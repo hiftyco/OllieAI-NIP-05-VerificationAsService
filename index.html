@@ -686,7 +686,7 @@
         }
 
         function updateQR() {
-            var qrData = 'lightning:ollie21@coinos.io?amount=' + (currentAmount / 1000);
+            var qrData = 'lightning:ollie21@coinos.io?amount=' + (currentAmount);
             var qrUrl = 'https://api.qrserver.com/v1/create-qr-code/?size=120x120&margin=6&data=' + encodeURIComponent(qrData);
             document.getElementById('mainQR').src = qrUrl;
             document.getElementById('modalQR').src = qrUrl.replace('size=120', 'size=180');
@@ -732,7 +732,7 @@
         }
 
         function copyAddress() {
-            var addr = 'ollie21@coinos.io?amount=' + (currentAmount / 1000);
+            var addr = 'ollie21@coinos.io?amount=' + (currentAmount);
             navigator.clipboard.writeText(addr).then(function() {
                 var btn = document.getElementById('copyBtn');
                 var txt = document.getElementById('copyText');
