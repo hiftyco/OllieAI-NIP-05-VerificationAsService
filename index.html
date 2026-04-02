@@ -3,16 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>⚡ NIP-05 Verified — Get Your Checkmark in 30 Seconds</title>
+    <title>⚡ NIP-05 Verification — Get Verified in 30 Seconds</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
             background: #000;
             color: #fff;
             overflow-x: hidden;
             min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
         }
         
         /* Particle Canvas */
@@ -26,7 +27,6 @@
             pointer-events: none;
         }
         
-        /* Content */
         .content {
             position: relative;
             z-index: 1;
@@ -40,175 +40,182 @@
             justify-content: center;
             align-items: center;
             text-align: center;
-            padding: 40px 20px;
+            padding: 60px 24px;
         }
         
-        .verified-badge {
+        .badge {
             display: inline-flex;
             align-items: center;
-            gap: 10px;
-            background: linear-gradient(135deg, rgba(48, 209, 88, 0.2) 0%, rgba(0, 212, 170, 0.1) 100%);
-            border: 2px solid #30d158;
-            padding: 12px 24px;
+            gap: 8px;
+            background: rgba(48, 209, 88, 0.15);
+            border: 1px solid #30d158;
+            padding: 10px 20px;
             border-radius: 980px;
-            font-size: 15px;
+            font-size: 14px;
             font-weight: 600;
             color: #30d158;
-            margin-bottom: 32px;
-            animation: badgePulse 2s ease-in-out infinite;
+            margin-bottom: 40px;
+            animation: badgeGlow 2s ease-in-out infinite;
         }
         
-        @keyframes badgePulse {
+        @keyframes badgeGlow {
             0%, 100% { box-shadow: 0 0 20px rgba(48, 209, 88, 0.3); }
-            50% { box-shadow: 0 0 40px rgba(48, 209, 88, 0.5); }
+            50% { box-shadow: 0 0 35px rgba(48, 209, 88, 0.5); }
         }
         
         .hero h1 {
-            font-size: clamp(40px, 9vw, 80px);
+            font-size: clamp(44px, 10vw, 88px);
             font-weight: 800;
             letter-spacing: -0.03em;
             line-height: 1.05;
-            margin-bottom: 20px;
+            margin-bottom: 24px;
         }
         
-        .hero h1 .gradient {
-            background: linear-gradient(135deg, #fff 0%, #30d158 50%, #00d4aa 100%);
+        .gradient-text {
+            background: linear-gradient(135deg, #30d158 0%, #00d4aa 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            background-size: 200% 200%;
-            animation: gradientShift 4s ease infinite;
-        }
-        
-        @keyframes gradientShift {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
         }
         
         .hero p {
-            font-size: clamp(16px, 2.5vw, 22px);
-            color: #888;
-            max-width: 550px;
+            font-size: clamp(18px, 2.5vw, 22px);
+            color: #86868b;
+            max-width: 520px;
             margin-bottom: 48px;
             line-height: 1.5;
         }
         
-        /* Payment Section */
-        .payment-box {
+        /* Payment Card */
+        .payment-card {
             background: linear-gradient(145deg, #111 0%, #0a0a0a 100%);
             border: 1px solid #222;
-            border-radius: 28px;
-            padding: 40px;
-            max-width: 500px;
+            border-radius: 32px;
+            padding: 48px;
+            max-width: 480px;
             width: 100%;
-            margin-bottom: 32px;
+            backdrop-filter: blur(20px);
         }
         
-        .payment-box h2 {
-            font-size: 22px;
+        .payment-card h2 {
+            font-size: 24px;
+            font-weight: 700;
             margin-bottom: 8px;
         }
         
-        .payment-box .subtitle {
+        .payment-card .subtitle {
             color: #666;
-            font-size: 14px;
-            margin-bottom: 24px;
+            font-size: 15px;
+            margin-bottom: 32px;
         }
         
-        /* Amount Selector */
-        .amount-selector {
-            display: flex;
+        /* Plan Selector */
+        .plan-selector {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
             gap: 12px;
-            margin-bottom: 24px;
+            margin-bottom: 32px;
         }
         
-        .amount-btn {
-            flex: 1;
+        .plan {
             padding: 20px 16px;
-            background: #1a1a1a;
-            border: 2px solid #333;
+            background: #161616;
+            border: 2px solid #2a2a2a;
             border-radius: 16px;
             cursor: pointer;
             transition: all 0.3s ease;
             text-align: center;
         }
         
-        .amount-btn:hover {
-            border-color: #555;
-            transform: translateY(-2px);
+        .plan:hover {
+            border-color: #444;
+            background: #1a1a1a;
         }
         
-        .amount-btn.selected {
+        .plan.selected {
             border-color: #30d158;
-            background: rgba(48, 209, 88, 0.1);
+            background: rgba(48, 209, 88, 0.08);
         }
         
-        .amount-btn .plan {
+        .plan .name {
             font-size: 13px;
             color: #888;
-            margin-bottom: 4px;
+            margin-bottom: 6px;
         }
         
-        .amount-btn .price {
-            font-size: 28px;
-            font-weight: 700;
+        .plan .price {
+            font-size: 32px;
+            font-weight: 800;
             color: #30d158;
         }
         
-        /* Wallet Buttons */
-        .wallet-section h3 {
-            font-size: 14px;
+        /* QR Code Display */
+        .qr-container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 20px;
+            margin-bottom: 20px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        
+        .qr-container:hover {
+            transform: scale(1.02);
+        }
+        
+        .qr-container img {
+            display: block;
+            width: 200px;
+            height: 200px;
+            margin: 0 auto;
+        }
+        
+        .qr-amount {
+            text-align: center;
+            font-size: 20px;
+            font-weight: 700;
+            color: #000;
+            margin-top: 12px;
+        }
+        
+        .qr-hint {
+            text-align: center;
+            font-size: 13px;
             color: #666;
-            margin-bottom: 16px;
+            margin-top: 8px;
+        }
+        
+        /* LN Address */
+        .ln-address {
+            background: #0d0d0d;
+            border-radius: 14px;
+            padding: 16px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .ln-address .label {
+            font-size: 11px;
+            color: #555;
             text-transform: uppercase;
             letter-spacing: 0.1em;
+            margin-bottom: 8px;
         }
         
-        .wallet-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            margin-bottom: 20px;
+        .ln-address .value {
+            font-size: 14px;
+            color: #30d158;
+            font-family: ui-monospace, monospace;
+            word-break: break-all;
         }
         
-        .wallet-btn {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 8px;
-            padding: 16px 8px;
-            background: #1a1a1a;
-            border: 1px solid #333;
-            border-radius: 14px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            color: #fff;
-        }
-        
-        .wallet-btn:hover {
-            background: #222;
-            transform: translateY(-2px);
-            border-color: #555;
-        }
-        
-        .wallet-btn .icon {
-            font-size: 28px;
-        }
-        
-        .wallet-btn .name {
-            font-size: 11px;
-            color: #888;
-        }
-        
-        /* Primary Pay Button */
-        .pay-btn {
+        .copy-btn {
             width: 100%;
-            padding: 20px;
+            padding: 16px;
             background: linear-gradient(135deg, #30d158 0%, #00d4aa 100%);
             border: none;
-            border-radius: 16px;
-            font-size: 18px;
+            border-radius: 14px;
+            font-size: 16px;
             font-weight: 700;
             color: #000;
             cursor: pointer;
@@ -216,70 +223,111 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
-            text-decoration: none;
-        }
-        
-        .pay-btn:hover {
-            transform: scale(1.02);
-            box-shadow: 0 8px 30px rgba(48, 209, 88, 0.4);
-        }
-        
-        .pay-btn:active {
-            transform: scale(0.98);
-        }
-        
-        /* LN Address */
-        .ln-address {
-            margin-top: 20px;
-            padding: 16px;
-            background: #0d0d0d;
-            border-radius: 12px;
-            text-align: center;
-        }
-        
-        .ln-address .label {
-            font-size: 12px;
-            color: #555;
-            margin-bottom: 8px;
-        }
-        
-        .ln-address .address {
-            font-size: 14px;
-            color: #30d158;
-            font-family: monospace;
-            word-break: break-all;
-        }
-        
-        .copy-btn {
-            margin-top: 12px;
-            padding: 12px 24px;
-            background: #222;
-            border: 1px solid #444;
-            border-radius: 10px;
-            color: #fff;
-            font-size: 14px;
-            cursor: pointer;
-            transition: all 0.3s ease;
+            gap: 8px;
         }
         
         .copy-btn:hover {
-            background: #333;
+            transform: scale(1.02);
+            box-shadow: 0 8px 30px rgba(48, 209, 88, 0.3);
         }
         
         .copy-btn.copied {
-            background: #30d158;
+            background: #333;
+            color: #30d158;
+        }
+        
+        /* Wallets Grid */
+        .wallets-section {
+            margin-top: 32px;
+            padding-top: 32px;
+            border-top: 1px solid #222;
+        }
+        
+        .wallets-section h4 {
+            font-size: 13px;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 16px;
+            text-align: center;
+        }
+        
+        .wallets-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+        
+        .wallet {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            padding: 16px 8px;
+            background: #161616;
+            border: 1px solid #2a2a2a;
+            border-radius: 14px;
+            text-decoration: none;
+            color: #fff;
+            transition: all 0.3s ease;
+        }
+        
+        .wallet:hover {
+            background: #1e1e1e;
+            border-color: #3a3a3a;
+            transform: translateY(-2px);
+        }
+        
+        .wallet img {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+        }
+        
+        .wallet .icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+        
+        .wallet .name {
+            font-size: 11px;
+            color: #888;
+        }
+        
+        /* DM Button */
+        .dm-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: linear-gradient(135deg, #30d158 0%, #00d4aa 100%);
             color: #000;
+            padding: 18px 36px;
+            border-radius: 980px;
+            text-decoration: none;
+            font-size: 17px;
+            font-weight: 700;
+            margin-top: 32px;
+            transition: all 0.3s ease;
+        }
+        
+        .dm-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 12px 40px rgba(48, 209, 88, 0.4);
         }
         
         /* Pain Points */
         .pain-section {
-            padding: 100px 20px;
-            max-width: 900px;
+            padding: 100px 24px;
+            max-width: 1000px;
             margin: 0 auto;
         }
         
-        .pain-section h2 {
+        .section-title {
             text-align: center;
             font-size: clamp(28px, 5vw, 42px);
             margin-bottom: 48px;
@@ -287,8 +335,8 @@
         
         .pain-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 16px;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
         }
         
         .pain-card {
@@ -305,7 +353,7 @@
         }
         
         .pain-card .emoji {
-            font-size: 36px;
+            font-size: 40px;
             margin-bottom: 16px;
         }
         
@@ -315,7 +363,7 @@
         }
         
         .pain-card .old {
-            color: #ff4757;
+            color: #ff453a;
             font-size: 13px;
             text-decoration: line-through;
             margin-bottom: 4px;
@@ -328,42 +376,38 @@
         
         /* How It Works */
         .how-section {
-            padding: 80px 20px;
+            padding: 100px 24px;
             background: linear-gradient(180deg, transparent 0%, rgba(48, 209, 88, 0.03) 100%);
         }
         
-        .how-section h2 {
-            text-align: center;
-            font-size: clamp(28px, 5vw, 42px);
-            margin-bottom: 48px;
+        .how-section .section-title {
+            margin-bottom: 56px;
         }
         
         .steps {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 48px;
-            max-width: 900px;
-            margin: 0 auto;
+            gap: 64px;
         }
         
         .step {
             text-align: center;
-            width: 220px;
+            width: 200px;
         }
         
         .step-num {
-            width: 60px;
-            height: 60px;
+            width: 64px;
+            height: 64px;
             background: linear-gradient(135deg, #30d158 0%, #00d4aa 100%);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 26px;
+            font-size: 28px;
             font-weight: 800;
             color: #000;
-            margin: 0 auto 16px;
+            margin: 0 auto 20px;
         }
         
         .step h4 {
@@ -376,41 +420,41 @@
             font-size: 14px;
         }
         
-        /* Verified Section */
+        /* Verified */
         .verified-section {
-            padding: 80px 20px;
+            padding: 80px 24px;
             text-align: center;
         }
         
         .verified-section h3 {
             color: #666;
-            font-size: 13px;
+            font-size: 12px;
             text-transform: uppercase;
             letter-spacing: 0.15em;
-            margin-bottom: 24px;
+            margin-bottom: 20px;
         }
         
         .verified-tags {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 12px;
+            gap: 10px;
         }
         
         .verified-tag {
             background: rgba(48, 209, 88, 0.15);
             border: 1px solid #30d158;
-            padding: 10px 20px;
+            padding: 8px 16px;
             border-radius: 980px;
-            font-size: 14px;
+            font-size: 13px;
             color: #30d158;
         }
         
         /* Footer */
         footer {
-            padding: 60px 20px;
+            padding: 60px 24px;
             text-align: center;
-            border-top: 1px solid rgba(255,255,255,0.1);
+            border-top: 1px solid #1a1a1a;
         }
         
         footer p {
@@ -424,6 +468,75 @@
             text-decoration: none;
         }
         
+        /* Modal */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.92);
+            z-index: 10000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+        }
+        
+        .modal.show {
+            display: flex;
+        }
+        
+        .modal-content {
+            background: #111;
+            border-radius: 28px;
+            padding: 48px 40px;
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+        }
+        
+        .modal-content h3 {
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+        
+        .modal-content .amount {
+            font-size: 36px;
+            font-weight: 800;
+            color: #30d158;
+            margin-bottom: 24px;
+        }
+        
+        .modal-content .qr-big {
+            background: #fff;
+            padding: 20px;
+            border-radius: 20px;
+            display: inline-block;
+        }
+        
+        .modal-content .close-btn {
+            margin-top: 24px;
+            padding: 14px 32px;
+            background: #222;
+            border: none;
+            border-radius: 12px;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        
+        /* Responsive */
+        @media (max-width: 500px) {
+            .payment-card {
+                padding: 32px 24px;
+            }
+            
+            .wallets-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
         /* Animations */
         @keyframes fadeInUp {
             from { opacity: 0; transform: translateY(30px); }
@@ -435,122 +548,126 @@
         }
         
         .hero > *:nth-child(1) { animation-delay: 0.1s; }
-        .hero > *:nth-child(2) { animation-delay: 0.2s; }
-        .hero > *:nth-child(3) { animation-delay: 0.3s; }
-        .hero > *:nth-child(4) { animation-delay: 0.4s; }
-        .hero > *:nth-child(5) { animation-delay: 0.5s; }
-        
-        /* Responsive */
-        @media (max-width: 500px) {
-            .wallet-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
-            .payment-box {
-                padding: 28px;
-            }
-        }
+        .hero > *:nth-child(2) { animation-delay: 0.15s; }
+        .hero > *:nth-child(3) { animation-delay: 0.2s; }
+        .hero > *:nth-child(4) { animation-delay: 0.25s; }
     </style>
 </head>
 <body>
     <!-- Particle Background -->
     <canvas id="particles"></canvas>
     
+    <!-- QR Modal -->
+    <div class="modal" id="qrModal">
+        <div class="modal-content">
+            <h3>⚡ Scan to Pay</h3>
+            <div class="amount" id="modalAmount">10,000 sats</div>
+            <div class="qr-big">
+                <img id="modalQR" src="" width="240" height="240" alt="QR Code" />
+            </div>
+            <p style="color: #666; margin-top: 16px; font-size: 14px;">paradigmtech21@coinos.io</p>
+            <button class="close-btn" onclick="closeModal()">Close</button>
+        </div>
+    </div>
+    
     <div class="content">
         <!-- Hero -->
         <section class="hero">
-            <div class="verified-badge">
-                ⚡ Verified in 30 Seconds
-            </div>
+            <div class="badge">⚡ Verified in 30 Seconds</div>
             
             <h1>
                 Get Your<br>
-                <span class="gradient">NIP-05 Checkmark</span>
+                <span class="gradient-text">NIP-05 Checkmark</span>
             </h1>
             
-            <p>The easiest way to get verified on Nostr. No DNS. No coding. Just pay and you're verified.</p>
+            <p>The dead-simple way to get verified on Nostr. No DNS. No coding. Just pay and you're done.</p>
             
-            <!-- Payment Box -->
-            <div class="payment-box">
-                <h2>🚀 Choose Your Plan</h2>
-                <p class="subtitle">Select verification type</p>
+            <!-- Payment Card -->
+            <div class="payment-card">
+                <h2>🚀 Get Verified</h2>
+                <p class="subtitle">Select your plan</p>
                 
-                <div class="amount-selector">
-                    <div class="amount-btn selected" onclick="selectPlan(10000, 'Full Hosting')">
-                        <div class="plan">🌐 Full Hosting</div>
+                <!-- Plan Selector -->
+                <div class="plan-selector">
+                    <div class="plan selected" onclick="selectPlan(10000, 'Full Hosting')">
+                        <div class="name">🌐 Full Hosting</div>
                         <div class="price">10k</div>
                     </div>
-                    <div class="amount-btn" onclick="selectPlan(50000, 'Custom Domain')">
-                        <div class="plan">🚀 Custom Domain</div>
+                    <div class="plan" onclick="selectPlan(50000, 'Custom Domain')">
+                        <div class="name">🚀 Custom Domain</div>
                         <div class="price">50k</div>
                     </div>
                 </div>
                 
-                <div class="wallet-section">
-                    <h3>📱 Pay Now</h3>
-                    
-                    <!-- Big QR Code -->
-                    <div style="background: #fff; padding: 16px; border-radius: 16px; display: inline-block; margin-bottom: 20px; cursor: pointer;" onclick="showQRModal()">
-                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&margin=10&data=lightning%3Aparadigmtech21%40coinos.io%3Famount%3D10000" width="180" height="180" alt="Pay QR" />
-                    </div>
-                    <p style="color: #666; font-size: 13px; margin-top: 8px;">Tap QR to enlarge</p>
-                    
-                    <div class="wallet-grid">
-                        <!-- QR Code - Always Works -->
-                        <a href="#" onclick="showQRModal(); return false;" class="wallet-btn">
-                            <span class="icon">📱</span>
-                            <span class="name">QR Code</span>
+                <!-- QR Code -->
+                <div class="qr-container" onclick="showModal()">
+                    <img id="mainQR" src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&margin=20&data=paradigmtech21@coinos.io" alt="Payment QR" />
+                    <div class="qr-amount" id="qrAmount">10,000 sats</div>
+                    <div class="qr-hint">Tap to enlarge</div>
+                </div>
+                
+                <!-- LN Address -->
+                <div class="ln-address">
+                    <div class="label">Or send to Lightning address</div>
+                    <div class="value">paradigmtech21@coinos.io</div>
+                </div>
+                
+                <!-- Copy Button -->
+                <button class="copy-btn" id="copyBtn" onclick="copyAddress()">
+                    📋 Copy Lightning Address
+                </button>
+                
+                <!-- Wallets -->
+                <div class="wallets-section">
+                    <h4>📱 Open Payment App</h4>
+                    <div class="wallets-grid">
+                        <!-- Primal -->
+                        <a href="https://primal.net/dm/paradigmtech21" class="wallet" target="_blank">
+                            <div class="icon" style="background: linear-gradient(135deg, #FFD700, #FF6B00);">P</div>
+                            <span class="name">Primal</span>
                         </a>
                         
                         <!-- Cash App -->
-                        <a href="cashapp:$paradigmtech21" class="wallet-btn" onclick="trackClick('cashapp')">
-                            <span class="icon">💚</span>
+                        <a href="https://cash.app/$paradigmtech21" class="wallet" target="_blank">
+                            <div class="icon" style="background: #00D64A;">$</div>
                             <span class="name">Cash App</span>
                         </a>
                         
-                        <!-- Primal -->
-                        <a href="https://primal.net/dm/paradigmtech21" class="wallet-btn" onclick="trackClick('primal')">
-                            <span class="icon">🔶</span>
-                            <span class="name">Primal DM</span>
-                        </a>
-                        
                         <!-- Alby -->
-                        <a href="https://getalby.com/pay/paradigmtech21" class="wallet-btn" onclick="trackClick('alby')">
-                            <span class="icon">⚡</span>
+                        <a href="https://getalby.com/pay/paradigmtech21" class="wallet" target="_blank">
+                            <div class="icon" style="background: #FFFE;">⚡</div>
                             <span class="name">Alby</span>
                         </a>
                         
                         <!-- Wallet of Satoshi -->
-                        <a href="https://walletofsatoshi.com/pay/paradigmtech21" class="wallet-btn" onclick="trackClick('walletofsatoshi')">
-                            <span class="icon">⚡</span>
-                            <span class="name">WoS Web</span>
+                        <a href="https://walletofsatoshi.com/pay/paradigmtech21" class="wallet" target="_blank">
+                            <div class="icon" style="background: #FF6B00;">W</div>
+                            <span class="name">Wallet of Satoshi</span>
+                        </a>
+                        
+                        <!-- Strike -->
+                        <a href="https://strike.me/pay/paradigmtech21" class="wallet" target="_blank">
+                            <div class="icon" style="background: #00C7FF;">S</div>
+                            <span class="name">Strike</span>
                         </a>
                         
                         <!-- Coinos -->
-                        <a href="https://coinos.io/paradigmtech21" class="wallet-btn" onclick="trackClick('coinos')">
-                            <span class="icon">💰</span>
+                        <a href="https://coinos.io/paradigmtech21" class="wallet" target="_blank">
+                            <div class="icon" style="background: #4CAF50;">C</div>
                             <span class="name">Coinos</span>
                         </a>
                     </div>
-                    
-                    <!-- Primary Pay Button -->
-                    <a href="#" onclick="showQRModal(); return false;" class="pay-btn" id="payBtn" onclick="trackClick('qr-pay')">
-                        📱 Show QR to Pay
-                    </a>
-                    
-                    <!-- LN Address Copy -->
-                    <div class="ln-address">
-                        <div class="label">Or send sats to:</div>
-                        <div class="address" id="lnAddress">paradigmtech21@coinos.io</div>
-                        <button class="copy-btn" id="copyBtn" onclick="copyAddress()">📋 Copy Address</button>
-                    </div>
                 </div>
             </div>
+            
+            <a href="nostr:npub1a3lz855htm20sfcd0y2hp38e4h2akrqjj92spvruw8ge9yslrgws4x8vth" class="dm-btn">
+                💬 DM to Complete Verification
+            </a>
         </section>
         
         <!-- Pain Points -->
         <section class="pain-section">
-            <h2>😌 We Made It Dead Simple</h2>
+            <h2 class="section-title">😌 We Made It Dead Simple</h2>
             
             <div class="pain-grid">
                 <div class="pain-card">
@@ -563,14 +680,14 @@
                 <div class="pain-card">
                     <div class="emoji">📱</div>
                     <h3>Can't Scan QR?</h3>
-                    <div class="old">Manually copy address</div>
-                    <div class="new">✅ One-tap wallet buttons</div>
+                    <div class="old">Fumble with cameras</div>
+                    <div class="new">✅ One-tap app links</div>
                 </div>
                 
                 <div class="pain-card">
                     <div class="emoji">⏰</div>
                     <h3>Don't Wait Days?</h3>
-                    <div class="old">DNS takes time</div>
+                    <div class="old">DNS takes forever</div>
                     <div class="new">✅ 30 seconds</div>
                 </div>
                 
@@ -585,13 +702,13 @@
         
         <!-- How It Works -->
         <section class="how-section">
-            <h2>⚡ 3 Steps to Verified</h2>
+            <h2 class="section-title">⚡ 3 Steps to Verified</h2>
             
             <div class="steps">
                 <div class="step">
                     <div class="step-num">1</div>
                     <h4>Pay</h4>
-                    <p>Tap a wallet button above or copy the address</p>
+                    <p>Scan QR or tap a wallet link above</p>
                 </div>
                 
                 <div class="step">
@@ -602,7 +719,7 @@
                 
                 <div class="step">
                     <div class="step-num">3</div>
-                    <h4>Verified!</h4>
+                    <h4>Done!</h4>
                     <p>Your checkmark appears instantly</p>
                 </div>
             </div>
@@ -624,12 +741,10 @@
     </div>
     
     <script>
-        // ============ PARTICLE SYSTEM ============
+        // ============ PARTICLES ============
         const canvas = document.getElementById('particles');
         const ctx = canvas.getContext('2d');
-        
         let particles = [];
-        const particleCount = 80;
         
         function resize() {
             canvas.width = window.innerWidth;
@@ -644,17 +759,16 @@
             reset() {
                 this.x = Math.random() * canvas.width;
                 this.y = Math.random() * canvas.height;
-                this.size = Math.random() * 2 + 1;
-                this.speedX = (Math.random() - 0.5) * 0.5;
-                this.speedY = (Math.random() - 0.5) * 0.5;
-                this.opacity = Math.random() * 0.5 + 0.2;
+                this.size = Math.random() * 2 + 0.5;
+                this.speedX = (Math.random() - 0.5) * 0.3;
+                this.speedY = (Math.random() - 0.5) * 0.3;
+                this.opacity = Math.random() * 0.4 + 0.1;
                 this.color = Math.random() > 0.5 ? '#30d158' : '#00d4aa';
             }
             
             update() {
                 this.x += this.speedX;
                 this.y += this.speedY;
-                
                 if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
                 if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
             }
@@ -670,8 +784,7 @@
         }
         
         function initParticles() {
-            particles = [];
-            for (let i = 0; i < particleCount; i++) {
+            for (let i = 0; i < 60; i++) {
                 particles.push(new Particle());
             }
         }
@@ -681,14 +794,14 @@
                 for (let j = i + 1; j < particles.length; j++) {
                     const dx = particles[i].x - particles[j].x;
                     const dy = particles[i].y - particles[j].y;
-                    const distance = Math.sqrt(dx * dx + dy * dy);
+                    const dist = Math.sqrt(dx * dx + dy * dy);
                     
-                    if (distance < 150) {
+                    if (dist < 120) {
                         ctx.beginPath();
                         ctx.moveTo(particles[i].x, particles[i].y);
                         ctx.lineTo(particles[j].x, particles[j].y);
                         ctx.strokeStyle = '#30d158';
-                        ctx.globalAlpha = (150 - distance) / 150 * 0.15;
+                        ctx.globalAlpha = (120 - dist) / 120 * 0.1;
                         ctx.lineWidth = 0.5;
                         ctx.stroke();
                         ctx.globalAlpha = 1;
@@ -697,22 +810,17 @@
             }
         }
         
-        function animateParticles() {
+        function animate() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            
-            particles.forEach(p => {
-                p.update();
-                p.draw();
-            });
-            
+            particles.forEach(p => { p.update(); p.draw(); });
             connectParticles();
-            requestAnimationFrame(animateParticles);
+            requestAnimationFrame(animate);
         }
         
         window.addEventListener('resize', resize);
         resize();
         initParticles();
-        animateParticles();
+        animate();
         
         // ============ PAYMENT ============
         let currentAmount = 10000;
@@ -722,40 +830,39 @@
             currentAmount = amount;
             currentPlan = plan;
             
-            // Update UI
-            document.querySelectorAll('.amount-btn').forEach(b => b.classList.remove('selected'));
+            document.querySelectorAll('.plan').forEach(p => p.classList.remove('selected'));
             event.currentTarget.classList.add('selected');
             
-            // Update pay button
-            document.getElementById('payBtn').href = `bitpay://pay?id=paradigmtech21@coinos.io&amount=${amount}`;
-            
-            // Update wallet buttons
-            document.querySelectorAll('.wallet-btn').forEach(btn => {
-                let href = btn.href;
-                href = href.replace(/amount=\d+/, `amount=${amount}`);
-                btn.href = href;
-            });
+            document.getElementById('qrAmount').textContent = amount.toLocaleString() + ' sats';
+            document.getElementById('mainQR').src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&margin=20&data=paradigmtech21@coinos.io`;
+            document.getElementById('modalAmount').textContent = amount.toLocaleString() + ' sats';
+            document.getElementById('modalQR').src = `https://api.qrserver.com/v1/create-qr-code/?size=240x240&margin=20&data=paradigmtech21@coinos.io`;
+        }
+        
+        function showModal() {
+            document.getElementById('qrModal').classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeModal() {
+            document.getElementById('qrModal').classList.remove('show');
+            document.body.style.overflow = 'auto';
         }
         
         function copyAddress() {
-            const addr = document.getElementById('lnAddress').textContent;
-            navigator.clipboard.writeText(addr + '?amount=' + currentAmount).then(() => {
+            const text = `paradigmtech21@coinos.io?amount=${currentAmount}`;
+            navigator.clipboard.writeText(text).then(() => {
                 const btn = document.getElementById('copyBtn');
                 btn.textContent = '✅ Copied!';
                 btn.classList.add('copied');
                 setTimeout(() => {
-                    btn.textContent = '📋 Copy Address';
+                    btn.textContent = '📋 Copy Lightning Address';
                     btn.classList.remove('copied');
                 }, 2000);
             });
         }
         
-        function trackClick(wallet) {
-            // Track clicks for analytics
-            console.log(`Payment method: ${wallet}, Amount: ${currentAmount}`);
-        }
-        
-        // ============ LOAD VERIFIED ============
+        // ============ VERIFIED LIST ============
         async function loadVerified() {
             try {
                 const resp = await fetch('https://hiftyco.github.io/.well-known/nostr.json');
@@ -777,88 +884,9 @@
         
         loadVerified();
         
-        // ============ QR MODAL ============
-        function showQRModal() {
-            const amount = currentAmount;
-            const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&margin=10&data=lightning%3Aparadigmtech21%40coinos.io%3Famount%3D${amount}`;
-            
-            const modal = document.createElement('div');
-            modal.style.cssText = `
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background: rgba(0,0,0,0.9);
-                z-index: 10000;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                justify-content: center;
-                padding: 20px;
-            `;
-            
-            modal.innerHTML = `
-                <div style="background: #1a1a1a; border-radius: 24px; padding: 40px; text-align: center; max-width: 400px;">
-                    <h2 style="color: #fff; margin-bottom: 8px;">⚡ Scan to Pay</h2>
-                    <p style="color: #666; margin-bottom: 24px;">${amount.toLocaleString()} sats</p>
-                    <div style="background: #fff; padding: 16px; border-radius: 16px; display: inline-block;">
-                        <img src="${qrUrl}" width="260" height="260" alt="QR Code" />
-                    </div>
-                    <p style="color: #30d158; margin-top: 16px; font-size: 14px;">${amount.toLocaleString()} sats to:</p>
-                    <p style="color: #888; font-size: 12px; word-break: break-all; margin-top: 8px;">paradigmtech21@coinos.io</p>
-                    <button onclick="this.closest('div').parentElement.remove(); document.body.style.overflow='auto';" style="margin-top: 24px; padding: 14px 32px; background: #333; border: none; border-radius: 12px; color: #fff; font-size: 16px; cursor: pointer;">Close</button>
-                </div>
-            `;
-            
-            document.body.appendChild(modal);
-            document.body.style.overflow = 'hidden';
-            
-            modal.addEventListener('click', (e) => {
-                if (e.target === modal) {
-                    modal.remove();
-                    document.body.style.overflow = 'auto';
-                }
-            });
-        }
-        
-        // ============ CONFETTI ON CLICK ============
-        document.querySelector('.pay-btn').addEventListener('click', function(e) {
-            for (let i = 0; i < 30; i++) {
-                const confetti = document.createElement('div');
-                const colors = ['#30d158', '#00d4aa', '#ffd700', '#ff6b6b', '#fff'];
-                confetti.style.cssText = `
-                    position: fixed;
-                    width: ${Math.random() * 8 + 4}px;
-                    height: ${Math.random() * 8 + 4}px;
-                    background: ${colors[Math.floor(Math.random() * colors.length)]};
-                    border-radius: ${Math.random() > 0.5 ? '50%' : '0'};
-                    pointer-events: none;
-                    z-index: 9999;
-                    left: ${e.clientX}px;
-                    top: ${e.clientY}px;
-                `;
-                document.body.appendChild(confetti);
-                
-                const angle = Math.random() * Math.PI * 2;
-                const velocity = 5 + Math.random() * 10;
-                const vx = Math.cos(angle) * velocity;
-                let vy = Math.sin(angle) * velocity - 5;
-                let opacity = 1;
-                let x = e.clientX, y = e.clientY;
-                
-                const fall = () => {
-                    x += vx;
-                    y += vy += 0.5;
-                    opacity -= 0.02;
-                    confetti.style.transform = `translate(${x - e.clientX}px, ${y - e.clientY}px)`;
-                    confetti.style.opacity = opacity;
-                    if (opacity > 0) requestAnimationFrame(fall);
-                    else confetti.remove();
-                };
-                
-                requestAnimationFrame(fall);
-            }
+        // Click outside modal to close
+        document.getElementById('qrModal').addEventListener('click', (e) => {
+            if (e.target.id === 'qrModal') closeModal();
         });
     </script>
 </body>
