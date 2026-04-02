@@ -96,7 +96,6 @@
             align-items: center;
             text-align: center;
             padding: 60px 24px;
-            position: relative;
         }
         
         .hero-badge {
@@ -417,30 +416,12 @@
             padding: 40px;
             border: 1px solid rgba(255, 255, 255, 0.08);
             transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
         }
         
         .feature-card:hover {
             transform: translateY(-8px);
             border-color: rgba(255, 255, 255, 0.2);
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-        }
-        
-        .feature-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, #0071e3, transparent);
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-        
-        .feature-card:hover::before {
-            opacity: 1;
         }
         
         .feature-icon {
@@ -594,18 +575,6 @@
             text-decoration: none;
         }
         
-        /* Scroll animations */
-        .animate-on-scroll {
-            opacity: 0;
-            transform: translateY(40px);
-            transition: all 0.8s ease-out;
-        }
-        
-        .animate-on-scroll.animated {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        
         /* Responsive */
         @media (max-width: 600px) {
             .checker-input {
@@ -647,7 +616,7 @@
             <span class="gradient-text">Be Different.</span>
         </h1>
         
-        <p>Stand out on Nostr like never before. No DNS headaches. No coding required. Just you, verified.</p>
+        <p>Stand out on Nostr. No DNS. No coding. Just you, verified with a real checkmark.</p>
         
         <div class="cta-group">
             <a href="nostr:npub1a3lz855htm20sfcd0y2hp38e4h2akrqjj92spvruw8ge9yslrgws4x8vth" class="cta-button">
@@ -693,19 +662,19 @@
         <h2>Why Get Verified? ✨</h2>
         
         <div class="feature-grid">
-            <div class="feature-card animate-on-scroll">
+            <div class="feature-card">
                 <div class="feature-icon">🛡️</div>
                 <h3>Proves You're Real</h3>
                 <p>No more "is this really you?" Show the verified badge and clients know instantly.</p>
             </div>
             
-            <div class="feature-card animate-on-scroll">
+            <div class="feature-card">
                 <div class="feature-icon">⚡</div>
                 <h3>Instant Setup</h3>
                 <p>We handle everything. No DNS. No coding. Just send your npub and get verified.</p>
             </div>
             
-            <div class="feature-card animate-on-scroll">
+            <div class="feature-card">
                 <div class="feature-icon">🎯</div>
                 <h3>Builds Trust</h3>
                 <p>Trust = better connections. Verified users get more zaps, more followers.</p>
@@ -748,7 +717,7 @@
     <section class="verified-section">
         <h3>✅ Already Verified</h3>
         <div class="verified-tags" id="verifiedList">
-            <span class="verified-tag">hifty@hiftyco.github.io</span>
+            <span class="verified-tag">Loading...</span>
         </div>
     </section>
     
@@ -759,12 +728,10 @@
     </footer>
     
     <script>
-        const REPO = 'hiftyco/OllieAI-NIP-05-VerificationAsService';
-        
-        // Load verified users
+        // Load verified users from hiftyco/.well-known
         async function loadVerified() {
             try {
-                const resp = await fetch(`https://raw.githubusercontent.com/${REPO}/main/nostr.json`);
+                const resp = await fetch(`https://hiftyco.github.io/.well-known/nostr.json`);
                 const data = await resp.json();
                 const names = Object.keys(data.names || {});
                 
@@ -773,9 +740,11 @@
                     container.innerHTML = names.map(n => 
                         `<span class="verified-tag">${n}@hiftyco.github.io</span>`
                     ).join('');
+                } else {
+                    container.innerHTML = '<span class="verified-tag">Be the first to verify!</span>';
                 }
             } catch (e) {
-                console.log('Could not load verified list');
+                document.getElementById('verifiedList').innerHTML = '<span class="verified-tag">Could not load</span>';
             }
         }
         
@@ -789,7 +758,7 @@
             result.className = 'checker-result show';
             result.innerHTML = '<p style="color:#86868b">Checking...</p>';
             
-            fetch(`https://raw.githubusercontent.com/${REPO}/main/nostr.json`)
+            fetch(`https://hiftyco.github.io/.well-known/nostr.json`)
                 .then(r => r.json())
                 .then(data => {
                     const found = Object.entries(data.names || {}).find(([k]) => 
@@ -818,22 +787,9 @@
         // Load on page load
         loadVerified();
         
-        // Scroll animations
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('animated');
-                }
-            });
-        }, { threshold: 0.1 });
-        
-        document.querySelectorAll('.animate-on-scroll').forEach(el => {
-            observer.observe(el);
-        });
-        
-        // Fun: confetti on CTA click
+        // Confetti on CTA click
         document.querySelector('.cta-button').addEventListener('click', (e) => {
-            for (let i = 0; i < 20; i++) {
+            for (let i = 0; i < 30; i++) {
                 const confetti = document.createElement('div');
                 confetti.style.cssText = `
                     position: fixed;
@@ -849,16 +805,16 @@
                 document.body.appendChild(confetti);
                 
                 const angle = Math.random() * Math.PI * 2;
-                const velocity = 5 + Math.random() * 5;
+                const velocity = 5 + Math.random() * 10;
                 const vx = Math.cos(angle) * velocity;
-                const vy = Math.sin(angle) * velocity;
+                let vy = Math.sin(angle) * velocity;
                 
                 let x = e.clientX, y = e.clientY;
                 let opacity = 1;
                 
                 const animate = () => {
                     x += vx;
-                    y += vy + 2;
+                    y += vy + 3;
                     opacity -= 0.02;
                     confetti.style.transform = `translate(${x - e.clientX}px, ${y - e.clientY}px)`;
                     confetti.style.opacity = opacity;
