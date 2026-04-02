@@ -7,18 +7,23 @@
     <meta name="description" content="Get your verified checkmark on Nostr in 30 seconds. No DNS. No coding. Just pay and you're verified.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --green: #30d158;
-            --green-glow: rgba(48, 209, 88, 0.4);
-            --bg: #030303;
-            --card: #0a0a0a;
-            --card-hover: #111111;
-            --border: #1a1a1a;
-            --text: #ffffff;
-            --muted: #888888;
-            --dim: #555555;
+            --bg: #0a0a0b;
+            --bg-light: #111113;
+            --card: #141416;
+            --card-hover: #1a1a1d;
+            --border: #222225;
+            --border-light: #2a2a2f;
+            --text: #f0f0f0;
+            --text-muted: #888;
+            --text-dim: #555;
+            --accent: #ff6b35;
+            --accent-glow: rgba(255, 107, 53, 0.4);
+            --accent-soft: rgba(255, 107, 53, 0.1);
+            --gold: #ffd700;
+            --green: #00ff88;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -26,12 +31,44 @@
         html { scroll-behavior: smooth; }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-family: 'Space Grotesk', -apple-system, sans-serif;
             background: var(--bg);
             color: var(--text);
             min-height: 100vh;
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
+        }
+
+        /* Gradient Orbs */
+        .orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(100px);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .orb-1 {
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, var(--accent-soft) 0%, transparent 70%);
+            top: -200px;
+            right: -200px;
+            animation: orbFloat 20s ease-in-out infinite;
+        }
+
+        .orb-2 {
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(0, 255, 136, 0.05) 0%, transparent 70%);
+            bottom: -150px;
+            left: -150px;
+            animation: orbFloat 25s ease-in-out infinite reverse;
+        }
+
+        @keyframes orbFloat {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(30px, 30px); }
         }
 
         /* Particle Canvas */
@@ -44,8 +81,7 @@
 
         .content { position: relative; z-index: 1; }
 
-        /* Layout */
-        .container { max-width: 520px; margin: 0 auto; padding: 0 24px; }
+        .container { max-width: 540px; margin: 0 auto; padding: 0 24px; }
 
         /* Hero */
         .hero {
@@ -59,235 +95,245 @@
         }
 
         /* Badge */
-        .badge-container {
+        .badge-wrapper {
             position: relative;
-            margin-bottom: 40px;
+            margin-bottom: 36px;
+        }
+
+        .badge-ring {
+            position: absolute;
+            inset: -50px;
+            border: 1px solid var(--border);
+            border-radius: 50%;
+            opacity: 0.3;
+        }
+
+        .badge-ring-2 {
+            inset: -70px;
+            opacity: 0.15;
         }
 
         .badge-glow {
             position: absolute;
-            inset: -40px;
-            background: radial-gradient(circle, var(--green-glow) 0%, transparent 70%);
-            filter: blur(40px);
-            opacity: 0.6;
-            animation: glowPulse 4s ease-in-out infinite;
+            inset: -30px;
+            background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+            opacity: 0.5;
+            animation: badgeGlow 3s ease-in-out infinite;
         }
 
-        @keyframes glowPulse {
-            0%, 100% { opacity: 0.4; transform: scale(0.95); }
-            50% { opacity: 0.7; transform: scale(1.05); }
+        @keyframes badgeGlow {
+            0%, 100% { opacity: 0.3; transform: scale(0.95); }
+            50% { opacity: 0.6; transform: scale(1.05); }
         }
 
         .badge {
             position: relative;
-            width: 110px;
-            height: 110px;
+            width: 100px;
+            height: 100px;
             border-radius: 50%;
-            background: linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 100%);
-            border: 2px solid var(--green);
+            background: linear-gradient(135deg, var(--card) 0%, var(--bg-light) 100%);
+            border: 2px solid var(--accent);
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 0 60px var(--green-glow);
-        }
-
-        .badge::before {
-            content: '';
-            position: absolute;
-            inset: -4px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--green), transparent, var(--green));
-            opacity: 0.3;
-            z-index: -1;
+            box-shadow: 0 0 50px var(--accent-glow);
         }
 
         .badge span {
-            font-size: 52px;
-            font-weight: 300;
-            color: var(--green);
-            text-shadow: 0 0 30px var(--green-glow);
-        }
-
-        .badge-label {
-            margin-top: 20px;
-            font-size: 11px;
-            font-weight: 600;
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
-            color: var(--green);
+            font-size: 44px;
+            color: var(--accent);
+            text-shadow: 0 0 20px var(--accent-glow);
         }
 
         /* Typography */
         h1 {
-            font-size: clamp(36px, 9vw, 56px);
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(40px, 10vw, 64px);
             font-weight: 800;
             letter-spacing: -0.03em;
-            line-height: 1.05;
-            margin-bottom: 20px;
-            background: linear-gradient(135deg, #fff 0%, #ccc 50%, #fff 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            line-height: 1.0;
+            margin-bottom: 18px;
         }
 
         h1 .accent {
-            background: linear-gradient(135deg, var(--green) 0%, #00e5a0 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: var(--accent);
+            position: relative;
+        }
+
+        h1 .accent::after {
+            content: '';
+            position: absolute;
+            bottom: 4px;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: var(--accent);
+            opacity: 0.3;
+            border-radius: 2px;
         }
 
         .subtitle {
             font-size: 17px;
-            color: var(--muted);
-            max-width: 380px;
-            line-height: 1.6;
-            margin-bottom: 48px;
-            font-weight: 400;
+            color: var(--text-muted);
+            max-width: 360px;
+            line-height: 1.65;
+            margin-bottom: 44px;
         }
 
         /* Payment Card */
         .payment-card {
             background: var(--card);
             border: 1px solid var(--border);
-            border-radius: 24px;
-            padding: 28px;
+            border-radius: 28px;
+            padding: 32px;
             width: 100%;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .payment-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+            opacity: 0.5;
         }
 
         /* Plan Toggle */
         .plan-toggle {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 8px;
+            gap: 10px;
             margin-bottom: 28px;
-            background: #080808;
-            padding: 6px;
-            border-radius: 14px;
         }
 
         .plan-btn {
-            padding: 14px 10px;
-            background: transparent;
-            border: none;
-            border-radius: 10px;
+            padding: 16px 12px;
+            background: var(--bg-light);
+            border: 1px solid var(--border);
+            border-radius: 14px;
             cursor: pointer;
             transition: all 0.25s ease;
             text-align: center;
         }
 
-        .plan-btn:hover { background: rgba(255,255,255,0.03); }
+        .plan-btn:hover {
+            border-color: var(--border-light);
+            background: var(--card-hover);
+        }
 
         .plan-btn.active {
-            background: linear-gradient(135deg, rgba(48, 209, 88, 0.2) 0%, rgba(48, 209, 88, 0.1) 100%);
-            box-shadow: 0 0 20px rgba(48, 209, 88, 0.1);
+            background: var(--accent-soft);
+            border-color: var(--accent);
+            box-shadow: 0 0 20px var(--accent-soft);
         }
 
         .plan-btn .pname {
             font-size: 10px;
-            color: var(--dim);
+            color: var(--text-dim);
             text-transform: uppercase;
             letter-spacing: 0.1em;
-            margin-bottom: 4px;
+            margin-bottom: 6px;
             display: block;
         }
 
         .plan-btn .pprice {
-            font-size: 26px;
+            font-size: 24px;
             font-weight: 700;
             color: var(--text);
             display: block;
         }
 
-        .plan-btn.active .pprice { color: var(--green); }
+        .plan-btn.active .pprice {
+            color: var(--accent);
+        }
 
         /* QR */
-        .qr-wrapper {
-            position: relative;
+        .qr-section {
+            text-align: center;
             margin-bottom: 20px;
         }
 
-        .qr-container {
-            background: #ffffff;
+        .qr-frame {
+            background: #fff;
             padding: 14px;
-            border-radius: 18px;
+            border-radius: 20px;
             display: inline-block;
             cursor: pointer;
             transition: all 0.3s ease;
             position: relative;
-            overflow: hidden;
         }
 
-        .qr-container::before {
+        .qr-frame::before {
             content: '';
             position: absolute;
-            inset: 0;
-            background: linear-gradient(135deg, rgba(48, 209, 88, 0.1) 0%, transparent 50%);
+            inset: -2px;
+            border-radius: 22px;
+            background: linear-gradient(135deg, var(--accent), var(--gold));
+            z-index: -1;
             opacity: 0;
             transition: opacity 0.3s ease;
         }
 
-        .qr-container:hover {
-            transform: scale(1.03);
-            box-shadow: 0 10px 40px rgba(48, 209, 88, 0.2);
+        .qr-frame:hover::before { opacity: 1; }
+
+        .qr-frame:hover {
+            transform: scale(1.04);
+            box-shadow: 0 15px 40px rgba(255, 107, 53, 0.25);
         }
 
-        .qr-container:hover::before { opacity: 1; }
-
-        .qr-container img {
+        .qr-frame img {
             display: block;
             width: 150px;
             height: 150px;
+            border-radius: 8px;
         }
 
-        .qr-tap-hint {
-            position: absolute;
-            bottom: -28px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 10px;
-            color: var(--dim);
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            white-space: nowrap;
+        .qr-hint {
+            font-size: 11px;
+            color: var(--text-dim);
+            margin-top: 14px;
+            letter-spacing: 0.05em;
         }
 
         /* Amount */
-        .amount {
-            font-size: 38px;
-            font-weight: 800;
-            color: var(--green);
-            margin: 24px 0 16px;
+        .amount-display {
+            font-size: 42px;
+            font-weight: 700;
+            color: var(--accent);
+            margin: 24px 0 18px;
             letter-spacing: -0.02em;
         }
 
-        .amount span {
+        .amount-display span {
             font-size: 18px;
             font-weight: 500;
-            color: var(--muted);
+            color: var(--text-muted);
         }
 
         /* Address */
-        .address-card {
-            background: #060606;
+        .address-box {
+            background: var(--bg);
             border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 14px 16px;
+            border-radius: 14px;
+            padding: 16px;
             margin-bottom: 14px;
         }
 
-        .address-card .alabel {
+        .address-box .alabel {
             font-size: 9px;
-            color: var(--dim);
+            color: var(--text-dim);
             text-transform: uppercase;
             letter-spacing: 0.15em;
-            margin-bottom: 6px;
+            margin-bottom: 8px;
         }
 
-        .address-card .avalue {
+        .address-box .avalue {
             font-size: 13px;
-            color: var(--green);
+            color: var(--gold);
             font-family: 'SF Mono', ui-monospace, monospace;
             word-break: break-all;
         }
@@ -295,11 +341,11 @@
         /* Copy Button */
         .copy-btn {
             width: 100%;
-            padding: 16px;
-            background: var(--green);
+            padding: 17px;
+            background: linear-gradient(135deg, var(--accent) 0%, #ff8f5a 100%);
             color: #000;
             border: none;
-            border-radius: 12px;
+            border-radius: 14px;
             font-size: 14px;
             font-weight: 700;
             cursor: pointer;
@@ -312,93 +358,91 @@
         }
 
         .copy-btn:hover {
-            background: #3de064;
             transform: translateY(-2px);
-            box-shadow: 0 8px 30px rgba(48, 209, 88, 0.35);
+            box-shadow: 0 10px 35px var(--accent-glow);
         }
 
         .copy-btn:active { transform: translateY(0); }
 
         .copy-btn.copied {
-            background: transparent;
-            color: var(--green);
-            border: 1px solid var(--green);
+            background: var(--bg);
+            color: var(--accent);
+            border: 1px solid var(--accent);
         }
 
         /* Quick Pay */
         .quick-pay {
-            margin-top: 22px;
-            padding-top: 22px;
+            margin-top: 24px;
+            padding-top: 24px;
             border-top: 1px solid var(--border);
         }
 
         .quick-pay-label {
             font-size: 10px;
-            color: var(--dim);
+            color: var(--text-dim);
             text-transform: uppercase;
             letter-spacing: 0.15em;
-            margin-bottom: 12px;
+            margin-bottom: 14px;
         }
 
-        .pay-grid {
+        .wallet-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 8px;
+            gap: 10px;
         }
 
-        .pay-btn {
+        .wallet-btn {
             display: flex;
             align-items: center;
-            gap: 10px;
-            padding: 14px 12px;
-            background: #0d0d0d;
+            gap: 12px;
+            padding: 16px 14px;
+            background: var(--bg-light);
             border: 1px solid var(--border);
-            border-radius: 12px;
+            border-radius: 14px;
             text-decoration: none;
             color: var(--text);
             transition: all 0.25s ease;
         }
 
-        .pay-btn:hover {
+        .wallet-btn:hover {
             background: var(--card-hover);
-            border-color: #2a2a2a;
+            border-color: var(--border-light);
             transform: translateY(-2px);
         }
 
-        .pay-icon {
-            width: 34px;
-            height: 34px;
-            border-radius: 9px;
+        .wallet-icon {
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 15px;
+            font-size: 16px;
             font-weight: 700;
             flex-shrink: 0;
         }
 
-        .pay-info { flex: 1; min-width: 0; }
+        .wallet-info { flex: 1; min-width: 0; }
 
-        .pay-name {
+        .wallet-name {
             font-size: 13px;
             font-weight: 600;
-            color: var(--text);
         }
 
-        .pay-desc {
+        .wallet-desc {
             font-size: 10px;
-            color: var(--dim);
+            color: var(--text-dim);
             margin-top: 2px;
         }
 
         /* DM Button */
-        .dm-section { margin-top: 32px; }
+        .dm-section { margin-top: 30px; }
 
         .dm-btn {
             display: inline-flex;
             align-items: center;
             gap: 10px;
-            padding: 16px 32px;
+            padding: 16px 28px;
             background: transparent;
             border: 1px solid var(--border);
             border-radius: 980px;
@@ -410,11 +454,9 @@
         }
 
         .dm-btn:hover {
-            background: var(--card);
-            border-color: var(--green);
-            color: var(--green);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 30px rgba(48, 209, 88, 0.15);
+            border-color: var(--accent);
+            color: var(--accent);
+            background: var(--accent-soft);
         }
 
         /* Why Section */
@@ -423,18 +465,18 @@
             border-top: 1px solid var(--border);
         }
 
-        .section-title {
-            font-size: 32px;
-            font-weight: 700;
-            text-align: center;
+        .section-label {
+            font-size: 11px;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
             margin-bottom: 12px;
-            letter-spacing: -0.02em;
         }
 
-        .section-sub {
-            font-size: 15px;
-            color: var(--muted);
-            text-align: center;
+        .section-title {
+            font-family: 'Syne', sans-serif;
+            font-size: 36px;
+            font-weight: 800;
             margin-bottom: 48px;
         }
 
@@ -450,31 +492,16 @@
             padding: 28px;
             transition: all 0.3s ease;
             position: relative;
-            overflow: hidden;
-        }
-
-        .why-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(48, 209, 88, 0.3), transparent);
-            opacity: 0;
-            transition: opacity 0.3s ease;
         }
 
         .why-card:hover {
-            border-color: rgba(48, 209, 88, 0.3);
+            border-color: var(--border-light);
             transform: translateY(-4px);
             box-shadow: 0 20px 50px rgba(0,0,0,0.4);
         }
 
-        .why-card:hover::before { opacity: 1; }
-
-        .why-icon {
-            font-size: 36px;
+        .why-card-icon {
+            font-size: 40px;
             margin-bottom: 16px;
         }
 
@@ -486,33 +513,33 @@
 
         .why-card p {
             font-size: 14px;
-            color: var(--muted);
+            color: var(--text-muted);
             line-height: 1.6;
         }
 
         /* Steps */
         .steps-section {
             padding: 80px 0;
-            background: linear-gradient(180deg, transparent 0%, rgba(48, 209, 88, 0.02) 50%, transparent 100%);
+            background: linear-gradient(180deg, transparent 0%, var(--accent-soft) 50%, transparent 100%);
         }
 
         .steps-row {
             display: flex;
             justify-content: center;
-            gap: 24px;
+            gap: 20px;
         }
 
         .step {
             text-align: center;
             flex: 1;
-            max-width: 140px;
+            max-width: 130px;
         }
 
-        .step-circle {
-            width: 56px;
-            height: 56px;
+        .step-num {
+            width: 54px;
+            height: 54px;
             border-radius: 50%;
-            background: linear-gradient(135deg, var(--green) 0%, #00a142 100%);
+            background: linear-gradient(135deg, var(--accent) 0%, #ff8f5a 100%);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -520,7 +547,7 @@
             font-weight: 800;
             color: #000;
             margin: 0 auto 14px;
-            box-shadow: 0 8px 30px rgba(48, 209, 88, 0.3);
+            box-shadow: 0 8px 25px var(--accent-glow);
         }
 
         .step h4 {
@@ -531,7 +558,7 @@
 
         .step p {
             font-size: 12px;
-            color: var(--muted);
+            color: var(--text-muted);
         }
 
         /* Verified */
@@ -541,14 +568,13 @@
 
         .verified-label {
             font-size: 11px;
-            color: var(--dim);
+            color: var(--text-dim);
             text-transform: uppercase;
             letter-spacing: 0.15em;
-            text-align: center;
             margin-bottom: 16px;
         }
 
-        .verified-row {
+        .verified-tags {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
@@ -556,18 +582,18 @@
         }
 
         .vtag {
-            background: rgba(48, 209, 88, 0.08);
-            border: 1px solid rgba(48, 209, 88, 0.2);
+            background: var(--accent-soft);
+            border: 1px solid rgba(255, 107, 53, 0.2);
             padding: 8px 14px;
             border-radius: 980px;
             font-size: 12px;
-            color: var(--green);
+            color: var(--accent);
             transition: all 0.2s ease;
         }
 
         .vtag:hover {
-            background: rgba(48, 209, 88, 0.15);
-            border-color: rgba(48, 209, 88, 0.4);
+            background: rgba(255, 107, 53, 0.15);
+            border-color: rgba(255, 107, 53, 0.4);
         }
 
         /* Footer */
@@ -579,12 +605,12 @@
 
         footer p {
             font-size: 13px;
-            color: var(--dim);
+            color: var(--text-dim);
             margin-bottom: 8px;
         }
 
         footer a {
-            color: var(--green);
+            color: var(--accent);
             text-decoration: none;
         }
 
@@ -592,7 +618,7 @@
         .modal {
             position: fixed;
             inset: 0;
-            background: rgba(0,0,0,0.9);
+            background: rgba(0,0,0,0.92);
             backdrop-filter: blur(20px);
             z-index: 1000;
             display: none;
@@ -611,7 +637,7 @@
             text-align: center;
             max-width: 360px;
             width: 100%;
-            animation: modalIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+            animation: modalIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
         @keyframes modalIn {
@@ -620,15 +646,16 @@
         }
 
         .modal-box h3 {
-            font-size: 22px;
-            font-weight: 700;
-            margin-bottom: 4px;
+            font-family: 'Syne', sans-serif;
+            font-size: 24px;
+            font-weight: 800;
+            margin-bottom: 6px;
         }
 
         .modal-amt {
-            font-size: 32px;
-            font-weight: 800;
-            color: var(--green);
+            font-size: 34px;
+            font-weight: 700;
+            color: var(--accent);
             margin-bottom: 24px;
         }
 
@@ -639,19 +666,19 @@
             display: inline-block;
         }
 
-        .modal-qr img { width: 220px; height: 220px; }
+        .modal-qr img { width: 220px; height: 220px; border-radius: 8px; }
 
         .modal-addr {
             margin-top: 18px;
             font-size: 11px;
-            color: var(--dim);
+            color: var(--text-dim);
             word-break: break-all;
         }
 
         .modal-close {
             margin-top: 28px;
             padding: 14px 32px;
-            background: #1a1a1a;
+            background: var(--bg-light);
             border: 1px solid var(--border);
             border-radius: 12px;
             color: var(--text);
@@ -662,16 +689,15 @@
         }
 
         .modal-close:hover {
-            background: #222;
-            border-color: #333;
+            background: var(--card-hover);
+            border-color: var(--border-light);
         }
 
         /* Confetti */
-        .confetti-piece {
+        .confetti {
             position: fixed;
             width: 8px;
             height: 8px;
-            border-radius: 2px;
             pointer-events: none;
             z-index: 2000;
             animation: confettiFall 1s ease-out forwards;
@@ -679,22 +705,21 @@
 
         @keyframes confettiFall {
             0% { transform: translateY(0) rotate(0deg); opacity: 1; }
-            100% { transform: translateY(120px) rotate(720deg); opacity: 0; }
+            100% { transform: translateY(100px) rotate(720deg); opacity: 0; }
         }
 
         /* Animations */
-        .fade-up {
-            opacity: 0;
-            transform: translateY(30px);
-            animation: fadeUp 0.8s ease-out forwards;
+        .fade-in {
+            animation: fadeIn 0.8s ease-out forwards;
         }
 
-        @keyframes fadeUp {
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        .hero > * { animation: fadeUp 0.8s ease-out forwards; }
-        .hero-badge { animation-delay: 0.1s !important; }
+        .hero > * { opacity: 0; animation: fadeIn 0.8s ease-out forwards; }
+        .badge-wrapper { animation-delay: 0.1s !important; }
         h1 { animation-delay: 0.2s !important; }
         .subtitle { animation-delay: 0.3s !important; }
         .payment-card { animation-delay: 0.4s !important; }
@@ -702,16 +727,20 @@
 
         /* Responsive */
         @media (max-width: 480px) {
-            .payment-card { padding: 22px 18px; }
-            .plan-btn .pprice { font-size: 22px; }
-            .amount { font-size: 32px; }
-            .steps-row { gap: 16px; }
-            .step { max-width: 100px; }
+            .payment-card { padding: 24px 20px; }
+            .amount-display { font-size: 36px; }
+            .wallet-grid { grid-template-columns: 1fr; }
+            .steps-row { gap: 12px; }
+            .step { max-width: 90px; }
         }
     </style>
 </head>
 <body>
-    <!-- Particle Background -->
+    <!-- Background Orbs -->
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+
+    <!-- Particle Canvas -->
     <canvas id="particles"></canvas>
 
     <!-- QR Modal -->
@@ -731,13 +760,14 @@
         <!-- Hero -->
         <section class="hero">
             <div class="container">
-                <div class="badge-container">
+                <div class="badge-wrapper">
+                    <div class="badge-ring"></div>
+                    <div class="badge-ring badge-ring-2"></div>
                     <div class="badge-glow"></div>
                     <div class="badge">
                         <span>&#10003;</span>
                     </div>
                 </div>
-                <div class="badge-label">Verified in 30 Seconds</div>
 
                 <h1>
                     Stand Out.<br>
@@ -761,16 +791,16 @@
                         </button>
                     </div>
 
-                    <div class="qr-wrapper">
-                        <div class="qr-container" onclick="showModal()">
-                            <img id="mainQR" src="" alt="Payment QR">
+                    <div class="qr-section">
+                        <div class="qr-frame" onclick="showModal()">
+                            <img id="mainQR" src="" alt="QR Code">
                         </div>
-                        <div class="qr-tap-hint">Tap to enlarge</div>
+                        <div class="qr-hint">Tap to enlarge</div>
                     </div>
 
-                    <div class="amount" id="amountDisplay">10,000 <span>sats</span></div>
+                    <div class="amount-display" id="amountDisplay">10,000 <span>sats</span></div>
 
-                    <div class="address-card">
+                    <div class="address-box">
                         <div class="alabel">Lightning Address</div>
                         <div class="avalue">paradigmtech21@coinos.io</div>
                     </div>
@@ -781,19 +811,19 @@
 
                     <div class="quick-pay">
                         <div class="quick-pay-label">Or Open Your Wallet</div>
-                        <div class="pay-grid">
-                            <a href="https://cash.app/$paradigmtech21" class="pay-btn" target="_blank">
-                                <div class="pay-icon" style="background: #00D64A;">$</div>
-                                <div class="pay-info">
-                                    <div class="pay-name">Cash App</div>
-                                    <div class="pay-desc">Send from Cash</div>
+                        <div class="wallet-grid">
+                            <a href="https://coinos.io/paradigmtech21" class="wallet-btn" target="_blank">
+                                <div class="wallet-icon" style="background: linear-gradient(135deg, #00ff88, #00cc6a); color: #000;">C</div>
+                                <div class="wallet-info">
+                                    <div class="wallet-name">Coinos</div>
+                                    <div class="wallet-desc">Web Wallet</div>
                                 </div>
                             </a>
-                            <a href="https://coinos.io/paradigmtech21" class="pay-btn" target="_blank">
-                                <div class="pay-icon" style="background: #4CAF50;">C</div>
-                                <div class="pay-info">
-                                    <div class="pay-name">Coinos</div>
-                                    <div class="pay-desc">Web Wallet</div>
+                            <a href="https://primal.net/dm/paradigmtech21" class="wallet-btn" target="_blank">
+                                <div class="wallet-icon" style="background: linear-gradient(135deg, #FFD700, #FFA500); color: #000;">P</div>
+                                <div class="wallet-info">
+                                    <div class="wallet-name">Primal</div>
+                                    <div class="wallet-desc">DM to Pay</div>
                                 </div>
                             </a>
                         </div>
@@ -802,7 +832,7 @@
 
                 <div class="dm-section">
                     <a href="nostr:npub1a3lz855htm20sfcd0y2hp38e4h2akrqjj92spvruw8ge9yslrgws4x8vth" class="dm-btn">
-                        &#128172; DM to Complete Verification
+                        &#128172; DM to Complete
                     </a>
                 </div>
             </div>
@@ -811,30 +841,30 @@
         <!-- Why -->
         <section class="why-section">
             <div class="container">
-                <h2 class="section-title">Why Get Verified?</h2>
-                <p class="section-sub">Stand out in the Nostr ecosystem</p>
+                <div class="section-label">Why Get Verified?</div>
+                <h2 class="section-title">Stand Out in the Crowd</h2>
 
                 <div class="why-grid">
                     <div class="why-card">
-                        <div class="why-icon">&#128737;</div>
+                        <div class="why-card-icon">&#128737;</div>
                         <h3>Proves You're Real</h3>
                         <p>The verified badge shows everyone you control this Nostr identity. No more "is this really you?" messages.</p>
                     </div>
 
                     <div class="why-card">
-                        <div class="why-icon">&#9889;</div>
+                        <div class="why-card-icon">&#9889;</div>
                         <h3>30 Seconds</h3>
-                        <p>No DNS setup. No waiting days for propagation. You're verified the moment we add you.</p>
+                        <p>No DNS setup. No waiting for propagation. You're verified the moment we add you.</p>
                     </div>
 
                     <div class="why-card">
-                        <div class="why-icon">&#127760;</div>
+                        <div class="why-card-icon">&#127760;</div>
                         <h3>Works Everywhere</h3>
                         <p>Your checkmark shows on Primal, Damus, Iris, and all major Nostr clients.</p>
                     </div>
 
                     <div class="why-card">
-                        <div class="why-icon">&#128176;</div>
+                        <div class="why-card-icon">&#128176;</div>
                         <h3>One-Time Payment</h3>
                         <p>Just 10,000 sats for lifetime verification. No recurring fees. Ever.</p>
                     </div>
@@ -845,24 +875,24 @@
         <!-- Steps -->
         <section class="steps-section">
             <div class="container">
-                <h2 class="section-title">How It Works</h2>
-                <p class="section-sub">Three simple steps to your checkmark</p>
+                <div class="section-label">How It Works</div>
+                <h2 class="section-title">Three Simple Steps</h2>
 
                 <div class="steps-row">
                     <div class="step">
-                        <div class="step-circle">1</div>
+                        <div class="step-num">1</div>
                         <h4>Pay</h4>
                         <p>Scan QR or copy address</p>
                     </div>
 
                     <div class="step">
-                        <div class="step-circle">2</div>
+                        <div class="step-num">2</div>
                         <h4>DM Us</h4>
                         <p>Send username + npub</p>
                     </div>
 
                     <div class="step">
-                        <div class="step-circle">3</div>
+                        <div class="step-num">3</div>
                         <h4>Done!</h4>
                         <p>Checkmark appears</p>
                     </div>
@@ -874,7 +904,7 @@
         <section class="verified-section">
             <div class="container">
                 <div class="verified-label">Already Verified</div>
-                <div class="verified-row" id="verifiedTags">
+                <div class="verified-tags" id="verifiedTags">
                     <span class="vtag">Loading...</span>
                 </div>
             </div>
@@ -894,7 +924,6 @@
         var canvas = document.getElementById('particles');
         var ctx = canvas.getContext('2d');
         var particles = [];
-        var animFrame;
 
         function resizeCanvas() {
             canvas.width = window.innerWidth;
@@ -903,16 +932,16 @@
 
         function createParticles() {
             particles = [];
-            var count = Math.min(80, Math.floor(window.innerWidth / 15));
+            var count = Math.min(70, Math.floor(window.innerWidth / 18));
             for (var i = 0; i < count; i++) {
                 particles.push({
                     x: Math.random() * canvas.width,
                     y: Math.random() * canvas.height,
-                    vx: (Math.random() - 0.5) * 0.5,
-                    vy: (Math.random() - 0.5) * 0.5,
-                    size: Math.random() * 2 + 1,
-                    opacity: Math.random() * 0.5 + 0.1,
-                    color: Math.random() > 0.7 ? '#30d158' : '#ffffff'
+                    vx: (Math.random() - 0.5) * 0.4,
+                    vy: (Math.random() - 0.5) * 0.4,
+                    size: Math.random() * 2 + 0.5,
+                    opacity: Math.random() * 0.4 + 0.1,
+                    color: Math.random() > 0.6 ? '#ff6b35' : '#ffffff'
                 });
             }
         }
@@ -920,16 +949,15 @@
         function drawParticles() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-            // Draw connections
             for (var i = 0; i < particles.length; i++) {
                 for (var j = i + 1; j < particles.length; j++) {
                     var dx = particles[i].x - particles[j].x;
                     var dy = particles[i].y - particles[j].y;
                     var dist = Math.sqrt(dx * dx + dy * dy);
 
-                    if (dist < 120) {
+                    if (dist < 100) {
                         ctx.beginPath();
-                        ctx.strokeStyle = 'rgba(48, 209, 88, ' + (0.15 * (1 - dist / 120)) + ')';
+                        ctx.strokeStyle = 'rgba(255, 107, 53, ' + (0.12 * (1 - dist / 100)) + ')';
                         ctx.lineWidth = 0.5;
                         ctx.moveTo(particles[i].x, particles[i].y);
                         ctx.lineTo(particles[j].x, particles[j].y);
@@ -938,7 +966,6 @@
                 }
             }
 
-            // Draw particles
             for (var i = 0; i < particles.length; i++) {
                 var p = particles[i];
                 ctx.beginPath();
@@ -964,7 +991,7 @@
         function animateParticles() {
             updateParticles();
             drawParticles();
-            animFrame = requestAnimationFrame(animateParticles);
+            requestAnimationFrame(animateParticles);
         }
 
         resizeCanvas();
@@ -988,10 +1015,9 @@
 
             var qrData = 'lightning:paradigmtech21@coinos.io?amount=' + (amt / 1000);
             var qrUrl = 'https://api.qrserver.com/v1/create-qr-code/?size=150x150&margin=8&data=' + encodeURIComponent(qrData);
-            var qrUrlLg = qrUrl.replace('size=150', 'size=220');
 
             document.getElementById('mainQR').src = qrUrl;
-            document.getElementById('modalQR').src = qrUrlLg;
+            document.getElementById('modalQR').src = qrUrl.replace('size=150', 'size=220');
         }
 
         function showModal() {
@@ -1012,12 +1038,11 @@
                 txt.textContent = 'Copied!';
                 btn.classList.add('copied');
 
-                // Confetti
-                var colors = ['#30d158', '#00d4aa', '#FFD700', '#FF6B6B', '#fff'];
+                var colors = ['#ff6b35', '#ffd700', '#00ff88', '#ff6b6b', '#fff'];
                 for (var i = 0; i < 25; i++) {
                     var c = document.createElement('div');
-                    c.className = 'confetti-piece';
-                    c.style.cssText = 'left:' + (45 + Math.random() * 30) + '%;top:40%;background:' + colors[Math.floor(Math.random() * colors.length)] + ';animation-delay:' + (Math.random() * 0.3) + 's';
+                    c.className = 'confetti';
+                    c.style.cssText = 'left:' + (40 + Math.random() * 30) + '%;top:45%;background:' + colors[Math.floor(Math.random() * colors.length)] + ';animation-delay:' + (Math.random() * 0.3) + 's;border-radius:' + (Math.random() > 0.5 ? '50%' : '2px');
                     document.body.appendChild(c);
                     setTimeout(function() { c.remove(); }, 1200);
                 }
