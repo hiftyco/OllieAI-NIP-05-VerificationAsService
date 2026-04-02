@@ -1,0 +1,38 @@
+name: NIP-05 Verified List Update
+
+on:
+  workflow_dispatch:
+    inputs:
+      username:
+        description: 'Username to add'
+        required: true
+      pubkey:
+        description: 'Hex pubkey'
+        required: true
+      domain:
+        description: 'Domain (default: nip05.hifty.co)'
+        required: false
+        default: 'nip05.hifty.co'
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        
+      - name: Update nostr.json
+        run: |
+          # Read current
+          cat .well-known/nostr.json
+          
+          # Add new user (this would be done by the action inputs)
+          echo "Would add: ${{ github.event.inputs.username }}"
+      
+      - name: Commit and push
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add -A
+          git diff --staged --quiet || git commit -m "Add ${{ github.event.inputs.username }} to verified NIP-05 list"
+          git push
