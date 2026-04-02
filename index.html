@@ -3,42 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>⚡ NIP-05 Verification — Get Your Checkmark in 60 Seconds</title>
+    <title>⚡ NIP-05 Verified — Get Your Checkmark in 30 Seconds</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
-            background: #0a0a0a;
+            background: #000;
             color: #fff;
             overflow-x: hidden;
+            min-height: 100vh;
         }
         
-        /* Animated Background */
-        .bg-animation {
+        /* Particle Canvas */
+        #particles {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: -1;
+            z-index: 0;
+            pointer-events: none;
         }
         
-        .bg-animation::before {
-            content: '';
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background: 
-                radial-gradient(ellipse at 20% 0%, rgba(120, 0, 255, 0.12) 0%, transparent 50%),
-                radial-gradient(ellipse at 80% 100%, rgba(255, 0, 128, 0.08) 0%, transparent 50%),
-                radial-gradient(ellipse at 50% 50%, rgba(0, 113, 227, 0.05) 0%, transparent 70%);
-            animation: pulse 8s ease-in-out infinite;
-        }
-        
-        @keyframes pulse {
-            0%, 100% { opacity: 0.8; }
-            50% { opacity: 1; }
+        /* Content */
+        .content {
+            position: relative;
+            z-index: 1;
         }
         
         /* Hero */
@@ -49,226 +40,246 @@
             justify-content: center;
             align-items: center;
             text-align: center;
-            padding: 60px 24px;
+            padding: 40px 20px;
         }
         
-        .hero-badge {
+        .verified-badge {
             display: inline-flex;
             align-items: center;
-            gap: 8px;
-            background: rgba(48, 209, 88, 0.15);
-            border: 1px solid #30d158;
-            padding: 10px 20px;
+            gap: 10px;
+            background: linear-gradient(135deg, rgba(48, 209, 88, 0.2) 0%, rgba(0, 212, 170, 0.1) 100%);
+            border: 2px solid #30d158;
+            padding: 12px 24px;
             border-radius: 980px;
-            font-size: 14px;
+            font-size: 15px;
+            font-weight: 600;
             color: #30d158;
-            margin-bottom: 40px;
-            animation: fadeInDown 0.8s ease-out;
+            margin-bottom: 32px;
+            animation: badgePulse 2s ease-in-out infinite;
         }
         
-        .hero-badge span {
-            font-size: 16px;
+        @keyframes badgePulse {
+            0%, 100% { box-shadow: 0 0 20px rgba(48, 209, 88, 0.3); }
+            50% { box-shadow: 0 0 40px rgba(48, 209, 88, 0.5); }
         }
         
         .hero h1 {
-            font-size: clamp(36px, 8vw, 72px);
-            font-weight: 700;
-            letter-spacing: -0.02em;
-            line-height: 1.1;
+            font-size: clamp(40px, 9vw, 80px);
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            line-height: 1.05;
             margin-bottom: 20px;
-            animation: fadeInUp 0.8s ease-out 0.1s both;
         }
         
-        .hero h1 .highlight {
-            background: linear-gradient(135deg, #30d158 0%, #00d4aa 100%);
+        .hero h1 .gradient {
+            background: linear-gradient(135deg, #fff 0%, #30d158 50%, #00d4aa 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            background-size: 200% 200%;
+            animation: gradientShift 4s ease infinite;
         }
         
-        .hero-subtitle {
-            font-size: clamp(18px, 3vw, 24px);
-            color: #86868b;
-            max-width: 600px;
-            margin-bottom: 40px;
-            animation: fadeInUp 0.8s ease-out 0.2s both;
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
         }
         
-        /* Payment Cards */
-        .payment-section {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 24px;
-            justify-content: center;
+        .hero p {
+            font-size: clamp(16px, 2.5vw, 22px);
+            color: #888;
+            max-width: 550px;
             margin-bottom: 48px;
-            animation: fadeInUp 0.8s ease-out 0.3s both;
+            line-height: 1.5;
         }
         
-        .payment-card {
-            background: linear-gradient(145deg, #1a1a1a 0%, #0d0d0d 100%);
-            border: 1px solid #333;
-            border-radius: 24px;
-            padding: 32px;
-            width: 280px;
-            text-align: center;
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-        
-        .payment-card:hover {
-            transform: translateY(-4px);
-            border-color: #555;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
-        }
-        
-        .payment-card.selected {
-            border-color: #30d158;
-            box-shadow: 0 0 30px rgba(48, 209, 88, 0.2);
-        }
-        
-        .payment-card h3 {
-            font-size: 18px;
-            margin-bottom: 16px;
-            color: #fff;
-        }
-        
-        .payment-card .price {
-            font-size: 42px;
-            font-weight: 700;
-            color: #30d158;
-            margin-bottom: 4px;
-        }
-        
-        .payment-card .price-label {
-            font-size: 14px;
-            color: #666;
-            margin-bottom: 20px;
-        }
-        
-        .payment-card ul {
-            list-style: none;
-            text-align: left;
-        }
-        
-        .payment-card li {
-            padding: 8px 0;
-            font-size: 14px;
-            color: #ccc;
-        }
-        
-        .payment-card li::before {
-            content: '✓ ';
-            color: #30d158;
-        }
-        
-        /* QR Code */
-        .qr-section {
-            background: #1a1a1a;
-            border-radius: 24px;
+        /* Payment Section */
+        .payment-box {
+            background: linear-gradient(145deg, #111 0%, #0a0a0a 100%);
+            border: 1px solid #222;
+            border-radius: 28px;
             padding: 40px;
-            max-width: 400px;
-            margin: 0 auto 40px;
-            border: 1px solid #333;
-            animation: fadeInUp 0.8s ease-out 0.4s both;
+            max-width: 500px;
+            width: 100%;
+            margin-bottom: 32px;
         }
         
-        .qr-section h3 {
-            font-size: 20px;
+        .payment-box h2 {
+            font-size: 22px;
             margin-bottom: 8px;
         }
         
-        .qr-section p {
+        .payment-box .subtitle {
             color: #666;
             font-size: 14px;
             margin-bottom: 24px;
         }
         
-        .qr-code {
-            background: #fff;
-            padding: 16px;
+        /* Amount Selector */
+        .amount-selector {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+        
+        .amount-btn {
+            flex: 1;
+            padding: 20px 16px;
+            background: #1a1a1a;
+            border: 2px solid #333;
             border-radius: 16px;
-            display: inline-block;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
         }
         
-        .qr-code img {
-            display: block;
-            width: 180px;
-            height: 180px;
+        .amount-btn:hover {
+            border-color: #555;
+            transform: translateY(-2px);
         }
         
-        .qr-amount {
-            margin-top: 16px;
-            font-size: 24px;
+        .amount-btn.selected {
+            border-color: #30d158;
+            background: rgba(48, 209, 88, 0.1);
+        }
+        
+        .amount-btn .plan {
+            font-size: 13px;
+            color: #888;
+            margin-bottom: 4px;
+        }
+        
+        .amount-btn .price {
+            font-size: 28px;
             font-weight: 700;
             color: #30d158;
         }
         
-        .qr-address {
-            margin-top: 12px;
-            font-size: 12px;
+        /* Wallet Buttons */
+        .wallet-section h3 {
+            font-size: 14px;
             color: #666;
-            word-break: break-all;
-            font-family: monospace;
+            margin-bottom: 16px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
         }
         
-        /* CTA Buttons */
-        .cta-group {
-            display: flex;
-            gap: 16px;
-            flex-wrap: wrap;
-            justify-content: center;
-            animation: fadeInUp 0.8s ease-out 0.5s both;
-        }
-        
-        .cta-button {
-            display: inline-flex;
-            align-items: center;
+        .wallet-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
             gap: 10px;
-            background: linear-gradient(135deg, #30d158 0%, #00d4aa 100%);
-            color: #000;
-            padding: 18px 36px;
-            border-radius: 980px;
-            text-decoration: none;
-            font-size: 17px;
-            font-weight: 700;
+            margin-bottom: 20px;
+        }
+        
+        .wallet-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            padding: 16px 8px;
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 14px;
+            cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 8px 30px rgba(48, 209, 88, 0.3);
-        }
-        
-        .cta-button:hover {
-            transform: scale(1.05);
-            box-shadow: 0 12px 40px rgba(48, 209, 88, 0.4);
-        }
-        
-        .cta-secondary {
-            background: transparent;
-            border: 2px solid #444;
+            text-decoration: none;
             color: #fff;
-            box-shadow: none;
         }
         
-        .cta-secondary:hover {
-            border-color: #666;
-            background: rgba(255,255,255,0.05);
-            box-shadow: none;
+        .wallet-btn:hover {
+            background: #222;
+            transform: translateY(-2px);
+            border-color: #555;
         }
         
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
+        .wallet-btn .icon {
+            font-size: 28px;
         }
         
-        @keyframes fadeInDown {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
+        .wallet-btn .name {
+            font-size: 11px;
+            color: #888;
+        }
+        
+        /* Primary Pay Button */
+        .pay-btn {
+            width: 100%;
+            padding: 20px;
+            background: linear-gradient(135deg, #30d158 0%, #00d4aa 100%);
+            border: none;
+            border-radius: 16px;
+            font-size: 18px;
+            font-weight: 700;
+            color: #000;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+        
+        .pay-btn:hover {
+            transform: scale(1.02);
+            box-shadow: 0 8px 30px rgba(48, 209, 88, 0.4);
+        }
+        
+        .pay-btn:active {
+            transform: scale(0.98);
+        }
+        
+        /* LN Address */
+        .ln-address {
+            margin-top: 20px;
+            padding: 16px;
+            background: #0d0d0d;
+            border-radius: 12px;
+            text-align: center;
+        }
+        
+        .ln-address .label {
+            font-size: 12px;
+            color: #555;
+            margin-bottom: 8px;
+        }
+        
+        .ln-address .address {
+            font-size: 14px;
+            color: #30d158;
+            font-family: monospace;
+            word-break: break-all;
+        }
+        
+        .copy-btn {
+            margin-top: 12px;
+            padding: 12px 24px;
+            background: #222;
+            border: 1px solid #444;
+            border-radius: 10px;
+            color: #fff;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .copy-btn:hover {
+            background: #333;
+        }
+        
+        .copy-btn.copied {
+            background: #30d158;
+            color: #000;
         }
         
         /* Pain Points */
         .pain-section {
-            padding: 100px 24px;
+            padding: 100px 20px;
+            max-width: 900px;
+            margin: 0 auto;
         }
         
-        .section-title {
+        .pain-section h2 {
             text-align: center;
             font-size: clamp(28px, 5vw, 42px);
             margin-bottom: 48px;
@@ -276,15 +287,13 @@
         
         .pain-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-            max-width: 1000px;
-            margin: 0 auto;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
         }
         
         .pain-card {
             background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.06);
             border-radius: 20px;
             padding: 28px;
             transition: all 0.3s ease;
@@ -296,7 +305,7 @@
         }
         
         .pain-card .emoji {
-            font-size: 40px;
+            font-size: 36px;
             margin-bottom: 16px;
         }
         
@@ -306,49 +315,55 @@
         }
         
         .pain-card .old {
-            color: #ff453a;
+            color: #ff4757;
+            font-size: 13px;
             text-decoration: line-through;
-            font-size: 14px;
             margin-bottom: 4px;
         }
         
         .pain-card .new {
             color: #30d158;
-            font-size: 14px;
+            font-size: 13px;
         }
         
         /* How It Works */
         .how-section {
-            padding: 100px 24px;
+            padding: 80px 20px;
             background: linear-gradient(180deg, transparent 0%, rgba(48, 209, 88, 0.03) 100%);
+        }
+        
+        .how-section h2 {
+            text-align: center;
+            font-size: clamp(28px, 5vw, 42px);
+            margin-bottom: 48px;
         }
         
         .steps {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 32px;
-            max-width: 1000px;
+            gap: 48px;
+            max-width: 900px;
             margin: 0 auto;
         }
         
         .step {
             text-align: center;
-            width: 200px;
+            width: 220px;
         }
         
         .step-num {
-            width: 56px;
-            height: 56px;
+            width: 60px;
+            height: 60px;
             background: linear-gradient(135deg, #30d158 0%, #00d4aa 100%);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 24px;
-            font-weight: 700;
-            margin: 0 auto 16px;
+            font-size: 26px;
+            font-weight: 800;
             color: #000;
+            margin: 0 auto 16px;
         }
         
         .step h4 {
@@ -361,17 +376,17 @@
             font-size: 14px;
         }
         
-        /* Verified List */
+        /* Verified Section */
         .verified-section {
-            padding: 80px 24px;
+            padding: 80px 20px;
             text-align: center;
         }
         
         .verified-section h3 {
             color: #666;
-            font-size: 14px;
+            font-size: 13px;
             text-transform: uppercase;
-            letter-spacing: 0.1em;
+            letter-spacing: 0.15em;
             margin-bottom: 24px;
         }
         
@@ -393,13 +408,13 @@
         
         /* Footer */
         footer {
-            padding: 60px 24px;
+            padding: 60px 20px;
             text-align: center;
             border-top: 1px solid rgba(255,255,255,0.1);
         }
         
         footer p {
-            color: #666;
+            color: #555;
             font-size: 14px;
             margin-bottom: 8px;
         }
@@ -409,198 +424,332 @@
             text-decoration: none;
         }
         
+        /* Animations */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .hero > * {
+            animation: fadeInUp 0.8s ease-out both;
+        }
+        
+        .hero > *:nth-child(1) { animation-delay: 0.1s; }
+        .hero > *:nth-child(2) { animation-delay: 0.2s; }
+        .hero > *:nth-child(3) { animation-delay: 0.3s; }
+        .hero > *:nth-child(4) { animation-delay: 0.4s; }
+        .hero > *:nth-child(5) { animation-delay: 0.5s; }
+        
         /* Responsive */
-        @media (max-width: 600px) {
-            .payment-card {
-                width: 100%;
+        @media (max-width: 500px) {
+            .wallet-grid {
+                grid-template-columns: repeat(2, 1fr);
             }
             
-            .cta-group {
-                flex-direction: column;
-            }
-            
-            .cta-button {
-                width: 100%;
-                justify-content: center;
+            .payment-box {
+                padding: 28px;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Background -->
-    <div class="bg-animation"></div>
+    <!-- Particle Background -->
+    <canvas id="particles"></canvas>
     
-    <!-- Hero -->
-    <section class="hero">
-        <div class="hero-badge">
-            <span>⚡</span> Verified in 60 Seconds
-        </div>
+    <div class="content">
+        <!-- Hero -->
+        <section class="hero">
+            <div class="verified-badge">
+                ⚡ Verified in 30 Seconds
+            </div>
+            
+            <h1>
+                Get Your<br>
+                <span class="gradient">NIP-05 Checkmark</span>
+            </h1>
+            
+            <p>The easiest way to get verified on Nostr. No DNS. No coding. Just pay and you're verified.</p>
+            
+            <!-- Payment Box -->
+            <div class="payment-box">
+                <h2>🚀 Choose Your Plan</h2>
+                <p class="subtitle">Select verification type</p>
+                
+                <div class="amount-selector">
+                    <div class="amount-btn selected" onclick="selectPlan(10000, 'Full Hosting')">
+                        <div class="plan">🌐 Full Hosting</div>
+                        <div class="price">10k</div>
+                    </div>
+                    <div class="amount-btn" onclick="selectPlan(50000, 'Custom Domain')">
+                        <div class="plan">🚀 Custom Domain</div>
+                        <div class="price">50k</div>
+                    </div>
+                </div>
+                
+                <div class="wallet-section">
+                    <h3>📱 Open Payment App</h3>
+                    
+                    <div class="wallet-grid">
+                        <!-- Wallet of Satoshi - Popular -->
+                        <a href="walletofsatoshi://pay?address=paradigmtech21@coinos.io&amount=10000" class="wallet-btn" onclick="trackClick('walletofsatoshi')">
+                            <span class="icon">⚡</span>
+                            <span class="name">Wallet of Satoshi</span>
+                        </a>
+                        
+                        <!-- Primal -->
+                        <a href="primal://pay?lnurl=paradigmtech21@coinos.io&amount=10000" class="wallet-btn" onclick="trackClick('primal')">
+                            <span class="icon">🔶</span>
+                            <span class="name">Primal</span>
+                        </a>
+                        
+                        <!-- Alby -->
+                        <a href="alby://pay?destination=paradigmtech21@coinos.io&amount=10000" class="wallet-btn" onclick="trackClick('alby')">
+                            <span class="icon">⚡</span>
+                            <span class="name">Alby</span>
+                        </a>
+                        
+                        <!-- Cash App -->
+                        <a href="cashapp://pay?$$amount=100&$$currency=SAT" class="wallet-btn" onclick="trackClick('cashapp')">
+                            <span class="icon">💚</span>
+                            <span class="name">Cash App</span>
+                        </a>
+                        
+                        <!-- Strike -->
+                        <a href="strike://pay?amount=10000&currency=sat&lnInvoice=true&to=paradigmtech21@coinos.io" class="wallet-btn" onclick="trackClick('strike')">
+                            <span class="icon">⚡</span>
+                            <span class="name">Strike</span>
+                        </a>
+                        
+                        <!-- Phoenix -->
+                        <a href="phoenix://pay?provider=coinos&lnurl=true&amount=10000" class="wallet-btn" onclick="trackClick('phoenix')">
+                            <span class="icon">🔴</span>
+                            <span class="name">Phoenix</span>
+                        </a>
+                    </div>
+                    
+                    <!-- Primary Pay Button -->
+                    <a href="bitpay://pay?id=paradigmtech21@coinos.io&amount=10000" class="pay-btn" id="payBtn" onclick="trackClick('primary-pay')">
+                        ⚡ Pay with Lightning
+                    </a>
+                    
+                    <!-- LN Address Copy -->
+                    <div class="ln-address">
+                        <div class="label">Or send sats to:</div>
+                        <div class="address" id="lnAddress">paradigmtech21@coinos.io</div>
+                        <button class="copy-btn" id="copyBtn" onclick="copyAddress()">📋 Copy Address</button>
+                    </div>
+                </div>
+            </div>
+        </section>
         
-        <h1>
-            Get Your<br>
-            <span class="highlight">NIP-05 Verified</span><br>
-            Checkmark
-        </h1>
+        <!-- Pain Points -->
+        <section class="pain-section">
+            <h2>😌 We Made It Dead Simple</h2>
+            
+            <div class="pain-grid">
+                <div class="pain-card">
+                    <div class="emoji">🧠</div>
+                    <h3>Don't Know DNS?</h3>
+                    <div class="old">Configure records</div>
+                    <div class="new">✅ We handle everything</div>
+                </div>
+                
+                <div class="pain-card">
+                    <div class="emoji">📱</div>
+                    <h3>Can't Scan QR?</h3>
+                    <div class="old">Manually copy address</div>
+                    <div class="new">✅ One-tap wallet buttons</div>
+                </div>
+                
+                <div class="pain-card">
+                    <div class="emoji">⏰</div>
+                    <h3>Don't Wait Days?</h3>
+                    <div class="old">DNS takes time</div>
+                    <div class="new">✅ 30 seconds</div>
+                </div>
+                
+                <div class="pain-card">
+                    <div class="emoji">🔑</div>
+                    <h3>Don't Know Pubkeys?</h3>
+                    <div class="old">Convert hex/npub</div>
+                    <div class="new">✅ Just send npub</div>
+                </div>
+            </div>
+        </section>
         
-        <p class="hero-subtitle">
-            The easiest way to get verified on Nostr. No DNS. No coding. Just zap and you're verified.
-        </p>
+        <!-- How It Works -->
+        <section class="how-section">
+            <h2>⚡ 3 Steps to Verified</h2>
+            
+            <div class="steps">
+                <div class="step">
+                    <div class="step-num">1</div>
+                    <h4>Pay</h4>
+                    <p>Tap a wallet button above or copy the address</p>
+                </div>
+                
+                <div class="step">
+                    <div class="step-num">2</div>
+                    <h4>DM Us</h4>
+                    <p>Send your username + npub on Nostr</p>
+                </div>
+                
+                <div class="step">
+                    <div class="step-num">3</div>
+                    <h4>Verified!</h4>
+                    <p>Your checkmark appears instantly</p>
+                </div>
+            </div>
+        </section>
         
-        <!-- Payment Options -->
-        <div class="payment-section">
-            <div class="payment-card" id="card10k" onclick="selectPlan('10k')">
-                <h3>🌐 Full Hosting</h3>
-                <div class="price">10k</div>
-                <div class="price-label">sats</div>
-                <ul>
-                    <li>Your NIP-05 badge</li>
-                    <li>Works on all clients</li>
-                    <li>Instant verification</li>
-                    <li>No DNS needed</li>
-                </ul>
+        <!-- Verified -->
+        <section class="verified-section">
+            <h3>✅ Already Verified</h3>
+            <div class="verified-tags" id="verifiedList">
+                <span class="verified-tag">Loading...</span>
             </div>
-            
-            <div class="payment-card" id="card50k" onclick="selectPlan('50k')">
-                <h3>🚀 Custom Domain</h3>
-                <div class="price">50k</div>
-                <div class="price-label">sats</div>
-                <ul>
-                    <li>Your own subdomain</li>
-                    <li>Your brand, your domain</li>
-                    <li>Priority support</li>
-                    <li>DNS help included</li>
-                </ul>
-            </div>
-        </div>
+        </section>
         
-        <!-- QR Code -->
-        <div class="qr-section">
-            <h3>📱 Scan to Pay</h3>
-            <p>Any Lightning wallet works - Primal, Wallet of Satoshi, Alby, etc.</p>
-            
-            <div class="qr-code">
-                <img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=lightning:paradigmtech21@coinos.io?amount=10000" alt="Lightning Payment QR" />
-            </div>
-            
-            <div class="qr-amount" id="qrAmount">10,000 sats</div>
-            <div class="qr-address">paradigmtech21@coinos.io</div>
-        </div>
-        
-        <!-- CTA -->
-        <div class="cta-group">
-            <a href="nostr:npub1a3lz855htm20sfcd0y2hp38e4h2akrqjj92spvruw8ge9yslrgws4x8vth" class="cta-button">
-                💬 DM to Verify
-            </a>
-            <a href="#check" class="cta-button cta-secondary">
-                🔍 Check Status
-            </a>
-        </div>
-    </section>
-    
-    <!-- Pain Points -->
-    <section class="pain-section">
-        <h2 class="section-title">😌 We Solved The Hard Parts</h2>
-        
-        <div class="pain-grid">
-            <div class="pain-card">
-                <div class="emoji">🧠</div>
-                <h3>Don't Know DNS?</h3>
-                <div class="old">Configure TXT records</div>
-                <div class="new">✅ We host everything for you</div>
-            </div>
-            
-            <div class="pain-card">
-                <div class="emoji">🔑</div>
-                <h3>Don't Know Pubkeys?</h3>
-                <div class="old">Convert hex/npub manually</div>
-                <div class="new">✅ Just send us your npub, we handle it</div>
-            </div>
-            
-            <div class="pain-card">
-                <div class="emoji">⏰</div>
-                <h3>Don't Want to Wait?</h3>
-                <div class="old">DNS propagation takes days</div>
-                <div class="new">✅ Verified in 60 seconds</div>
-            </div>
-            
-            <div class="pain-card">
-                <div class="emoji">💸</div>
-                <h3>Want Proof First?</h3>
-                <div class="old">Pay and hope it works</div>
-                <div class="new">✅ We post confirmation publicly</div>
-            </div>
-        </div>
-    </section>
-    
-    <!-- How It Works -->
-    <section class="how-section">
-        <h2 class="section-title">⚡ 3 Simple Steps</h2>
-        
-        <div class="steps">
-            <div class="step">
-                <div class="step-num">1</div>
-                <h4>DM or Zap</h4>
-                <p>Send us your username + npub, then zap the QR code above</p>
-            </div>
-            
-            <div class="step">
-                <div class="step-num">2</div>
-                <h4>We Verify</h4>
-                <p>We add you to our NIP-05 endpoint instantly</p>
-            </div>
-            
-            <div class="step">
-                <div class="step-num">3</div>
-                <h4>You're Verified!</h4>
-                <p>Checkmark appears. Everyone sees you're real.</p>
-            </div>
-        </div>
-    </section>
-    
-    <!-- Verified List -->
-    <section class="verified-section" id="check">
-        <h3>✅ Already Verified</h3>
-        <div class="verified-tags" id="verifiedList">
-            <span class="verified-tag">Loading...</span>
-        </div>
-    </section>
-    
-    <!-- Footer -->
-    <footer>
-        <p>⚡ Payment: <strong>paradigmtech21@coinos.io</strong></p>
-        <p>💬 Questions? <a href="nostr:npub1a3lz855htm20sfcd0y2hp38e4h2akrqjj92spvruw8ge9yslrgws4x8vth">DM on Nostr</a></p>
-        <p style="margin-top: 16px; font-size: 12px;">Powered by Nostr • NIP-05 Verification</p>
-    </footer>
+        <!-- Footer -->
+        <footer>
+            <p>⚡ Payment: <strong>paradigmtech21@coinos.io</strong></p>
+            <p>💬 Questions? <a href="nostr:npub1a3lz855htm20sfcd0y2hp38e4h2akrqjj92spvruw8ge9yslrgws4x8vth">DM on Nostr</a></p>
+        </footer>
+    </div>
     
     <script>
-        // Payment plans
-        const plans = {
-            '10k': { amount: 10000, label: '10,000 sats' },
-            '50k': { amount: 50000, label: '50,000 sats' }
-        };
+        // ============ PARTICLE SYSTEM ============
+        const canvas = document.getElementById('particles');
+        const ctx = canvas.getContext('2d');
         
-        let selectedPlan = '10k';
+        let particles = [];
+        const particleCount = 80;
         
-        function selectPlan(plan) {
-            selectedPlan = plan;
-            
-            // Update UI
-            document.querySelectorAll('.payment-card').forEach(c => c.classList.remove('selected'));
-            document.getElementById('card' + plan).classList.add('selected');
-            
-            // Update QR
-            const amount = plans[plan].amount;
-            document.getElementById('qrAmount').textContent = plans[plan].label;
-            
-            // Update QR code
-            const qrImg = document.querySelector('.qr-code img');
-            qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=lightning:paradigmtech21@coinos.io?amount=${amount}`;
+        function resize() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
         }
         
-        // Select 10k by default
-        selectPlan('10k');
+        class Particle {
+            constructor() {
+                this.reset();
+            }
+            
+            reset() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2 + 1;
+                this.speedX = (Math.random() - 0.5) * 0.5;
+                this.speedY = (Math.random() - 0.5) * 0.5;
+                this.opacity = Math.random() * 0.5 + 0.2;
+                this.color = Math.random() > 0.5 ? '#30d158' : '#00d4aa';
+            }
+            
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                
+                if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+                if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+            }
+            
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = this.color;
+                ctx.globalAlpha = this.opacity;
+                ctx.fill();
+                ctx.globalAlpha = 1;
+            }
+        }
         
-        // Load verified users
+        function initParticles() {
+            particles = [];
+            for (let i = 0; i < particleCount; i++) {
+                particles.push(new Particle());
+            }
+        }
+        
+        function connectParticles() {
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+                    
+                    if (distance < 150) {
+                        ctx.beginPath();
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.strokeStyle = '#30d158';
+                        ctx.globalAlpha = (150 - distance) / 150 * 0.15;
+                        ctx.lineWidth = 0.5;
+                        ctx.stroke();
+                        ctx.globalAlpha = 1;
+                    }
+                }
+            }
+        }
+        
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            
+            connectParticles();
+            requestAnimationFrame(animateParticles);
+        }
+        
+        window.addEventListener('resize', resize);
+        resize();
+        initParticles();
+        animateParticles();
+        
+        // ============ PAYMENT ============
+        let currentAmount = 10000;
+        let currentPlan = 'Full Hosting';
+        
+        function selectPlan(amount, plan) {
+            currentAmount = amount;
+            currentPlan = plan;
+            
+            // Update UI
+            document.querySelectorAll('.amount-btn').forEach(b => b.classList.remove('selected'));
+            event.currentTarget.classList.add('selected');
+            
+            // Update pay button
+            document.getElementById('payBtn').href = `bitpay://pay?id=paradigmtech21@coinos.io&amount=${amount}`;
+            
+            // Update wallet buttons
+            document.querySelectorAll('.wallet-btn').forEach(btn => {
+                let href = btn.href;
+                href = href.replace(/amount=\d+/, `amount=${amount}`);
+                btn.href = href;
+            });
+        }
+        
+        function copyAddress() {
+            const addr = document.getElementById('lnAddress').textContent;
+            navigator.clipboard.writeText(addr + '?amount=' + currentAmount).then(() => {
+                const btn = document.getElementById('copyBtn');
+                btn.textContent = '✅ Copied!';
+                btn.classList.add('copied');
+                setTimeout(() => {
+                    btn.textContent = '📋 Copy Address';
+                    btn.classList.remove('copied');
+                }, 2000);
+            });
+        }
+        
+        function trackClick(wallet) {
+            // Track clicks for analytics
+            console.log(`Payment method: ${wallet}, Amount: ${currentAmount}`);
+        }
+        
+        // ============ LOAD VERIFIED ============
         async function loadVerified() {
             try {
                 const resp = await fetch('https://hiftyco.github.io/.well-known/nostr.json');
@@ -616,22 +765,23 @@
                     container.innerHTML = '<span class="verified-tag">Be the first!</span>';
                 }
             } catch (e) {
-                document.getElementById('verifiedList').innerHTML = '<span class="verified-tag">Could not load</span>';
+                document.getElementById('verifiedList').innerHTML = '<span class="verified-tag">Error loading</span>';
             }
         }
         
         loadVerified();
         
-        // Confetti on CTA click
-        document.querySelector('.cta-button').addEventListener('click', (e) => {
-            for (let i = 0; i < 20; i++) {
+        // ============ CONFETTI ON CLICK ============
+        document.querySelector('.pay-btn').addEventListener('click', function(e) {
+            for (let i = 0; i < 30; i++) {
                 const confetti = document.createElement('div');
+                const colors = ['#30d158', '#00d4aa', '#ffd700', '#ff6b6b', '#fff'];
                 confetti.style.cssText = `
                     position: fixed;
-                    width: 8px;
-                    height: 8px;
-                    background: hsl(${Math.random() * 360}, 80%, 60%);
-                    border-radius: 50%;
+                    width: ${Math.random() * 8 + 4}px;
+                    height: ${Math.random() * 8 + 4}px;
+                    background: ${colors[Math.floor(Math.random() * colors.length)]};
+                    border-radius: ${Math.random() > 0.5 ? '50%' : '0'};
                     pointer-events: none;
                     z-index: 9999;
                     left: ${e.clientX}px;
@@ -640,24 +790,23 @@
                 document.body.appendChild(confetti);
                 
                 const angle = Math.random() * Math.PI * 2;
-                const velocity = 3 + Math.random() * 5;
+                const velocity = 5 + Math.random() * 10;
                 const vx = Math.cos(angle) * velocity;
-                let vy = Math.sin(angle) * velocity;
-                
-                let x = e.clientX, y = e.clientY;
+                let vy = Math.sin(angle) * velocity - 5;
                 let opacity = 1;
+                let x = e.clientX, y = e.clientY;
                 
-                const animate = () => {
+                const fall = () => {
                     x += vx;
-                    y += vy + 2;
-                    opacity -= 0.03;
+                    y += vy += 0.5;
+                    opacity -= 0.02;
                     confetti.style.transform = `translate(${x - e.clientX}px, ${y - e.clientY}px)`;
                     confetti.style.opacity = opacity;
-                    if (opacity > 0) requestAnimationFrame(animate);
+                    if (opacity > 0) requestAnimationFrame(fall);
                     else confetti.remove();
                 };
                 
-                requestAnimationFrame(animate);
+                requestAnimationFrame(fall);
             }
         });
     </script>
