@@ -17,10 +17,10 @@
 
 **📱 Lightning Payment QR Code:**
 
-![Lightning Payment](https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=lightning:paradigmtech21@coinos.io?amount=10000)
+![Lightning Payment](https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=lightning:ollie21@coinos.io?amount=10000)
 
 **Amount:** 10,000 sats (Full Hosting)  
-**Address:** `paradigmtech21@coinos.io`
+**Address:** `ollie21@coinos.io`
 
 *(Scan with any Lightning wallet: Primal, Wallet of Satoshi, Alby, Strike, etc.)*
 
@@ -69,7 +69,7 @@ Currently verified on this service:
 
 ```
 1. DM with username + npub
-2. Send sats to paradigmtech21@coinos.io
+2. Send sats to ollie21@coinos.io
 3. We add you to our NIP-05 endpoint
 4. Your checkmark appears instantly!
 ```
@@ -93,7 +93,7 @@ This works on:
 ## 📞 Contact
 
 - **Nostr**: [npub1a3lz855htm20sfcd0y2hp38e4h2akrqjj92spvruw8ge9yslrgws4x8vth](nostr:npub1a3lz855htm20sfcd0y2hp38e4h2akrqjj92spvruw8ge9yslrgws4x8vth)
-- **Payment**: paradigmtech21@coinos.io
+- **Payment**: ollie21@coinos.io
 
 ---
 
