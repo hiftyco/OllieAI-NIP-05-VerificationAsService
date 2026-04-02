@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>⚡ NIP-05 Verification — Get Verified. Be Different.</title>
+    <title>⚡ NIP-05 Verification — Get Your Checkmark in 60 Seconds</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
-            background: #000;
+            background: #0a0a0a;
             color: #fff;
             overflow-x: hidden;
         }
@@ -22,72 +22,26 @@
             width: 100%;
             height: 100%;
             z-index: -1;
-            overflow: hidden;
         }
         
         .bg-animation::before {
             content: '';
             position: absolute;
-            width: 200%;
-            height: 200%;
+            width: 100%;
+            height: 100%;
             background: 
-                radial-gradient(circle at 20% 80%, rgba(120, 0, 255, 0.15) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(0, 113, 227, 0.15) 0%, transparent 50%),
-                radial-gradient(circle at 50% 50%, rgba(255, 69, 0, 0.08) 0%, transparent 60%);
-            animation: bgMove 20s ease-in-out infinite;
+                radial-gradient(ellipse at 20% 0%, rgba(120, 0, 255, 0.12) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 100%, rgba(255, 0, 128, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(0, 113, 227, 0.05) 0%, transparent 70%);
+            animation: pulse 8s ease-in-out infinite;
         }
         
-        @keyframes bgMove {
-            0%, 100% { transform: translate(-10%, -10%) rotate(0deg); }
-            33% { transform: translate(-5%, -15%) rotate(2deg); }
-            66% { transform: translate(-15%, -5%) rotate(-2deg); }
+        @keyframes pulse {
+            0%, 100% { opacity: 0.8; }
+            50% { opacity: 1; }
         }
         
-        /* Floating Orbs */
-        .orb {
-            position: fixed;
-            border-radius: 50%;
-            filter: blur(80px);
-            opacity: 0.5;
-            animation: float 10s ease-in-out infinite;
-            z-index: -1;
-        }
-        
-        .orb-1 {
-            width: 400px;
-            height: 400px;
-            background: rgba(0, 113, 227, 0.3);
-            top: -100px;
-            left: -100px;
-            animation-delay: 0s;
-        }
-        
-        .orb-2 {
-            width: 300px;
-            height: 300px;
-            background: rgba(255, 69, 0, 0.25);
-            bottom: -50px;
-            right: -50px;
-            animation-delay: -5s;
-        }
-        
-        .orb-3 {
-            width: 250px;
-            height: 250px;
-            background: rgba(48, 209, 88, 0.2);
-            top: 50%;
-            left: 50%;
-            animation-delay: -2.5s;
-        }
-        
-        @keyframes float {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            25% { transform: translate(30px, -30px) scale(1.05); }
-            50% { transform: translate(-20px, 20px) scale(0.95); }
-            75% { transform: translate(20px, 30px) scale(1.02); }
-        }
-        
-        /* Hero Section */
+        /* Hero */
         .hero {
             min-height: 100vh;
             display: flex;
@@ -102,110 +56,201 @@
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            background: rgba(255, 255, 255, 0.1);
-            padding: 8px 16px;
+            background: rgba(48, 209, 88, 0.15);
+            border: 1px solid #30d158;
+            padding: 10px 20px;
             border-radius: 980px;
             font-size: 14px;
-            color: #86868b;
-            margin-bottom: 32px;
-            backdrop-filter: blur(10px);
-            animation: fadeInDown 1s ease-out;
+            color: #30d158;
+            margin-bottom: 40px;
+            animation: fadeInDown 0.8s ease-out;
         }
         
         .hero-badge span {
-            color: #30d158;
-            animation: pulse 2s infinite;
-        }
-        
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
+            font-size: 16px;
         }
         
         .hero h1 {
-            font-size: clamp(48px, 10vw, 96px);
+            font-size: clamp(36px, 8vw, 72px);
             font-weight: 700;
-            letter-spacing: -0.03em;
+            letter-spacing: -0.02em;
             line-height: 1.1;
-            margin-bottom: 24px;
-            animation: fadeInUp 1s ease-out 0.2s both;
+            margin-bottom: 20px;
+            animation: fadeInUp 0.8s ease-out 0.1s both;
         }
         
-        .hero h1 .gradient-text {
-            background: linear-gradient(135deg, #ff6b6b 0%, #ffd93d 50%, #6bcb77 100%);
+        .hero h1 .highlight {
+            background: linear-gradient(135deg, #30d158 0%, #00d4aa 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            background-size: 200% 200%;
-            animation: gradientShift 3s ease infinite;
         }
         
-        @keyframes gradientShift {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-        }
-        
-        .hero p {
+        .hero-subtitle {
             font-size: clamp(18px, 3vw, 24px);
             color: #86868b;
-            max-width: 500px;
-            margin-bottom: 48px;
-            animation: fadeInUp 1s ease-out 0.4s both;
+            max-width: 600px;
+            margin-bottom: 40px;
+            animation: fadeInUp 0.8s ease-out 0.2s both;
         }
         
+        /* Payment Cards */
+        .payment-section {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 24px;
+            justify-content: center;
+            margin-bottom: 48px;
+            animation: fadeInUp 0.8s ease-out 0.3s both;
+        }
+        
+        .payment-card {
+            background: linear-gradient(145deg, #1a1a1a 0%, #0d0d0d 100%);
+            border: 1px solid #333;
+            border-radius: 24px;
+            padding: 32px;
+            width: 280px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .payment-card:hover {
+            transform: translateY(-4px);
+            border-color: #555;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+        }
+        
+        .payment-card.selected {
+            border-color: #30d158;
+            box-shadow: 0 0 30px rgba(48, 209, 88, 0.2);
+        }
+        
+        .payment-card h3 {
+            font-size: 18px;
+            margin-bottom: 16px;
+            color: #fff;
+        }
+        
+        .payment-card .price {
+            font-size: 42px;
+            font-weight: 700;
+            color: #30d158;
+            margin-bottom: 4px;
+        }
+        
+        .payment-card .price-label {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 20px;
+        }
+        
+        .payment-card ul {
+            list-style: none;
+            text-align: left;
+        }
+        
+        .payment-card li {
+            padding: 8px 0;
+            font-size: 14px;
+            color: #ccc;
+        }
+        
+        .payment-card li::before {
+            content: '✓ ';
+            color: #30d158;
+        }
+        
+        /* QR Code */
+        .qr-section {
+            background: #1a1a1a;
+            border-radius: 24px;
+            padding: 40px;
+            max-width: 400px;
+            margin: 0 auto 40px;
+            border: 1px solid #333;
+            animation: fadeInUp 0.8s ease-out 0.4s both;
+        }
+        
+        .qr-section h3 {
+            font-size: 20px;
+            margin-bottom: 8px;
+        }
+        
+        .qr-section p {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 24px;
+        }
+        
+        .qr-code {
+            background: #fff;
+            padding: 16px;
+            border-radius: 16px;
+            display: inline-block;
+        }
+        
+        .qr-code img {
+            display: block;
+            width: 180px;
+            height: 180px;
+        }
+        
+        .qr-amount {
+            margin-top: 16px;
+            font-size: 24px;
+            font-weight: 700;
+            color: #30d158;
+        }
+        
+        .qr-address {
+            margin-top: 12px;
+            font-size: 12px;
+            color: #666;
+            word-break: break-all;
+            font-family: monospace;
+        }
+        
+        /* CTA Buttons */
         .cta-group {
             display: flex;
             gap: 16px;
             flex-wrap: wrap;
             justify-content: center;
-            animation: fadeInUp 1s ease-out 0.6s both;
+            animation: fadeInUp 0.8s ease-out 0.5s both;
         }
         
         .cta-button {
             display: inline-flex;
             align-items: center;
-            gap: 8px;
-            background: linear-gradient(135deg, #ff6b6b 0%, #ff4757 100%);
-            color: #fff;
+            gap: 10px;
+            background: linear-gradient(135deg, #30d158 0%, #00d4aa 100%);
+            color: #000;
             padding: 18px 36px;
             border-radius: 980px;
             text-decoration: none;
             font-size: 17px;
-            font-weight: 600;
+            font-weight: 700;
             transition: all 0.3s ease;
-            box-shadow: 0 8px 32px rgba(255, 71, 87, 0.3);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .cta-button::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            transition: left 0.5s;
-        }
-        
-        .cta-button:hover::before {
-            left: 100%;
+            box-shadow: 0 8px 30px rgba(48, 209, 88, 0.3);
         }
         
         .cta-button:hover {
-            transform: translateY(-2px) scale(1.02);
-            box-shadow: 0 12px 40px rgba(255, 71, 87, 0.4);
+            transform: scale(1.05);
+            box-shadow: 0 12px 40px rgba(48, 209, 88, 0.4);
         }
         
         .cta-secondary {
-            background: rgba(255, 255, 255, 0.1);
+            background: transparent;
+            border: 2px solid #444;
+            color: #fff;
             box-shadow: none;
         }
         
         .cta-secondary:hover {
-            background: rgba(255, 255, 255, 0.15);
-            box-shadow: 0 8px 32px rgba(255, 255, 255, 0.1);
+            border-color: #666;
+            background: rgba(255,255,255,0.05);
+            box-shadow: none;
         }
         
         @keyframes fadeInUp {
@@ -218,323 +263,112 @@
             to { opacity: 1; transform: translateY(0); }
         }
         
-        /* Badge Preview */
-        .badge-section {
-            padding: 100px 24px;
-            text-align: center;
-        }
-        
-        .badge-card {
-            display: inline-block;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-            border-radius: 24px;
-            padding: 48px 64px;
-            margin: 40px 0;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            position: relative;
-            overflow: hidden;
-            animation: cardGlow 3s ease-in-out infinite;
-        }
-        
-        @keyframes cardGlow {
-            0%, 100% { box-shadow: 0 0 30px rgba(0, 113, 227, 0.2); }
-            50% { box-shadow: 0 0 60px rgba(255, 69, 0, 0.3); }
-        }
-        
-        .badge-card::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: conic-gradient(from 0deg, transparent, rgba(255,255,255,0.03), transparent, transparent);
-            animation: rotate 10s linear infinite;
-        }
-        
-        @keyframes rotate {
-            100% { transform: rotate(360deg); }
-        }
-        
-        .badge-card .content {
-            position: relative;
-            z-index: 1;
-        }
-        
-        .badge-icon {
-            font-size: 48px;
-            margin-bottom: 16px;
-            animation: bounce 2s ease-in-out infinite;
-        }
-        
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-        
-        .badge-label {
-            font-size: 14px;
-            color: #86868b;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            margin-bottom: 12px;
-        }
-        
-        .badge-username {
-            font-size: 28px;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-        }
-        
-        .badge-username .check {
-            color: #30d158;
-            font-size: 24px;
-        }
-        
-        .badge-username .domain {
-            color: #86868b;
-            font-weight: 400;
-        }
-        
-        /* Checker */
-        .checker-section {
-            padding: 100px 24px;
-            text-align: center;
-        }
-        
-        .checker-card {
-            max-width: 500px;
-            margin: 0 auto;
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 24px;
-            padding: 40px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(20px);
-        }
-        
-        .checker-card h2 {
-            font-size: 32px;
-            margin-bottom: 8px;
-        }
-        
-        .checker-card p {
-            color: #86868b;
-            margin-bottom: 24px;
-        }
-        
-        .checker-input {
-            display: flex;
-            gap: 12px;
-        }
-        
-        .checker-input input {
-            flex: 1;
-            padding: 18px 24px;
-            font-size: 16px;
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            border-radius: 16px;
-            background: rgba(0, 0, 0, 0.3);
-            color: #fff;
-            outline: none;
-            transition: all 0.3s;
-        }
-        
-        .checker-input input:focus {
-            border-color: #0071e3;
-            box-shadow: 0 0 20px rgba(0, 113, 227, 0.2);
-        }
-        
-        .checker-input button {
-            padding: 18px 32px;
-            font-size: 16px;
-            font-weight: 600;
-            background: linear-gradient(135deg, #0071e3 0%, #0055d4 100%);
-            color: #fff;
-            border: none;
-            border-radius: 16px;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        
-        .checker-input button:hover {
-            transform: scale(1.05);
-            box-shadow: 0 8px 24px rgba(0, 113, 227, 0.4);
-        }
-        
-        .checker-result {
-            margin-top: 24px;
-            padding: 20px;
-            border-radius: 16px;
-            display: none;
-            animation: fadeInUp 0.5s ease-out;
-        }
-        
-        .checker-result.show { display: block; }
-        .checker-result.verified {
-            background: rgba(48, 209, 88, 0.15);
-            border: 1px solid #30d158;
-        }
-        
-        .checker-result.not-verified {
-            background: rgba(255, 69, 58, 0.15);
-            border: 1px solid #ff453a;
-        }
-        
-        .checker-result h4 {
-            font-size: 18px;
-            margin-bottom: 4px;
-        }
-        
-        .checker-result.verified h4 { color: #30d158; }
-        .checker-result.not-verified h4 { color: #ff453a; }
-        
-        /* Features */
-        .features {
+        /* Pain Points */
+        .pain-section {
             padding: 100px 24px;
         }
         
-        .features h2 {
+        .section-title {
             text-align: center;
-            font-size: clamp(32px, 5vw, 48px);
-            margin-bottom: 64px;
+            font-size: clamp(28px, 5vw, 42px);
+            margin-bottom: 48px;
         }
         
-        .feature-grid {
+        .pain-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 24px;
+            gap: 20px;
             max-width: 1000px;
             margin: 0 auto;
         }
         
-        .feature-card {
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 24px;
-            padding: 40px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
+        .pain-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 20px;
+            padding: 28px;
             transition: all 0.3s ease;
         }
         
-        .feature-card:hover {
-            transform: translateY(-8px);
-            border-color: rgba(255, 255, 255, 0.2);
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        .pain-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(48, 209, 88, 0.3);
         }
         
-        .feature-icon {
-            font-size: 48px;
-            margin-bottom: 20px;
-        }
-        
-        .feature-card h3 {
-            font-size: 20px;
-            margin-bottom: 12px;
-        }
-        
-        .feature-card p {
-            color: #86868b;
-            font-size: 15px;
-            line-height: 1.6;
-        }
-        
-        /* Pricing */
-        .pricing {
-            padding: 100px 24px;
-        }
-        
-        .pricing h2 {
-            text-align: center;
-            font-size: clamp(32px, 5vw, 48px);
-            margin-bottom: 64px;
-        }
-        
-        .pricing-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 24px;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        
-        .pricing-card {
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 24px;
-            padding: 40px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            text-align: center;
-            position: relative;
-            transition: all 0.3s;
-        }
-        
-        .pricing-card:hover {
-            transform: scale(1.02);
-        }
-        
-        .pricing-card.featured {
-            border-color: #ff6b6b;
-            background: linear-gradient(135deg, rgba(255,107,107,0.1) 0%, rgba(255,71,87,0.05) 100%);
-        }
-        
-        .pricing-card.featured::before {
-            content: '🔥 Popular';
-            position: absolute;
-            top: -12px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: linear-gradient(135deg, #ff6b6b 0%, #ff4757 100%);
-            padding: 6px 16px;
-            border-radius: 980px;
-            font-size: 12px;
-            font-weight: 600;
-        }
-        
-        .pricing-card h3 {
-            font-size: 18px;
+        .pain-card .emoji {
+            font-size: 40px;
             margin-bottom: 16px;
-            color: #86868b;
         }
         
-        .pricing-card .price {
-            font-size: 48px;
-            font-weight: 700;
-            color: #fff;
+        .pain-card h3 {
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
+        
+        .pain-card .old {
+            color: #ff453a;
+            text-decoration: line-through;
+            font-size: 14px;
             margin-bottom: 4px;
         }
         
-        .pricing-card .price-label {
-            color: #86868b;
-            font-size: 14px;
-            margin-bottom: 24px;
-        }
-        
-        .pricing-card ul {
-            list-style: none;
-            text-align: left;
-            margin-bottom: 24px;
-        }
-        
-        .pricing-card li {
-            padding: 8px 0;
-            color: #f5f5f7;
-            font-size: 14px;
-        }
-        
-        .pricing-card li::before {
-            content: '✓ ';
+        .pain-card .new {
             color: #30d158;
+            font-size: 14px;
         }
         
-        /* Verified Section */
+        /* How It Works */
+        .how-section {
+            padding: 100px 24px;
+            background: linear-gradient(180deg, transparent 0%, rgba(48, 209, 88, 0.03) 100%);
+        }
+        
+        .steps {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 32px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .step {
+            text-align: center;
+            width: 200px;
+        }
+        
+        .step-num {
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, #30d158 0%, #00d4aa 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: 700;
+            margin: 0 auto 16px;
+            color: #000;
+        }
+        
+        .step h4 {
+            font-size: 18px;
+            margin-bottom: 8px;
+        }
+        
+        .step p {
+            color: #666;
+            font-size: 14px;
+        }
+        
+        /* Verified List */
         .verified-section {
             padding: 80px 24px;
             text-align: center;
         }
         
         .verified-section h3 {
-            color: #86868b;
+            color: #666;
             font-size: 14px;
             text-transform: uppercase;
             letter-spacing: 0.1em;
@@ -555,166 +389,176 @@
             border-radius: 980px;
             font-size: 14px;
             color: #30d158;
-            animation: fadeInUp 0.5s ease-out;
         }
         
         /* Footer */
         footer {
-            padding: 40px 24px;
+            padding: 60px 24px;
             text-align: center;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            border-top: 1px solid rgba(255,255,255,0.1);
         }
         
         footer p {
-            color: #86868b;
+            color: #666;
             font-size: 14px;
+            margin-bottom: 8px;
         }
         
         footer a {
-            color: #0071e3;
+            color: #30d158;
             text-decoration: none;
         }
         
         /* Responsive */
         @media (max-width: 600px) {
-            .checker-input {
-                flex-direction: column;
+            .payment-card {
+                width: 100%;
             }
             
             .cta-group {
                 flex-direction: column;
             }
             
-            .badge-card {
-                padding: 32px;
-            }
-            
-            .badge-username {
-                font-size: 22px;
-                flex-direction: column;
-                gap: 4px;
+            .cta-button {
+                width: 100%;
+                justify-content: center;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Animated Background -->
-    <div class="bg-animation">
-        <div class="orb orb-1"></div>
-        <div class="orb orb-2"></div>
-        <div class="orb orb-3"></div>
-    </div>
+    <!-- Background -->
+    <div class="bg-animation"></div>
     
     <!-- Hero -->
     <section class="hero">
         <div class="hero-badge">
-            <span>⚡</span> Lightning Fast Verification
+            <span>⚡</span> Verified in 60 Seconds
         </div>
         
         <h1>
-            Get Verified.<br>
-            <span class="gradient-text">Be Different.</span>
+            Get Your<br>
+            <span class="highlight">NIP-05 Verified</span><br>
+            Checkmark
         </h1>
         
-        <p>Stand out on Nostr. No DNS. No coding. Just you, verified with a real checkmark.</p>
+        <p class="hero-subtitle">
+            The easiest way to get verified on Nostr. No DNS. No coding. Just zap and you're verified.
+        </p>
         
-        <div class="cta-group">
-            <a href="nostr:npub1a3lz855htm20sfcd0y2hp38e4h2akrqjj92spvruw8ge9yslrgws4x8vth" class="cta-button">
-                ⚡ Get Verified Now
-            </a>
-            <a href="#checker" class="cta-button cta-secondary">
-                🔍 Check Verification
-            </a>
-        </div>
-    </section>
-    
-    <!-- Badge Preview -->
-    <section class="badge-section">
-        <div class="badge-card">
-            <div class="content">
-                <div class="badge-icon">🎉</div>
-                <div class="badge-label">Your NIP-05 Badge</div>
-                <div class="badge-username">
-                    <span class="check">✓</span>
-                    yourname<span class="domain">@hiftyco.github.io</span>
-                </div>
-            </div>
-        </div>
-    </section>
-    
-    <!-- Checker -->
-    <section class="checker-section" id="checker">
-        <div class="checker-card">
-            <h2>🔍 Check Verification</h2>
-            <p>See if a username is verified instantly.</p>
-            
-            <div class="checker-input">
-                <input type="text" id="usernameInput" placeholder="Enter username..." />
-                <button onclick="checkUser()">Check</button>
-            </div>
-            
-            <div id="result" class="checker-result"></div>
-        </div>
-    </section>
-    
-    <!-- Features -->
-    <section class="features">
-        <h2>Why Get Verified? ✨</h2>
-        
-        <div class="feature-grid">
-            <div class="feature-card">
-                <div class="feature-icon">🛡️</div>
-                <h3>Proves You're Real</h3>
-                <p>No more "is this really you?" Show the verified badge and clients know instantly.</p>
-            </div>
-            
-            <div class="feature-card">
-                <div class="feature-icon">⚡</div>
-                <h3>Instant Setup</h3>
-                <p>We handle everything. No DNS. No coding. Just send your npub and get verified.</p>
-            </div>
-            
-            <div class="feature-card">
-                <div class="feature-icon">🎯</div>
-                <h3>Builds Trust</h3>
-                <p>Trust = better connections. Verified users get more zaps, more followers.</p>
-            </div>
-        </div>
-    </section>
-    
-    <!-- Pricing -->
-    <section class="pricing">
-        <h2>Simple Pricing 💰</h2>
-        
-        <div class="pricing-grid">
-            <div class="pricing-card featured">
-                <h3>Full Hosting</h3>
+        <!-- Payment Options -->
+        <div class="payment-section">
+            <div class="payment-card" id="card10k" onclick="selectPlan('10k')">
+                <h3>🌐 Full Hosting</h3>
                 <div class="price">10k</div>
                 <div class="price-label">sats</div>
                 <ul>
-                    <li>We host your NIP-05</li>
-                    <li>Just send your npub</li>
-                    <li>Verified in minutes</li>
-                    <li>Example: you@hiftyco.github.io</li>
+                    <li>Your NIP-05 badge</li>
+                    <li>Works on all clients</li>
+                    <li>Instant verification</li>
+                    <li>No DNS needed</li>
                 </ul>
             </div>
             
-            <div class="pricing-card">
-                <h3>Custom Domain</h3>
+            <div class="payment-card" id="card50k" onclick="selectPlan('50k')">
+                <h3>🚀 Custom Domain</h3>
                 <div class="price">50k</div>
                 <div class="price-label">sats</div>
                 <ul>
                     <li>Your own subdomain</li>
-                    <li>Example: you@yourbrand.com</li>
-                    <li>DNS help included</li>
+                    <li>Your brand, your domain</li>
                     <li>Priority support</li>
+                    <li>DNS help included</li>
                 </ul>
+            </div>
+        </div>
+        
+        <!-- QR Code -->
+        <div class="qr-section">
+            <h3>📱 Scan to Pay</h3>
+            <p>Any Lightning wallet works - Primal, Wallet of Satoshi, Alby, etc.</p>
+            
+            <div class="qr-code">
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=lightning:paradigmtech21@coinos.io?amount=10000" alt="Lightning Payment QR" />
+            </div>
+            
+            <div class="qr-amount" id="qrAmount">10,000 sats</div>
+            <div class="qr-address">paradigmtech21@coinos.io</div>
+        </div>
+        
+        <!-- CTA -->
+        <div class="cta-group">
+            <a href="nostr:npub1a3lz855htm20sfcd0y2hp38e4h2akrqjj92spvruw8ge9yslrgws4x8vth" class="cta-button">
+                💬 DM to Verify
+            </a>
+            <a href="#check" class="cta-button cta-secondary">
+                🔍 Check Status
+            </a>
+        </div>
+    </section>
+    
+    <!-- Pain Points -->
+    <section class="pain-section">
+        <h2 class="section-title">😌 We Solved The Hard Parts</h2>
+        
+        <div class="pain-grid">
+            <div class="pain-card">
+                <div class="emoji">🧠</div>
+                <h3>Don't Know DNS?</h3>
+                <div class="old">Configure TXT records</div>
+                <div class="new">✅ We host everything for you</div>
+            </div>
+            
+            <div class="pain-card">
+                <div class="emoji">🔑</div>
+                <h3>Don't Know Pubkeys?</h3>
+                <div class="old">Convert hex/npub manually</div>
+                <div class="new">✅ Just send us your npub, we handle it</div>
+            </div>
+            
+            <div class="pain-card">
+                <div class="emoji">⏰</div>
+                <h3>Don't Want to Wait?</h3>
+                <div class="old">DNS propagation takes days</div>
+                <div class="new">✅ Verified in 60 seconds</div>
+            </div>
+            
+            <div class="pain-card">
+                <div class="emoji">💸</div>
+                <h3>Want Proof First?</h3>
+                <div class="old">Pay and hope it works</div>
+                <div class="new">✅ We post confirmation publicly</div>
             </div>
         </div>
     </section>
     
-    <!-- Verified -->
-    <section class="verified-section">
+    <!-- How It Works -->
+    <section class="how-section">
+        <h2 class="section-title">⚡ 3 Simple Steps</h2>
+        
+        <div class="steps">
+            <div class="step">
+                <div class="step-num">1</div>
+                <h4>DM or Zap</h4>
+                <p>Send us your username + npub, then zap the QR code above</p>
+            </div>
+            
+            <div class="step">
+                <div class="step-num">2</div>
+                <h4>We Verify</h4>
+                <p>We add you to our NIP-05 endpoint instantly</p>
+            </div>
+            
+            <div class="step">
+                <div class="step-num">3</div>
+                <h4>You're Verified!</h4>
+                <p>Checkmark appears. Everyone sees you're real.</p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Verified List -->
+    <section class="verified-section" id="check">
         <h3>✅ Already Verified</h3>
         <div class="verified-tags" id="verifiedList">
             <span class="verified-tag">Loading...</span>
@@ -723,17 +567,45 @@
     
     <!-- Footer -->
     <footer>
-        <p>💬 DM on Nostr to get started</p>
-        <p style="margin-top: 8px;">⚡ Payment: <strong>paradigmtech21@coinos.io</strong></p>
+        <p>⚡ Payment: <strong>paradigmtech21@coinos.io</strong></p>
+        <p>💬 Questions? <a href="nostr:npub1a3lz855htm20sfcd0y2hp38e4h2akrqjj92spvruw8ge9yslrgws4x8vth">DM on Nostr</a></p>
+        <p style="margin-top: 16px; font-size: 12px;">Powered by Nostr • NIP-05 Verification</p>
     </footer>
     
     <script>
-        // Load verified users from hiftyco/.well-known
+        // Payment plans
+        const plans = {
+            '10k': { amount: 10000, label: '10,000 sats' },
+            '50k': { amount: 50000, label: '50,000 sats' }
+        };
+        
+        let selectedPlan = '10k';
+        
+        function selectPlan(plan) {
+            selectedPlan = plan;
+            
+            // Update UI
+            document.querySelectorAll('.payment-card').forEach(c => c.classList.remove('selected'));
+            document.getElementById('card' + plan).classList.add('selected');
+            
+            // Update QR
+            const amount = plans[plan].amount;
+            document.getElementById('qrAmount').textContent = plans[plan].label;
+            
+            // Update QR code
+            const qrImg = document.querySelector('.qr-code img');
+            qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=lightning:paradigmtech21@coinos.io?amount=${amount}`;
+        }
+        
+        // Select 10k by default
+        selectPlan('10k');
+        
+        // Load verified users
         async function loadVerified() {
             try {
-                const resp = await fetch(`https://hiftyco.github.io/.well-known/nostr.json`);
+                const resp = await fetch('https://hiftyco.github.io/.well-known/nostr.json');
                 const data = await resp.json();
-                const names = Object.keys(data.names || {});
+                const names = Object.keys(data.names || {}).filter(n => n !== '_');
                 
                 const container = document.getElementById('verifiedList');
                 if (names.length > 0) {
@@ -741,60 +613,23 @@
                         `<span class="verified-tag">${n}@hiftyco.github.io</span>`
                     ).join('');
                 } else {
-                    container.innerHTML = '<span class="verified-tag">Be the first to verify!</span>';
+                    container.innerHTML = '<span class="verified-tag">Be the first!</span>';
                 }
             } catch (e) {
                 document.getElementById('verifiedList').innerHTML = '<span class="verified-tag">Could not load</span>';
             }
         }
         
-        // Check user
-        function checkUser() {
-            const username = document.getElementById('usernameInput').value.trim();
-            const result = document.getElementById('result');
-            
-            if (!username) return;
-            
-            result.className = 'checker-result show';
-            result.innerHTML = '<p style="color:#86868b">Checking...</p>';
-            
-            fetch(`https://hiftyco.github.io/.well-known/nostr.json`)
-                .then(r => r.json())
-                .then(data => {
-                    const found = Object.entries(data.names || {}).find(([k]) => 
-                        k.toLowerCase() === username.toLowerCase()
-                    );
-                    
-                    if (found) {
-                        result.className = 'checker-result show verified';
-                        result.innerHTML = `<h4>✅ ${found[0]} is Verified!</h4><p>${found[0]}@hiftyco.github.io</p>`;
-                    } else {
-                        result.className = 'checker-result show not-verified';
-                        result.innerHTML = `<h4>❌ Not Verified Yet</h4><p>"${username}" hasn't verified with us.</p>`;
-                    }
-                })
-                .catch(() => {
-                    result.className = 'checker-result show not-verified';
-                    result.innerHTML = '<h4>❌ Error</h4><p>Could not check. Try again.</p>';
-                });
-        }
-        
-        // Enter key
-        document.getElementById('usernameInput').addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') checkUser();
-        });
-        
-        // Load on page load
         loadVerified();
         
         // Confetti on CTA click
         document.querySelector('.cta-button').addEventListener('click', (e) => {
-            for (let i = 0; i < 30; i++) {
+            for (let i = 0; i < 20; i++) {
                 const confetti = document.createElement('div');
                 confetti.style.cssText = `
                     position: fixed;
-                    width: 10px;
-                    height: 10px;
+                    width: 8px;
+                    height: 8px;
                     background: hsl(${Math.random() * 360}, 80%, 60%);
                     border-radius: 50%;
                     pointer-events: none;
@@ -805,7 +640,7 @@
                 document.body.appendChild(confetti);
                 
                 const angle = Math.random() * Math.PI * 2;
-                const velocity = 5 + Math.random() * 10;
+                const velocity = 3 + Math.random() * 5;
                 const vx = Math.cos(angle) * velocity;
                 let vy = Math.sin(angle) * velocity;
                 
@@ -814,8 +649,8 @@
                 
                 const animate = () => {
                     x += vx;
-                    y += vy + 3;
-                    opacity -= 0.02;
+                    y += vy + 2;
+                    opacity -= 0.03;
                     confetti.style.transform = `translate(${x - e.clientX}px, ${y - e.clientY}px)`;
                     confetti.style.opacity = opacity;
                     if (opacity > 0) requestAnimationFrame(animate);
