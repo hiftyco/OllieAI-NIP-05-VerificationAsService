@@ -3,354 +3,529 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>⚡ NIP-05 Verification - Get Your GitHub-Style Checkmark on Nostr</title>
-    <meta name="description" content="Get verified on Nostr like GitHub verified developers. Stand out with a NIP-05 checkmark. No coding required!">
+    <title>NIP-05 Verification — Stand Out on Nostr</title>
     <style>
-        :root {
-            --bg: #0d1117;
-            --card: #161b22;
-            --border: #30363d;
-            --text: #e6edf3;
-            --text-muted: #8b949e;
-            --orange: #f7931a;
-            --green: #2ea043;
-            --purple: #8b5cf6;
-        }
-        * { box-sizing: border-box; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            background: var(--bg);
-            color: var(--text);
-            line-height: 1.6;
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
+            background: #000;
+            color: #f5f5f7;
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
         }
-        .container { background: var(--card); border-radius: 16px; padding: 32px; border: 1px solid var(--border); }
         
         /* Hero */
-        .hero { text-align: center; margin-bottom: 32px; }
-        .hero h1 { color: var(--orange); font-size: 2.5em; margin: 0 0 8px 0; }
-        .hero .subtitle { color: var(--text-muted); font-size: 1.2em; }
-        
-        /* Dev Badge Preview */
-        .badge-preview { 
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-            border: 2px solid var(--orange);
-            border-radius: 12px;
-            padding: 24px;
-            margin: 24px 0;
-            text-align: center;
-        }
-        .badge-preview .badge {
-            display: inline-flex;
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
             align-items: center;
-            gap: 8px;
-            background: var(--orange);
-            color: #000;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-weight: bold;
-            font-size: 1.1em;
+            text-align: center;
+            padding: 80px 24px;
+            background: linear-gradient(180deg, #000 0%, #0a0a0a 100%);
         }
-        .badge-preview .badge::before { content: "✓"; }
-        .badge-preview p { color: var(--text-muted); margin: 12px 0 0 0; }
         
-        /* Verification Checker */
-        .checker { 
-            background: var(--bg); 
-            border-radius: 12px; 
-            padding: 24px; 
-            margin: 24px 0;
+        .hero h1 {
+            font-size: clamp(40px, 8vw, 80px);
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            margin-bottom: 16px;
+            background: linear-gradient(135deg, #fff 0%, #999 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
-        .checker h3 { margin: 0 0 16px 0; color: var(--purple); }
-        .checker-form { display: flex; gap: 8px; }
-        .checker-form input { 
-            flex: 1; 
-            padding: 14px 16px; 
-            border: 1px solid var(--border); 
-            border-radius: 8px;
-            background: var(--card);
-            color: var(--text);
-            font-size: 16px;
+        
+        .hero p {
+            font-size: clamp(18px, 3vw, 28px);
+            color: #86868b;
+            max-width: 600px;
+            margin-bottom: 48px;
+            font-weight: 400;
         }
-        .checker-form button { 
-            padding: 14px 24px; 
-            background: var(--purple); 
-            color: #fff; 
-            border: none; 
-            border-radius: 8px; 
-            cursor: pointer;
-            font-weight: bold;
-        }
-        .checker-form button:hover { background: #7c3aed; }
-        .checker-result { margin-top: 16px; padding: 16px; border-radius: 8px; display: none; }
-        .checker-result.verified { background: rgba(46, 160, 67, 0.15); border: 1px solid var(--green); }
-        .checker-result.not-verified { background: rgba(248, 81, 73, 0.15); border: 1px solid #f85149; }
-        .checker-result h4 { margin: 0 0 8px 0; }
-        .checker-result.verified h4 { color: var(--green); }
-        .checker-result.not-verified h4 { color: #f85149; }
         
-        /* Pain Points */
-        .pain-points { margin: 32px 0; }
-        .pain-points h2 { color: var(--orange); text-align: center; }
-        .pain-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px; }
-        .pain-item { background: var(--bg); padding: 16px; border-radius: 8px; }
-        .pain-item .old { color: #f85149; text-decoration: line-through; margin-bottom: 4px; }
-        .pain-item .new { color: var(--green); }
-        .pain-item .emoji { font-size: 1.5em; }
-        
-        /* Pricing */
-        .pricing { margin: 32px 0; }
-        .pricing h2 { color: var(--orange); text-align: center; }
-        .pricing-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px; }
-        .pricing-card { background: var(--bg); padding: 24px; border-radius: 12px; text-align: center; border: 2px solid var(--border); }
-        .pricing-card.featured { border-color: var(--orange); }
-        .pricing-card h3 { margin: 0 0 8px 0; color: var(--purple); }
-        .pricing-card.featured h3 { color: var(--orange); }
-        .pricing-card .price { font-size: 2em; color: var(--orange); font-weight: bold; }
-        .pricing-card .price-label { color: var(--text-muted); font-size: 0.9em; }
-        .pricing-card ul { list-style: none; padding: 0; margin: 16px 0; text-align: left; }
-        .pricing-card li { padding: 6px 0; color: var(--text-muted); }
-        .pricing-card li::before { content: "✓ "; color: var(--green); }
-        
-        /* How It Works */
-        .steps { margin: 32px 0; }
-        .steps h2 { color: var(--orange); text-align: center; }
-        .steps-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 16px; }
-        .step { background: var(--bg); padding: 16px; border-radius: 8px; text-align: center; }
-        .step-num { 
-            width: 32px; height: 32px; 
-            background: var(--purple); 
-            color: #fff; 
-            border-radius: 50%; 
-            display: flex; align-items: center; justify-content: center;
-            margin: 0 auto 8px auto;
-            font-weight: bold;
-        }
-        .step p { margin: 0; font-size: 0.9em; color: var(--text-muted); }
-        
-        /* CTA */
-        .cta-section { text-align: center; margin: 32px 0; }
         .cta-button {
             display: inline-block;
-            background: var(--orange);
-            color: #000;
+            background: #0071e3;
+            color: #fff;
             padding: 16px 32px;
-            border-radius: 8px;
+            border-radius: 980px;
             text-decoration: none;
-            font-weight: bold;
-            font-size: 1.1em;
+            font-size: 17px;
+            font-weight: 500;
+            transition: all 0.3s ease;
         }
-        .cta-button:hover { background: #e8850a; }
+        
+        .cta-button:hover {
+            background: #0077ed;
+            transform: scale(1.02);
+        }
+        
+        /* Badge Preview */
+        .badge-section {
+            padding: 120px 24px;
+            text-align: center;
+            background: #000;
+        }
+        
+        .badge-preview {
+            display: inline-block;
+            background: linear-gradient(135deg, #1d1d1f 0%, #2a2a2c 100%);
+            border-radius: 24px;
+            padding: 48px 64px;
+            margin-top: 40px;
+            border: 1px solid #424245;
+        }
+        
+        .badge-preview .label {
+            font-size: 14px;
+            color: #86868b;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+        
+        .badge-preview .badge {
+            font-size: 32px;
+            font-weight: 600;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+        
+        .badge-preview .badge::before {
+            content: "✓";
+            color: #30d158;
+            font-size: 28px;
+        }
+        
+        /* Checker */
+        .checker-section {
+            padding: 120px 24px;
+            background: #000;
+        }
+        
+        .checker-container {
+            max-width: 500px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .checker-container h2 {
+            font-size: 40px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .checker-container p {
+            color: #86868b;
+            margin-bottom: 32px;
+            font-size: 18px;
+        }
+        
+        .checker-input-group {
+            display: flex;
+            gap: 12px;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        
+        .checker-input-group input {
+            flex: 1;
+            padding: 18px 24px;
+            font-size: 17px;
+            border: 1px solid #424245;
+            border-radius: 12px;
+            background: #1d1d1f;
+            color: #fff;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+        
+        .checker-input-group input:focus {
+            border-color: #0071e3;
+        }
+        
+        .checker-input-group button {
+            padding: 18px 32px;
+            font-size: 17px;
+            font-weight: 500;
+            background: #0071e3;
+            color: #fff;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .checker-input-group button:hover {
+            background: #0077ed;
+        }
+        
+        .checker-result {
+            margin-top: 24px;
+            padding: 24px;
+            border-radius: 16px;
+            display: none;
+        }
+        
+        .checker-result.verified {
+            background: rgba(48, 209, 88, 0.1);
+            border: 1px solid #30d158;
+        }
+        
+        .checker-result.not-verified {
+            background: rgba(255, 69, 58, 0.1);
+            border: 1px solid #ff453a;
+        }
+        
+        .checker-result h4 {
+            font-size: 20px;
+            margin-bottom: 8px;
+        }
+        
+        .checker-result.verified h4 { color: #30d158; }
+        .checker-result.not-verified h4 { color: #ff453a; }
+        
+        /* Features */
+        .features {
+            padding: 120px 24px;
+            background: #000;
+        }
+        
+        .features h2 {
+            text-align: center;
+            font-size: clamp(32px, 5vw, 48px);
+            font-weight: 600;
+            margin-bottom: 64px;
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .feature-card {
+            background: #1d1d1f;
+            border-radius: 24px;
+            padding: 40px;
+            border: 1px solid #424245;
+            transition: transform 0.3s, border-color 0.3s;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-4px);
+            border-color: #636366;
+        }
+        
+        .feature-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+        
+        .feature-card h3 {
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+        
+        .feature-card p {
+            color: #86868b;
+            font-size: 16px;
+        }
+        
+        /* Pricing */
+        .pricing {
+            padding: 120px 24px;
+            background: #000;
+        }
+        
+        .pricing h2 {
+            text-align: center;
+            font-size: clamp(32px, 5vw, 48px);
+            font-weight: 600;
+            margin-bottom: 64px;
+        }
+        
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .pricing-card {
+            background: #1d1d1f;
+            border-radius: 24px;
+            padding: 40px;
+            border: 1px solid #424245;
+            text-align: center;
+        }
+        
+        .pricing-card.featured {
+            border-color: #0071e3;
+            background: linear-gradient(180deg, #1d1d1f 0%, #0a1540 100%);
+        }
+        
+        .pricing-card h3 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .pricing-card .price {
+            font-size: 48px;
+            font-weight: 600;
+            color: #0071e3;
+            margin-bottom: 4px;
+        }
+        
+        .pricing-card .price-label {
+            color: #86868b;
+            font-size: 14px;
+            margin-bottom: 24px;
+        }
+        
+        .pricing-card ul {
+            list-style: none;
+            text-align: left;
+            margin-bottom: 24px;
+        }
+        
+        .pricing-card li {
+            padding: 8px 0;
+            color: #f5f5f7;
+            font-size: 15px;
+        }
+        
+        .pricing-card li::before {
+            content: "✓ ";
+            color: #30d158;
+        }
         
         /* Verified List */
-        .verified-list { margin: 32px 0; }
-        .verified-list h2 { color: var(--orange); text-align: center; font-size: 1.2em; }
-        .verified-users { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
-        .verified-tag { 
-            background: var(--bg); 
-            padding: 8px 16px; 
-            border-radius: 20px; 
-            font-size: 0.9em;
-            border: 1px solid var(--border);
+        .verified-section {
+            padding: 80px 24px;
+            background: #000;
+            text-align: center;
+        }
+        
+        .verified-section h3 {
+            font-size: 20px;
+            color: #86868b;
+            margin-bottom: 24px;
+        }
+        
+        .verified-tags {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+        }
+        
+        .verified-tag {
+            background: #1d1d1f;
+            padding: 10px 20px;
+            border-radius: 980px;
+            font-size: 14px;
+            border: 1px solid #424245;
+            color: #f5f5f7;
         }
         
         /* Footer */
-        footer { text-align: center; margin-top: 32px; padding-top: 24px; border-top: 1px solid var(--border); color: var(--text-muted); font-size: 0.9em; }
+        footer {
+            padding: 40px 24px;
+            background: #000;
+            text-align: center;
+            border-top: 1px solid #424245;
+        }
         
+        footer p {
+            color: #86868b;
+            font-size: 14px;
+        }
+        
+        footer a {
+            color: #0071e3;
+            text-decoration: none;
+        }
+        
+        /* Responsive */
         @media (max-width: 600px) {
-            .hero h1 { font-size: 1.8em; }
-            .pain-grid, .pricing-grid, .steps-grid { grid-template-columns: 1fr; }
-            .checker-form { flex-direction: column; }
+            .checker-input-group {
+                flex-direction: column;
+            }
+            
+            .badge-preview {
+                padding: 32px;
+            }
+            
+            .badge-preview .badge {
+                font-size: 24px;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <!-- Hero -->
-        <div class="hero">
-            <h1>⚡ Get Verified on Nostr</h1>
-            <p class="subtitle">Like GitHub verified developers. Stand out with a NIP-05 checkmark.</p>
-        </div>
+    <!-- Hero -->
+    <section class="hero">
+        <h1>Get Verified on Nostr</h1>
+        <p>Stand out with a verified badge like GitHub developers. No coding required.</p>
+        <a href="nostr:npub1a3lz855htm20sfcd0y2hp38e4h2akrqjj92spvruw8ge9yslrgws4x8vth" class="cta-button">
+            Get Verified
+        </a>
+    </section>
+    
+    <!-- Badge Preview -->
+    <section class="badge-section">
+        <h2>Your Badge. Your Identity.</h2>
+        <p style="color: #86868b; max-width: 500px; margin: 0 auto 40px;">Be recognized. Be trusted. Show the world you're real.</p>
         
-        <!-- Badge Preview -->
         <div class="badge-preview">
-            <div class="badge">satoshi@nip05.hifty.co</div>
-            <p>Your GitHub-style verification badge on Nostr</p>
+            <div class="label">Your NIP-05 Identifier</div>
+            <div class="badge">satoshi@hiftyco.github.io</div>
         </div>
-        
-        <!-- Verification Checker -->
-        <div class="checker">
-            <h3>🔍 Check Verification Status</h3>
-            <div class="checker-form">
-                <input type="text" id="checkUsername" placeholder="Enter username to check" />
+    </section>
+    
+    <!-- Checker -->
+    <section class="checker-section">
+        <div class="checker-container">
+            <h2>Check Verification</h2>
+            <p>Enter a username to verify their NIP-05 status.</p>
+            
+            <div class="checker-input-group">
+                <input type="text" id="usernameInput" placeholder="Enter username" />
                 <button onclick="checkUser()">Check</button>
             </div>
-            <div id="checkerResult" class="checker-result"></div>
+            
+            <div id="result" class="checker-result"></div>
         </div>
+    </section>
+    
+    <!-- Features -->
+    <section class="features">
+        <h2>Why Get Verified?</h2>
         
-        <!-- Pain Points Solved -->
-        <div class="pain-points">
-            <h2>🎯 We Solved The Hard Parts</h2>
-            <div class="pain-grid">
-                <div class="pain-item">
-                    <div class="emoji">😰</div>
-                    <div class="old">"DNS setup is confusing"</div>
-                    <div class="new">✅ We host everything for you</div>
-                </div>
-                <div class="pain-item">
-                    <div class="emoji">🤯</div>
-                    <div class="old">"What's my hex pubkey?"</div>
-                    <div class="new">✅ Just paste your npub - we convert it</div>
-                </div>
-                <div class="pain-item">
-                    <div class="emoji">😕</div>
-                    <div class="old">"How do I know when it's ready?"</div>
-                    <div class="new">✅ We post public confirmation</div>
-                </div>
-                <div class="pain-item">
-                    <div class="emoji">💸</div>
-                    <div class="old">"Is this safe to pay?"</div>
-                    <div class="new">✅ Transparent process, public verification</div>
-                </div>
+        <div class="feature-grid">
+            <div class="feature-card">
+                <div class="feature-icon">✓</div>
+                <h3>Proves You're Real</h3>
+                <p>NIP-05 verification shows you control your Nostr identity. No more "is this really you?"</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">🎯</div>
+                <h3>Builds Trust</h3>
+                <p>Clients and followers know they're dealing with the real you. Trust = better relationships.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">⚡</div>
+                <h3>Lightning Fast</h3>
+                <p>No DNS setup. No coding. We handle everything. Get verified in minutes.</p>
             </div>
         </div>
+    </section>
+    
+    <!-- Pricing -->
+    <section class="pricing">
+        <h2>Simple Pricing</h2>
         
-        <!-- How It Works -->
-        <div class="steps">
-            <h2>⚡ 4 Simple Steps</h2>
-            <div class="steps-grid">
-                <div class="step">
-                    <div class="step-num">1</div>
-                    <p>DM us your username + npub</p>
-                </div>
-                <div class="step">
-                    <div class="step-num">2</div>
-                    <p>Send payment (zap or LN)</p>
-                </div>
-                <div class="step">
-                    <div class="step-num">3</div>
-                    <p>We add you instantly</p>
-                </div>
-                <div class="step">
-                    <div class="step-num">4</div>
-                    <p>You're verified! ✅</p>
-                </div>
+        <div class="pricing-grid">
+            <div class="pricing-card featured">
+                <h3>Full Hosting</h3>
+                <div class="price">10k</div>
+                <div class="price-label">sats</div>
+                <ul>
+                    <li>We host your NIP-05</li>
+                    <li>Just send your npub</li>
+                    <li>Instant verification</li>
+                    <li>Example: you@hiftyco.github.io</li>
+                </ul>
+            </div>
+            
+            <div class="pricing-card">
+                <h3>Custom Domain</h3>
+                <div class="price">50k</div>
+                <div class="price-label">sats</div>
+                <ul>
+                    <li>Your own subdomain</li>
+                    <li>Example: you@yourbrand.com</li>
+                    <li>DNS configuration help</li>
+                    <li>Priority support</li>
+                </ul>
             </div>
         </div>
-        
-        <!-- Pricing -->
-        <div class="pricing">
-            <h2>💰 Simple Pricing</h2>
-            <div class="pricing-grid">
-                <div class="pricing-card">
-                    <h3>🌐 Full Hosting</h3>
-                    <div class="price">10k</div>
-                    <div class="price-label">sats</div>
-                    <ul>
-                        <li>We host your NIP-05</li>
-                        <li>No DNS needed</li>
-                        <li>Instant setup</li>
-                        <li>Example: you@nip05.hifty.co</li>
-                    </ul>
-                </div>
-                <div class="pricing-card featured">
-                    <h3>🚀 Priority Setup</h3>
-                    <div class="price">50k</div>
-                    <div class="price-label">sats</div>
-                    <ul>
-                        <li>Your own subdomain</li>
-                        <li>Example: you@yourbrand.co</li>
-                        <li>Priority support</li>
-                        <li>DNS configuration help</li>
-                    </ul>
-                </div>
-            </div>
+    </section>
+    
+    <!-- Verified List -->
+    <section class="verified-section">
+        <h3>Already Verified</h3>
+        <div class="verified-tags" id="verifiedList">
+            <span class="verified-tag">hifty@hiftyco.github.io</span>
         </div>
-        
-        <!-- Verified List -->
-        <div class="verified-list">
-            <h2>✅ Already Verified</h2>
-            <div class="verified-users" id="verifiedUsers">
-                <span class="verified-tag">Loading...</span>
-            </div>
-        </div>
-        
-        <!-- CTA -->
-        <div class="cta-section">
-            <a href="nostr:npub1a3lz855htm20sfcd0y2hp38e4h2akrqjj92spvruw8ge9yslrgws4x8vth" class="cta-button">
-                ⚡ Get Verified Now - DM on Nostr
-            </a>
-            <p style="color: var(--text-muted); margin-top: 12px; font-size: 0.9em;">
-                Payment: paradigmtech21@coinos.io
-            </p>
-        </div>
-        
-        <footer>
-            <p>Powered by Nostr • NIP-05 Verification Service</p>
-            <p>npub: npub1a3lz855htm20sfcd0y2hp38e4h2akrqjj92spvruw8ge9yslrgws4x8vth</p>
-        </footer>
-    </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer>
+        <p>Payment: <strong>paradigmtech21@coinos.io</strong></p>
+        <p style="margin-top: 12px;">
+            <a href="nostr:npub1a3lz855htm20sfcd0y2hp38e4h2akrqjj92spvruw8ge9yslrgws4x8vth">DM on Nostr</a> to get started
+        </p>
+    </footer>
     
     <script>
         const REPO = 'hiftyco/OllieAI-NIP-05-VerificationAsService';
         
-        // Load verified users on page load
-        async function loadVerifiedUsers() {
+        // Load verified users
+        async function loadVerified() {
             try {
-                const response = await fetch(`https://raw.githubusercontent.com/${REPO}/main/nostr.json`);
-                const data = await response.json();
+                const resp = await fetch(`https://raw.githubusercontent.com/${REPO}/main/nostr.json`);
+                const data = await resp.json();
                 const names = Object.keys(data.names || {});
                 
-                const container = document.getElementById('verifiedUsers');
+                const container = document.getElementById('verifiedList');
                 if (names.length > 0) {
                     container.innerHTML = names.map(n => 
-                        `<span class="verified-tag">${n}@nip05.hifty.co</span>`
+                        `<span class="verified-tag">${n}@hiftyco.github.io</span>`
                     ).join('');
-                } else {
-                    container.innerHTML = '<span class="verified-tag">No users verified yet - be first!</span>';
                 }
             } catch (e) {
-                document.getElementById('verifiedUsers').innerHTML = '<span class="verified-tag">Could not load list</span>';
+                console.log('Could not load verified list');
             }
         }
         
-        // Check user verification
+        // Check user
         function checkUser() {
-            const username = document.getElementById('checkUsername').value.trim();
-            const result = document.getElementById('checkerResult');
+            const username = document.getElementById('usernameInput').value.trim();
+            const result = document.getElementById('result');
             
-            if (!username) {
-                alert('Please enter a username');
-                return;
-            }
+            if (!username) return;
             
-            result.className = 'checker-result';
             result.style.display = 'block';
-            result.innerHTML = '<p>Checking...</p>';
+            result.innerHTML = '<p style="color:#86868b">Checking...</p>';
             
             fetch(`https://raw.githubusercontent.com/${REPO}/main/nostr.json`)
                 .then(r => r.json())
                 .then(data => {
-                    const names = data.names || {};
-                    const found = Object.entries(names).find(([k]) => k.toLowerCase() === username.toLowerCase());
+                    const found = Object.entries(data.names || {}).find(([k]) => 
+                        k.toLowerCase() === username.toLowerCase()
+                    );
                     
                     if (found) {
-                        const [name, pubkey] = found;
                         result.className = 'checker-result verified';
-                        result.innerHTML = `
-                            <h4>✅ VERIFIED!</h4>
-                            <p><strong>${name}@nip05.hifty.co</strong></p>
-                            <p style="font-size: 0.85em; color: var(--text-muted);">This NIP-05 is live! Clients show verified badge.</p>
-                        `;
+                        result.innerHTML = `<h4>✅ Verified!</h4><p>${found[0]}@hiftyco.github.io is verified.</p>`;
                     } else {
                         result.className = 'checker-result not-verified';
-                        result.innerHTML = `
-                            <h4>❌ Not Verified</h4>
-                            <p>"${username}" is not verified yet.</p>
-                            <p style="font-size: 0.85em; color: var(--text-muted);">DM us to get verified!</p>
-                        `;
+                        result.innerHTML = `<h4>❌ Not Verified</h4><p>"${username}" is not verified yet. DM to get started!</p>`;
                     }
                 })
                 .catch(() => {
@@ -359,8 +534,13 @@
                 });
         }
         
-        // Load users on page load
-        loadVerifiedUsers();
+        // Load on page load
+        loadVerified();
+        
+        // Enter key for checker
+        document.getElementById('usernameInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') checkUser();
+        });
     </script>
 </body>
 </html>
