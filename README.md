@@ -1,132 +1,35 @@
 # NIP-05 Verification Service
 
-A fully automated NIP-05 verification service for Nostr.
+Get your business verified on Nostr with a custom NIP-05 identifier.
 
-## 🌐 Live Site
+## 🌐 Live Services
 
-Access the landing page at: **https://nip05.hifty.co**
+| Service | URL |
+|---------|-----|
+| Landing Page | https://hiftyco.github.io/OllieAI-NIP-05-VerificationAsService |
+| Verification Checker | https://hiftyco.github.io/OllieAI-NIP-05-VerificationAsService/check.html |
+| NIP-05 JSON (raw) | https://raw.githubusercontent.com/hiftyco/OllieAI-NIP-05-VerificationAsService/main/nostr.json |
 
-## 📋 Setup Instructions
+## 🔧 Setup Cloudflare Pages (for .well-known support)
 
-### 1. GitHub Repository Setup
+NIP-05 requires `/.well-known/nostr.json`. GitHub Pages doesn't serve dotfiles, so we use Cloudflare Pages:
 
-```bash
-# Create a new GitHub repo called "nip05-verified" (or similar)
-# Clone it locally and copy these files:
+1. Go to https://pages.cloudflare.com
+2. Connect your GitHub repo: `hiftyco/OllieAI-NIP-05-VerificationAsService`
+3. Set build command: leave empty
+4. Set output directory: `/`
+5. Enable **Preview deployments** for all branches
+6. Custom domain: `nip05.hifty.co`
 
-git clone https://github.com/YOUR_USERNAME/nip05-verified.git
-cd nip05-verified
+Cloudflare Pages serves dotfiles properly and auto-deploys when you push to GitHub!
 
-# Copy the contents of nip05_github/ into this repo:
-cp -r /home/node/.openclaw/nip05_github/* .
-cp -r /home/node/.openclaw/nip05_github/.* . 2>/dev/null
+## ✅ Verified Users
 
-# Push to GitHub
-git add .
-git commit -m "Initial NIP-05 service setup"
-git push
-```
-
-### 2. Enable GitHub Pages
-
-1. Go to repo Settings → Pages
-2. Source: Deploy from branch `main`
-3. Folder: `/ (root)`
-4. Click Save
-
-Your site will be live at: `https://YOUR_USERNAME.github.io/nip05-verified`
-
-Or custom domain: `https://nip05.YOURDOMAIN.com`
-
-### 3. Configure GitHub Token
-
-Add these secrets to your GitHub repo (Settings → Secrets):
-
-- `GH_TOKEN` - Personal access token with `repo` scope
-
-### 4. Set Up Local Environment
-
-```bash
-export GITHUB_TOKEN="your_github_token"
-export GITHUB_REPO="your_username/nip05-verified"
-export GITHUB_BRANCH="main"
-```
-
-## 🔄 How It Works
-
-```
-Client DMs on Nostr
-        ↓
-Generates NIP-05 record
-        ↓
-Client pays 10k-50k sats to paradigmtech21@coinos.io
-        ↓
-auto_nip05_payment_listener.py detects payment
-        ↓
-Adds to nostr.json + index.html
-        ↓
-Pushes to GitHub
-        ↓
-GitHub Pages serves updated nostr.json
-        ↓
-Client is VERIFIED! ✅
-```
-
-## ⚡ Commands
-
-```bash
-# Check status
-python3 auto_nip05_payment_listener.py status
-
-# Manually verify a client (after payment)
-python3 auto_nip05_payment_listener.py verify <username> <pubkey>
-
-# Check payments
-python3 auto_nip05_payment_listener.py check
-```
-
-## 📁 File Structure
-
-```
-nip05-verified/
-├── index.html          # Landing page
-├── index.md            # GitHub Pages source
-├── .well-known/
-│   └── nostr.json      # NIP-05 records (served via Pages)
-├── _includes/          # Jekyll includes
-├── assets/             # CSS, JS, images
-└── .github/
-    └── workflows/
-        └── update.yml   # GitHub Actions
-```
+| Username | Domain |
+|---------|--------|
+| hifty | nip05.hifty.co |
 
 ## 💰 Pricing
 
-| Service | Price |
-|---------|-------|
-| Basic Setup | 10,000 sats |
-| Full Hosting | 50,000 sats |
-
-## 🔒 Security
-
-- Payment is verified BEFORE adding to nostr.json
-- GitHub token required for automatic updates
-- All client data stored locally in `nip05_clients/`
-
-## 🤖 Automation
-
-The `auto_nip05_payment_listener.py` script:
-1. Runs via cron every 15 minutes
-2. Checks NWC balance for incoming payments
-3. When payment detected, auto-adds to verified
-4. Pushes to GitHub and deploys
-
-Add to crontab:
-```bash
-*/15 * * * * cd /home/node/.openclaw/workspace && python3 auto_nip05_payment_listener.py check >> logs/nip05.log 2>&1
-```
-
-## 📞 Contact
-
-Nostr: `npub1a3lz855htm20sfcd0y2hp38e4h2akrqjj92spvruw8ge9yslrgws4x8vth`
-Payment: `paradigmtech21@coinos.io`
+- Basic Setup: 10,000 sats (you provide domain)
+- Full Hosting: 50,000 sats (we host on nip05.hifty.co subdomain)
