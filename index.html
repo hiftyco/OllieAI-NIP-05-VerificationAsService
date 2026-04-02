@@ -41,41 +41,35 @@
         }
 
         /* Gradient Orbs */
-        .orb {
-            position: fixed;
-            border-radius: 50%;
-            filter: blur(100px);
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        .orb-1 {
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(circle, var(--accent-soft) 0%, transparent 70%);
-            top: -200px;
-            right: -200px;
-            animation: orbFloat 20s ease-in-out infinite;
-        }
-
-        .orb-2 {
-            width: 500px;
-            height: 500px;
-            background: radial-gradient(circle, rgba(0, 255, 136, 0.05) 0%, transparent 70%);
-            bottom: -150px;
-            left: -150px;
-            animation: orbFloat 25s ease-in-out infinite reverse;
-        }
-
-        @keyframes orbFloat {
-            0%, 100% { transform: translate(0, 0); }
-            50% { transform: translate(30px, 30px); }
-        }
+        .orb { position: fixed; border-radius: 50%; filter: blur(100px); pointer-events: none; z-index: 0; }
+        .orb-1 { width: 600px; height: 600px; background: radial-gradient(circle, var(--accent-soft) 0%, transparent 70%); top: -200px; right: -200px; animation: orbFloat 20s ease-in-out infinite; }
+        .orb-2 { width: 500px; height: 500px; background: radial-gradient(circle, rgba(0, 255, 136, 0.05) 0%, transparent 70%); bottom: -150px; left: -150px; animation: orbFloat 25s ease-in-out infinite reverse; }
+        @keyframes orbFloat { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(30px, 30px); } }
 
         #particles { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
-
         .content { position: relative; z-index: 1; }
         .container { max-width: 540px; margin: 0 auto; padding: 0 24px; }
+
+        /* Live Counter Banner */
+        .live-counter {
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.1) 0%, rgba(255, 107, 53, 0.05) 100%);
+            border: 1px solid rgba(0, 255, 136, 0.2);
+            border-radius: 14px;
+            padding: 12px 18px;
+            margin-bottom: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .counter-left { display: flex; align-items: center; gap: 10px; }
+        .counter-dot { width: 10px; height: 10px; background: var(--green); border-radius: 50%; animation: pulse 2s infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+        .counter-text { font-size: 13px; color: var(--text-muted); }
+        .counter-text strong { color: var(--green); font-weight: 700; }
+        .counter-right { font-size: 12px; color: var(--text-dim); }
 
         /* Hero */
         .hero {
@@ -89,565 +83,186 @@
         }
 
         /* Trust Bar */
-        .trust-bar {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 16px;
-            margin-bottom: 32px;
-            opacity: 0.8;
-        }
-
-        .trust-item {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 12px;
-            color: var(--text-muted);
-        }
-
-        .trust-item .icon {
-            font-size: 14px;
-        }
+        .trust-bar { display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; margin-bottom: 28px; }
+        .trust-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text-muted); }
 
         /* Badge */
-        .badge-wrapper {
-            position: relative;
-            margin-bottom: 32px;
-        }
-
-        .badge-ring {
-            position: absolute;
-            inset: -50px;
-            border: 1px solid var(--border);
-            border-radius: 50%;
-            opacity: 0.3;
-        }
-
-        .badge-ring-2 { inset: -70px; opacity: 0.15; }
-
-        .badge-glow {
-            position: absolute;
-            inset: -30px;
-            background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
-            opacity: 0.5;
-            animation: badgeGlow 3s ease-in-out infinite;
-        }
-
-        @keyframes badgeGlow {
-            0%, 100% { opacity: 0.3; transform: scale(0.95); }
-            50% { opacity: 0.6; transform: scale(1.05); }
-        }
-
-        .badge {
-            position: relative;
-            width: 90px;
-            height: 90px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--card) 0%, var(--bg-light) 100%);
-            border: 2px solid var(--accent);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 0 50px var(--accent-glow);
-        }
-
-        .badge span { font-size: 40px; color: var(--accent); }
+        .badge-wrapper { position: relative; margin-bottom: 28px; }
+        .badge-ring { position: absolute; inset: -40px; border: 1px solid var(--border); border-radius: 50%; opacity: 0.3; }
+        .badge-ring-2 { inset: -55px; opacity: 0.15; }
+        .badge-glow { position: absolute; inset: -20px; background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%); opacity: 0.5; animation: badgeGlow 3s ease-in-out infinite; }
+        @keyframes badgeGlow { 0%, 100% { opacity: 0.3; transform: scale(0.95); } 50% { opacity: 0.6; transform: scale(1.05); } }
+        .badge { position: relative; width: 80px; height: 80px; border-radius: 50%; background: linear-gradient(135deg, var(--card) 0%, var(--bg-light) 100%); border: 2px solid var(--accent); display: flex; align-items: center; justify-content: center; box-shadow: 0 0 40px var(--accent-glow); }
+        .badge span { font-size: 36px; color: var(--accent); }
 
         /* Typography */
-        h1 {
-            font-family: 'Syne', sans-serif;
-            font-size: clamp(36px, 9vw, 56px);
-            font-weight: 800;
-            letter-spacing: -0.03em;
-            line-height: 1.0;
-            margin-bottom: 16px;
-        }
-
+        h1 { font-family: 'Syne', sans-serif; font-size: clamp(32px, 8vw, 48px); font-weight: 800; letter-spacing: -0.03em; line-height: 1.0; margin-bottom: 14px; }
         h1 .accent { color: var(--accent); }
-
-        .headline-sub {
-            font-size: 15px;
-            color: var(--text-muted);
-            margin-bottom: 32px;
-            line-height: 1.5;
-        }
-
-        /* Pain Point Banner */
-        .pain-banner {
-            background: linear-gradient(135deg, rgba(255, 107, 53, 0.1) 0%, rgba(255, 215, 0, 0.05) 100%);
-            border: 1px solid rgba(255, 107, 53, 0.2);
-            border-radius: 16px;
-            padding: 18px 20px;
-            margin-bottom: 28px;
-            text-align: left;
-        }
-
-        .pain-banner h4 {
-            font-size: 13px;
-            font-weight: 700;
-            margin-bottom: 8px;
-            color: var(--accent);
-        }
-
-        .pain-banner p {
-            font-size: 13px;
-            color: var(--text-muted);
-            line-height: 1.5;
-        }
+        .headline-sub { font-size: 15px; color: var(--text-muted); margin-bottom: 24px; line-height: 1.5; }
 
         /* Payment Card */
-        .payment-card {
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 28px;
-            padding: 28px;
-            width: 100%;
-            position: relative;
-            overflow: hidden;
-        }
+        .payment-card { background: var(--card); border: 1px solid var(--border); border-radius: 28px; padding: 26px; width: 100%; position: relative; overflow: hidden; }
+        .payment-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--accent), transparent); opacity: 0.5; }
 
-        .payment-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, var(--accent), transparent);
-            opacity: 0.5;
-        }
+        /* Form */
+        .form-group { margin-bottom: 18px; text-align: left; }
+        .form-label { display: block; font-size: 11px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 8px; }
+        .form-input { width: 100%; padding: 14px 16px; background: var(--bg); border: 1px solid var(--border); border-radius: 12px; color: var(--text); font-size: 14px; font-family: 'SF Mono', ui-monospace, monospace; transition: border-color 0.2s ease; }
+        .form-input:focus { outline: none; border-color: var(--accent); }
+        .form-input::placeholder { color: var(--text-dim); font-family: 'Space Grotesk', sans-serif; }
+        .form-hint { font-size: 11px; color: var(--text-dim); margin-top: 6px; }
+        .form-error { font-size: 11px; color: var(--red); margin-top: 6px; display: none; }
+        .form-group.error .form-error { display: block; }
+        .form-group.error .form-input { border-color: var(--red); }
 
         /* Plan Toggle */
-        .plan-toggle {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 8px;
-            margin-bottom: 24px;
-        }
-
-        .plan-btn {
-            padding: 14px 10px;
-            background: var(--bg-light);
-            border: 1px solid var(--border);
-            border-radius: 14px;
-            cursor: pointer;
-            transition: all 0.25s ease;
-            text-align: center;
-        }
-
+        .plan-toggle { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 18px; }
+        .plan-btn { padding: 12px 10px; background: var(--bg-light); border: 1px solid var(--border); border-radius: 12px; cursor: pointer; transition: all 0.25s ease; text-align: center; }
         .plan-btn:hover { border-color: var(--border-light); }
-
-        .plan-btn.active {
-            background: var(--accent-soft);
-            border-color: var(--accent);
-            box-shadow: 0 0 20px var(--accent-soft);
-        }
-
-        .plan-btn .pname {
-            font-size: 10px;
-            color: var(--text-dim);
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            margin-bottom: 4px;
-            display: block;
-        }
-
-        .plan-btn .pprice {
-            font-size: 22px;
-            font-weight: 700;
-            color: var(--text);
-            display: block;
-        }
-
+        .plan-btn.active { background: var(--accent-soft); border-color: var(--accent); }
+        .plan-btn .pname { font-size: 9px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 3px; display: block; }
+        .plan-btn .pprice { font-size: 20px; font-weight: 700; color: var(--text); display: block; }
         .plan-btn.active .pprice { color: var(--accent); }
 
-        /* Features in card */
-        .card-features {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-bottom: 20px;
-        }
-
-        .card-feature {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            font-size: 11px;
-            color: var(--text-muted);
-            background: var(--bg-light);
-            padding: 6px 10px;
-            border-radius: 980px;
-        }
-
-        .card-feature .check { color: var(--green); }
-
         /* QR */
-        .qr-section { text-align: center; margin-bottom: 16px; }
-
-        .qr-frame {
-            background: #fff;
-            padding: 12px;
-            border-radius: 18px;
-            display: inline-block;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .qr-frame::before {
-            content: '';
-            position: absolute;
-            inset: -2px;
-            border-radius: 20px;
-            background: linear-gradient(135deg, var(--accent), var(--gold));
-            z-index: -1;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .qr-frame:hover::before { opacity: 1; }
-        .qr-frame:hover { transform: scale(1.04); box-shadow: 0 15px 40px rgba(255, 107, 53, 0.25); }
-        .qr-frame img { display: block; width: 140px; height: 140px; border-radius: 6px; }
-        .qr-hint { font-size: 10px; color: var(--text-dim); margin-top: 12px; }
+        .qr-section { text-align: center; margin: 18px 0; }
+        .qr-frame { background: #fff; padding: 10px; border-radius: 16px; display: inline-block; cursor: pointer; transition: all 0.3s ease; }
+        .qr-frame:hover { transform: scale(1.03); box-shadow: 0 10px 30px rgba(255, 107, 53, 0.2); }
+        .qr-frame img { display: block; width: 120px; height: 120px; border-radius: 4px; }
+        .qr-hint { font-size: 10px; color: var(--text-dim); margin-top: 10px; }
 
         /* Amount */
-        .amount-display {
-            font-size: 40px;
-            font-weight: 700;
-            color: var(--accent);
-            margin: 20px 0 14px;
-            letter-spacing: -0.02em;
-        }
-
-        .amount-display span { font-size: 16px; font-weight: 500; color: var(--text-muted); }
+        .amount-display { font-size: 36px; font-weight: 700; color: var(--accent); margin: 14px 0 12px; letter-spacing: -0.02em; }
+        .amount-display span { font-size: 14px; font-weight: 500; color: var(--text-muted); }
 
         /* Address */
-        .address-box {
-            background: var(--bg);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 14px;
-            margin-bottom: 12px;
-        }
+        .address-box { background: var(--bg); border: 1px solid var(--border); border-radius: 10px; padding: 12px; margin-bottom: 12px; }
+        .address-box .alabel { font-size: 9px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 4px; }
+        .address-box .avalue { font-size: 11px; color: var(--gold); font-family: 'SF Mono', ui-monospace, monospace; word-break: break-all; }
 
-        .address-box .alabel { font-size: 9px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 6px; }
-        .address-box .avalue { font-size: 12px; color: var(--gold); font-family: 'SF Mono', ui-monospace, monospace; word-break: break-all; }
+        /* Buttons */
+        .pay-btn { width: 100%; padding: 15px; background: linear-gradient(135deg, var(--accent) 0%, #ff8f5a 100%); color: #000; border: none; border-radius: 12px; font-size: 14px; font-weight: 700; cursor: pointer; transition: all 0.25s ease; display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 10px; }
+        .pay-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 30px var(--accent-glow); }
+        .pay-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
 
-        /* Copy Button */
-        .copy-btn {
-            width: 100%;
-            padding: 16px;
-            background: linear-gradient(135deg, var(--accent) 0%, #ff8f5a 100%);
-            color: #000;
-            border: none;
-            border-radius: 14px;
-            font-size: 14px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.25s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
+        .copy-btn { width: 100%; padding: 13px; background: transparent; color: var(--text); border: 1px solid var(--border); border-radius: 12px; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.25s ease; display: flex; align-items: center; justify-content: center; gap: 6px; }
+        .copy-btn:hover { border-color: var(--accent); color: var(--accent); }
+        .copy-btn.copied { background: var(--bg); color: var(--accent); border-color: var(--accent); }
 
-        .copy-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 35px var(--accent-glow); }
-        .copy-btn.copied { background: var(--bg); color: var(--accent); border: 1px solid var(--accent); }
+        /* Wallet Grid */
+        .wallet-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 14px; }
+        .wallet-btn { display: flex; align-items: center; gap: 10px; padding: 12px 10px; background: var(--bg-light); border: 1px solid var(--border); border-radius: 12px; text-decoration: none; color: var(--text); transition: all 0.2s ease; }
+        .wallet-btn:hover { background: var(--card-hover); transform: translateY(-1px); }
+        .wallet-icon { width: 30px; height: 30px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; flex-shrink: 0; }
+        .wallet-name { font-size: 11px; font-weight: 600; }
 
-        /* Payment Methods */
-        .payment-methods {
-            margin-top: 18px;
-            padding-top: 18px;
-            border-top: 1px solid var(--border);
-        }
+        /* Success State */
+        .success-card { display: none; text-align: center; padding: 30px 20px; }
+        .success-card.show { display: block; }
+        .success-icon { font-size: 60px; margin-bottom: 16px; }
+        .success-card h3 { font-size: 22px; font-weight: 700; margin-bottom: 10px; color: var(--green); }
+        .success-card p { font-size: 14px; color: var(--text-muted); margin-bottom: 16px; }
+        .success-check { display: inline-flex; align-items: center; gap: 8px; padding: 10px 18px; background: rgba(0, 255, 136, 0.1); border: 1px solid rgba(0, 255, 136, 0.3); border-radius: 990px; font-size: 13px; color: var(--green); margin-bottom: 16px; }
 
-        .payment-methods-label {
-            font-size: 10px;
-            color: var(--text-dim);
-            text-transform: uppercase;
-            letter-spacing: 0.15em;
-            margin-bottom: 12px;
-        }
+        /* Payment Form */
+        .payment-form { }
+        .payment-form.hidden { display: none; }
 
-        .wallet-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 8px;
-        }
-
-        .wallet-btn {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 14px 12px;
-            background: var(--bg-light);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            text-decoration: none;
-            color: var(--text);
-            transition: all 0.25s ease;
-        }
-
-        .wallet-btn:hover { background: var(--card-hover); transform: translateY(-2px); }
-
-        .wallet-icon {
-            width: 34px;
-            height: 34px;
-            border-radius: 9px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 14px;
-            font-weight: 700;
-            flex-shrink: 0;
-        }
-
-        .wallet-info { flex: 1; }
-        .wallet-name { font-size: 12px; font-weight: 600; }
-        .wallet-desc { font-size: 10px; color: var(--text-dim); }
-
-        /* DM Button */
-        .dm-section { margin-top: 24px; }
-
-        .dm-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 14px 24px;
-            background: transparent;
-            border: 1px solid var(--border);
-            border-radius: 980px;
-            text-decoration: none;
-            font-size: 13px;
-            font-weight: 600;
-            color: var(--text);
-            transition: all 0.25s ease;
-        }
-
-        .dm-btn:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }
-
-        /* Guarantee Badge */
-        .guarantee {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            margin-top: 20px;
-            padding: 12px 16px;
-            background: rgba(0, 255, 136, 0.05);
-            border: 1px solid rgba(0, 255, 136, 0.15);
-            border-radius: 12px;
-            font-size: 12px;
-            color: var(--green);
-        }
-
-        .guarantee .icon { font-size: 16px; }
+        /* Guarantee */
+        .guarantee { display: flex; align-items: center; justify-content: center; gap: 6px; margin-top: 16px; font-size: 11px; color: var(--green); }
 
         /* Why Section */
-        .why-section { padding: 80px 0; border-top: 1px solid var(--border); }
-
-        .section-label {
-            font-size: 11px;
-            color: var(--accent);
-            text-transform: uppercase;
-            letter-spacing: 0.2em;
-            margin-bottom: 10px;
-        }
-
-        .section-title {
-            font-family: 'Syne', sans-serif;
-            font-size: 32px;
-            font-weight: 800;
-            margin-bottom: 40px;
-        }
-
-        .why-grid { display: grid; gap: 14px; }
-
-        .why-card {
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 18px;
-            padding: 24px;
-            transition: all 0.3s ease;
-            text-align: left;
-        }
-
-        .why-card:hover { border-color: var(--border-light); transform: translateY(-3px); }
-
-        .why-card-icon { font-size: 32px; margin-bottom: 12px; }
-
-        .why-card h3 { font-size: 15px; font-weight: 700; margin-bottom: 6px; }
-
-        .why-card p { font-size: 13px; color: var(--text-muted); line-height: 1.55; }
+        .why-section { padding: 70px 0; border-top: 1px solid var(--border); }
+        .section-label { font-size: 11px; color: var(--accent); text-transform: uppercase; letter-spacing: 0.2em; margin-bottom: 10px; }
+        .section-title { font-family: 'Syne', sans-serif; font-size: 28px; font-weight: 800; margin-bottom: 36px; }
+        .why-grid { display: grid; gap: 12px; }
+        .why-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 20px; text-align: left; transition: all 0.3s ease; }
+        .why-card:hover { border-color: var(--border-light); transform: translateY(-2px); }
+        .why-card-icon { font-size: 28px; margin-bottom: 10px; }
+        .why-card h3 { font-size: 14px; font-weight: 700; margin-bottom: 5px; }
+        .why-card p { font-size: 12px; color: var(--text-muted); line-height: 1.5; }
 
         /* Comparison */
-        .compare-section {
-            padding: 60px 0;
-            background: linear-gradient(180deg, transparent 0%, rgba(255, 107, 53, 0.02) 50%, transparent 100%);
-        }
-
-        .compare-table {
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 18px;
-            overflow: hidden;
-        }
-
-        .compare-row {
-            display: flex;
-            padding: 14px 18px;
-            border-bottom: 1px solid var(--border);
-        }
-
+        .compare-section { padding: 60px 0; background: linear-gradient(180deg, transparent 0%, rgba(255, 107, 53, 0.02) 50%, transparent 100%); }
+        .compare-table { background: var(--card); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; }
+        .compare-row { display: flex; padding: 12px 16px; border-bottom: 1px solid var(--border); }
         .compare-row:last-child { border-bottom: none; }
         .compare-row:nth-child(even) { background: rgba(255,255,255,0.01); }
-
-        .compare-feature { flex: 1; font-size: 13px; }
-        .compare-old { width: 80px; text-align: center; font-size: 18px; color: var(--red); }
-        .compare-new { width: 80px; text-align: center; font-size: 18px; color: var(--green); }
-
-        .compare-header {
-            background: var(--bg-light);
-            font-size: 11px;
-            color: var(--text-dim);
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-        }
+        .compare-feature { flex: 1; font-size: 12px; }
+        .compare-old { width: 70px; text-align: center; font-size: 16px; }
+        .compare-new { width: 70px; text-align: center; font-size: 16px; color: var(--green); }
+        .compare-header { background: var(--bg-light); font-size: 10px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.1em; }
 
         /* FAQ */
-        .faq-section { padding: 80px 0; }
-
-        .faq-item {
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            margin-bottom: 12px;
-            overflow: hidden;
-        }
-
-        .faq-q {
-            padding: 18px 20px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            transition: background 0.2s ease;
-        }
-
+        .faq-section { padding: 60px 0; }
+        .faq-item { background: var(--card); border: 1px solid var(--border); border-radius: 14px; margin-bottom: 10px; overflow: hidden; }
+        .faq-q { padding: 16px 18px; font-size: 13px; font-weight: 600; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
         .faq-q:hover { background: var(--card-hover); }
-        .faq-q .arrow { transition: transform 0.3s ease; font-size: 12px; color: var(--text-dim); }
+        .faq-q .arrow { transition: transform 0.3s ease; font-size: 11px; color: var(--text-dim); }
         .faq-item.open .arrow { transform: rotate(180deg); }
-
-        .faq-a {
-            padding: 0 20px;
-            max-height: 0;
-            overflow: hidden;
-            transition: all 0.3s ease;
-        }
-
-        .faq-item.open .faq-a { max-height: 200px; padding: 0 20px 18px; }
-
-        .faq-a p { font-size: 13px; color: var(--text-muted); line-height: 1.6; }
+        .faq-a { max-height: 0; overflow: hidden; transition: all 0.3s ease; }
+        .faq-item.open .faq-a { max-height: 150px; }
+        .faq-a p { padding: 0 18px 14px; font-size: 12px; color: var(--text-muted); line-height: 1.6; }
 
         /* Steps */
-        .steps-section { padding: 60px 0; }
-
-        .steps-row {
-            display: flex;
-            justify-content: center;
-            gap: 16px;
-        }
-
-        .step { text-align: center; flex: 1; max-width: 120px; }
-
-        .step-num {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--accent) 0%, #ff8f5a 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-            font-weight: 800;
-            color: #000;
-            margin: 0 auto 12px;
-            box-shadow: 0 6px 20px var(--accent-glow);
-        }
-
-        .step h4 { font-size: 13px; font-weight: 700; margin-bottom: 3px; }
-        .step p { font-size: 11px; color: var(--text-muted); }
+        .steps-section { padding: 50px 0; }
+        .steps-row { display: flex; justify-content: center; gap: 14px; }
+        .step { text-align: center; flex: 1; max-width: 100px; }
+        .step-num { width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg, var(--accent) 0%, #ff8f5a 100%); display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 800; color: #000; margin: 0 auto 10px; box-shadow: 0 4px 15px var(--accent-glow); }
+        .step h4 { font-size: 12px; font-weight: 700; margin-bottom: 2px; }
+        .step p { font-size: 10px; color: var(--text-muted); }
 
         /* Verified */
-        .verified-section { padding: 60px 0; }
-
-        .verified-label { font-size: 11px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 14px; }
-
-        .verified-tags { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
-
-        .vtag {
-            background: var(--accent-soft);
-            border: 1px solid rgba(255, 107, 53, 0.2);
-            padding: 7px 12px;
-            border-radius: 990px;
-            font-size: 11px;
-            color: var(--accent);
-        }
+        .verified-section { padding: 50px 0; }
+        .verified-label { font-size: 11px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 12px; }
+        .verified-tags { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; }
+        .vtag { background: var(--accent-soft); border: 1px solid rgba(255, 107, 53, 0.2); padding: 6px 12px; border-radius: 990px; font-size: 11px; color: var(--accent); }
 
         /* Footer */
-        footer { padding: 50px 0; border-top: 1px solid var(--border); text-align: center; }
-        footer p { font-size: 12px; color: var(--text-dim); margin-bottom: 6px; }
+        footer { padding: 40px 0; border-top: 1px solid var(--border); text-align: center; }
+        footer p { font-size: 12px; color: var(--text-dim); margin-bottom: 5px; }
         footer a { color: var(--accent); text-decoration: none; }
 
         /* Modal */
         .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.92); backdrop-filter: blur(20px); z-index: 1000; display: none; align-items: center; justify-content: center; padding: 24px; }
         .modal.show { display: flex; }
-
-        .modal-box {
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 24px;
-            padding: 40px 32px;
-            text-align: center;
-            max-width: 340px;
-            width: 100%;
-            animation: modalIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-
+        .modal-box { background: var(--card); border: 1px solid var(--border); border-radius: 22px; padding: 36px 28px; text-align: center; max-width: 320px; width: 100%; animation: modalIn 0.35s ease; }
         @keyframes modalIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
-
-        .modal-box h3 { font-family: 'Syne', sans-serif; font-size: 22px; font-weight: 800; margin-bottom: 4px; }
-        .modal-amt { font-size: 30px; font-weight: 700; color: var(--accent); margin-bottom: 20px; }
-        .modal-qr { background: #fff; padding: 12px; border-radius: 14px; display: inline-block; }
-        .modal-qr img { width: 200px; height: 200px; border-radius: 6px; }
-        .modal-addr { margin-top: 16px; font-size: 11px; color: var(--text-dim); word-break: break-all; }
-        .modal-close { margin-top: 24px; padding: 12px 28px; background: var(--bg-light); border: 1px solid var(--border); border-radius: 12px; color: var(--text); font-size: 13px; cursor: pointer; }
+        .modal-box h3 { font-family: 'Syne', sans-serif; font-size: 20px; font-weight: 800; margin-bottom: 4px; }
+        .modal-amt { font-size: 28px; font-weight: 700; color: var(--accent); margin-bottom: 18px; }
+        .modal-qr { background: #fff; padding: 10px; border-radius: 12px; display: inline-block; }
+        .modal-qr img { width: 180px; height: 180px; border-radius: 4px; }
+        .modal-addr { margin-top: 14px; font-size: 11px; color: var(--text-dim); word-break: break-all; }
+        .modal-close { margin-top: 22px; padding: 12px 26px; background: var(--bg-light); border: 1px solid var(--border); border-radius: 10px; color: var(--text); font-size: 13px; cursor: pointer; }
         .modal-close:hover { background: var(--card-hover); }
 
         /* Confetti */
-        .confetti { position: fixed; width: 8px; height: 8px; pointer-events: none; z-index: 2000; animation: confettiFall 1s ease-out forwards; }
-        @keyframes confettiFall { 0% { transform: translateY(0) rotate(0deg); opacity: 1; } 100% { transform: translateY(100px) rotate(720deg); opacity: 0; } }
+        .confetti { position: fixed; width: 7px; height: 7px; pointer-events: none; z-index: 2000; animation: confettiFall 0.9s ease-out forwards; }
+        @keyframes confettiFall { 0% { transform: translateY(0) rotate(0deg); opacity: 1; } 100% { transform: translateY(80px) rotate(600deg); opacity: 0; } }
 
         /* Animations */
-        .fade-in { opacity: 0; animation: fadeIn 0.8s ease-out forwards; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(25px); } to { opacity: 1; transform: translateY(0); } }
-
-        .hero > * { opacity: 0; animation: fadeIn 0.7s ease-out forwards; }
+        .fade-in { opacity: 0; animation: fadeIn 0.7s ease-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .hero > * { opacity: 0; animation: fadeIn 0.6s ease-out forwards; }
         .trust-bar { animation-delay: 0.05s !important; }
-        .badge-wrapper { animation-delay: 0.1s !important; }
+        .live-counter { animation-delay: 0.1s !important; }
+        .badge-wrapper { animation-delay: 0.12s !important; }
         h1 { animation-delay: 0.15s !important; }
-        .payment-card { animation-delay: 0.3s !important; }
+        .payment-card { animation-delay: 0.2s !important; }
+
+        /* Recent Activity Toast */
+        .toast { position: fixed; bottom: 20px; right: 20px; background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 14px 18px; display: flex; align-items: center; gap: 10px; font-size: 12px; color: var(--text); z-index: 500; transform: translateX(120%); transition: transform 0.4s ease; max-width: 280px; }
+        .toast.show { transform: translateX(0); }
+        .toast-icon { font-size: 20px; flex-shrink: 0; }
+        .toast-text { flex: 1; }
+        .toast-text strong { color: var(--green); }
 
         @media (max-width: 480px) {
-            .payment-card { padding: 22px 18px; }
-            .amount-display { font-size: 34px; }
+            .payment-card { padding: 20px 16px; }
+            .amount-display { font-size: 30px; }
             .wallet-grid { grid-template-columns: 1fr; }
-            .steps-row { gap: 10px; }
-            .step { max-width: 85px; }
+            .steps-row { gap: 8px; }
+            .step { max-width: 80px; }
         }
     </style>
 </head>
@@ -656,6 +271,13 @@
     <div class="orb orb-2"></div>
     <canvas id="particles"></canvas>
 
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+        <span class="toast-icon">&#128640;</span>
+        <span class="toast-text"><strong>Alex</strong> just got verified!</span>
+    </div>
+
+    <!-- QR Modal -->
     <div class="modal" id="qrModal">
         <div class="modal-box">
             <h3>Scan to Pay</h3>
@@ -669,11 +291,20 @@
     <div class="content">
         <section class="hero">
             <div class="container">
+                <!-- Live Counter -->
+                <div class="live-counter">
+                    <div class="counter-left">
+                        <div class="counter-dot"></div>
+                        <span class="counter-text"><strong id="counterNum">12</strong> people verified today</span>
+                    </div>
+                    <div class="counter-right">Avg. verification: <strong style="color: var(--green);">5 min</strong></div>
+                </div>
+
                 <!-- Trust Bar -->
                 <div class="trust-bar">
-                    <div class="trust-item"><span class="icon">&#128994;</span> Instant Verification</div>
-                    <div class="trust-item"><span class="icon">&#128275;</span> Secure Payment</div>
-                    <div class="trust-item"><span class="icon">&#128172;</span> 24/7 Support</div>
+                    <div class="trust-item"><span>&#128994;</span> Instant</div>
+                    <div class="trust-item"><span>&#128275;</span> Secure</div>
+                    <div class="trust-item"><span>&#128172;</span> Auto-Verify</div>
                 </div>
 
                 <div class="badge-wrapper">
@@ -685,81 +316,83 @@
 
                 <h1>Stand Out.<br>Get <span class="accent">Verified.</span></h1>
 
-                <p class="headline-sub">The Bitcoin-verified checkmark that shows everyone you're real.</p>
-
-                <!-- Pain Point Banner -->
-                <div class="pain-banner">
-                    <h4>&#128544; Tired of DNS configuration headaches?</h4>
-                    <p>Most NIP-05 services make you set up DNS records, wait for propagation, and hope nothing breaks. We handle all of it for you.</p>
-                </div>
+                <p class="headline-sub">No DNS. No DM needed. Just pay and you're verified.</p>
 
                 <!-- Payment Card -->
                 <div class="payment-card">
-                    <div class="plan-toggle">
-                        <button class="plan-btn active" id="planA" onclick="selectPlan(10000)">
-                            <span class="pname">Full Hosting</span>
-                            <span class="pprice">10k</span>
-                        </button>
-                        <button class="plan-btn" id="planB" onclick="selectPlan(50000)">
-                            <span class="pname">Custom Domain</span>
-                            <span class="pprice">50k</span>
-                        </button>
+                    <!-- Success State (hidden by default) -->
+                    <div class="success-card" id="successCard">
+                        <div class="success-icon">&#127881;</div>
+                        <h3>Payment Received!</h3>
+                        <p>You're being verified now. Usually takes under 5 minutes.</p>
+                        <div class="success-check">&#10003; Auto-verification in progress</div>
+                        <p style="font-size: 12px; color: var(--text-dim);">Check back in a few minutes, then search for your username on Nostr!</p>
                     </div>
 
-                    <div class="card-features">
-                        <span class="card-feature"><span class="check">&#10003;</span> Lifetime verified</span>
-                        <span class="card-feature"><span class="check">&#10003;</span> All Nostr clients</span>
-                        <span class="card-feature"><span class="check">&#10003;</span> No DNS needed</span>
-                    </div>
-
-                    <div class="qr-section">
-                        <div class="qr-frame" onclick="showModal()">
-                            <img id="mainQR" src="" alt="QR">
+                    <!-- Payment Form -->
+                    <div class="payment-form" id="paymentForm">
+                        <div class="form-group" id="usernameGroup">
+                            <label class="form-label">Your Username</label>
+                            <input type="text" class="form-input" id="usernameInput" placeholder="pick_a_username" maxlength="20">
+                            <div class="form-hint">Letters, numbers, underscores. Max 20 chars.</div>
+                            <div class="form-error">Only letters, numbers, underscores allowed</div>
                         </div>
-                        <div class="qr-hint">Tap to enlarge</div>
-                    </div>
 
-                    <div class="amount-display" id="amountDisplay">10,000 <span>sats</span></div>
+                        <div class="form-group" id="npubGroup">
+                            <label class="form-label">Your Public Key (npub)</label>
+                            <input type="text" class="form-input" id="npubInput" placeholder="npub1...">
+                            <div class="form-hint">Paste your npub from your Nostr wallet</div>
+                            <div class="form-error">Invalid npub format</div>
+                        </div>
 
-                    <div class="address-box">
-                        <div class="alabel">Lightning Address</div>
-                        <div class="avalue">paradigmtech21@coinos.io</div>
-                    </div>
+                        <div class="plan-toggle">
+                            <button class="plan-btn active" id="planA" onclick="selectPlan(10000)">
+                                <span class="pname">Full Hosting</span>
+                                <span class="pprice">10k</span>
+                            </button>
+                            <button class="plan-btn" id="planB" onclick="selectPlan(50000)">
+                                <span class="pname">Custom Domain</span>
+                                <span class="pprice">50k</span>
+                            </button>
+                        </div>
 
-                    <button class="copy-btn" id="copyBtn" onclick="copyAddress()">
-                        <span id="copyText">Copy Payment Address</span>
-                    </button>
+                        <div class="qr-section">
+                            <div class="qr-frame" onclick="showModal()">
+                                <img id="mainQR" src="" alt="QR">
+                            </div>
+                            <div class="qr-hint">Tap to enlarge</div>
+                        </div>
 
-                    <div class="payment-methods">
-                        <div class="payment-methods-label">Or Open Your Wallet</div>
+                        <div class="amount-display" id="amountDisplay">10,000 <span>sats</span></div>
+
+                        <div class="address-box">
+                            <div class="alabel">Lightning Address</div>
+                            <div class="avalue">paradigmtech21@coinos.io</div>
+                        </div>
+
+                        <button class="pay-btn" id="payBtn" onclick="startPayment()">
+                            <span>&#9889;</span> Pay &amp; Verify
+                        </button>
+
+                        <button class="copy-btn" id="copyBtn" onclick="copyAddress()">
+                            <span id="copyText">Copy Address</span>
+                        </button>
+
                         <div class="wallet-grid">
                             <a href="https://coinos.io/paradigmtech21" class="wallet-btn" target="_blank">
                                 <div class="wallet-icon" style="background: linear-gradient(135deg, #00ff88, #00cc6a); color: #000;">C</div>
-                                <div class="wallet-info">
-                                    <div class="wallet-name">Coinos</div>
-                                    <div class="wallet-desc">Web Wallet</div>
-                                </div>
+                                <span class="wallet-name">Coinos</span>
                             </a>
                             <a href="https://primal.net/dm/paradigmtech21" class="wallet-btn" target="_blank">
                                 <div class="wallet-icon" style="background: linear-gradient(135deg, #FFD700, #FFA500); color: #000;">P</div>
-                                <div class="wallet-info">
-                                    <div class="wallet-name">Primal</div>
-                                    <div class="wallet-desc">DM to Pay</div>
-                                </div>
+                                <span class="wallet-name">Primal</span>
                             </a>
                         </div>
-                    </div>
 
-                    <div class="guarantee">
-                        <span class="icon">&#128176;</span>
-                        <span>100% Money-Back Guarantee — Not verified in 24hrs? Full refund.</span>
+                        <div class="guarantee">
+                            <span>&#128176;</span> 100% Money-Back Guarantee
+                        </div>
                     </div>
-                </div>
-
-                <div class="dm-section">
-                    <a href="nostr:npub1a3lz855htm20sfcd0y2hp38e4h2akrqjj92spvruw8ge9yslrgws4x8vth" class="dm-btn">
-                        &#128172; DM to Complete Verification
-                    </a>
                 </div>
             </div>
         </section>
@@ -774,25 +407,25 @@
                     <div class="why-card">
                         <div class="why-card-icon">&#128737;</div>
                         <h3>Proves You're Real</h3>
-                        <p>The verified badge shows everyone you control this Nostr identity. No more "is this really you?"</p>
+                        <p>The verified badge shows everyone you control this Nostr identity.</p>
                     </div>
 
                     <div class="why-card">
                         <div class="why-card-icon">&#9889;</div>
                         <h3>30 Seconds</h3>
-                        <p>No DNS setup. No waiting for propagation. You're verified the moment we add you.</p>
+                        <p>No DNS setup. You're verified the moment we add you.</p>
                     </div>
 
                     <div class="why-card">
                         <div class="why-card-icon">&#127760;</div>
                         <h3>Works Everywhere</h3>
-                        <p>Your checkmark shows on Primal, Damus, Iris, and all major Nostr clients.</p>
+                        <p>Your checkmark shows on Primal, Damus, Iris, and all clients.</p>
                     </div>
 
                     <div class="why-card">
                         <div class="why-card-icon">&#128176;</div>
                         <h3>One-Time Payment</h3>
-                        <p>Just 10,000 sats for lifetime verification. No recurring fees. Ever.</p>
+                        <p>Just 10,000 sats for lifetime verification.</p>
                     </div>
                 </div>
             </div>
@@ -821,19 +454,14 @@
                         <div class="compare-new">&#10003;</div>
                     </div>
                     <div class="compare-row">
-                        <div class="compare-feature">DNS Knowledge</div>
+                        <div class="compare-feature">Auto-Verify</div>
                         <div class="compare-old">&#10060;</div>
                         <div class="compare-new">&#10003;</div>
                     </div>
                     <div class="compare-row">
-                        <div class="compare-feature">Propagation Issues</div>
-                        <div class="compare-old">&#10060;</div>
-                        <div class="compare-new">&#10003;</div>
-                    </div>
-                    <div class="compare-row">
-                        <div class="compare-feature">Instant Results</div>
-                        <div class="compare-old">&#10060;</div>
-                        <div class="compare-new">&#10003;</div>
+                        <div class="compare-feature">DM Required</div>
+                        <div class="compare-old">&#10003;</div>
+                        <div class="compare-new">&#10060;</div>
                     </div>
                 </div>
             </div>
@@ -846,28 +474,23 @@
                 <h2 class="section-title">Questions? Answers.</h2>
 
                 <div class="faq-item" onclick="toggleFaq(this)">
-                    <div class="faq-q">What is NIP-05 verification?<span class="arrow">&#9662;</span></div>
-                    <div class="faq-a"><p>NIP-05 is a Nostr protocol standard that maps your Nostr public key to a Lightning address. The verified checkmark shows on clients like Primal, Damus, and Iris.</p></div>
+                    <div class="faq-q">How does auto-verification work?<span class="arrow">&#9662;</span></div>
+                    <div class="faq-a"><p>Enter your username + npub, pay, and we automatically add you to our verification list. No DM needed!</p></div>
                 </div>
 
                 <div class="faq-item" onclick="toggleFaq(this)">
                     <div class="faq-q">How long does verification last?<span class="arrow">&#9662;</span></div>
-                    <div class="faq-a"><p>Forever! Your verification is permanent as long as your domain/hosting remains active. We host it for you.</p></div>
+                    <div class="faq-a"><p>Forever! Your verification is permanent as long as we host it.</p></div>
                 </div>
 
                 <div class="faq-item" onclick="toggleFaq(this)">
                     <div class="faq-q">What if I don't have Lightning?<span class="arrow">&#9662;</span></div>
-                    <div class="faq-a"><p>You can use any Lightning wallet (Coinos, Alby, Cash App) or send sats via the Primal DM. If you're truly stuck, DM us and we'll help.</p></div>
+                    <div class="faq-a"><p>Use Cash App, or any wallet that supports Lightning. If truly stuck, DM us.</p></div>
                 </div>
 
                 <div class="faq-item" onclick="toggleFaq(this)">
                     <div class="faq-q">What if it doesn't work?<span class="arrow">&#9662;</span></div>
-                    <div class="faq-a"><p>We offer a 100% money-back guarantee. If you're not verified within 24 hours of payment, we'll refund you in full. No questions asked.</p></div>
-                </div>
-
-                <div class="faq-item" onclick="toggleFaq(this)">
-                    <div class="faq-q">Can I verify multiple usernames?<span class="arrow">&#9662;</span></div>
-                    <div class="faq-a"><p>Yes! Each username is a separate 10,000 sats payment. Contact us for bulk pricing if you need more than 5.</p></div>
+                    <div class="faq-a"><p>100% money-back guarantee. Not verified in 24hrs? Full refund.</p></div>
                 </div>
             </div>
         </section>
@@ -881,18 +504,18 @@
                 <div class="steps-row">
                     <div class="step">
                         <div class="step-num">1</div>
-                        <h4>Pay</h4>
-                        <p>Scan QR or copy address</p>
+                        <h4>Enter Info</h4>
+                        <p>Username + npub</p>
                     </div>
                     <div class="step">
                         <div class="step-num">2</div>
-                        <h4>DM Us</h4>
-                        <p>Send username + npub</p>
+                        <h4>Pay</h4>
+                        <p>Scan QR</p>
                     </div>
                     <div class="step">
                         <div class="step-num">3</div>
                         <h4>Done!</h4>
-                        <p>Checkmark appears</p>
+                        <p>Auto-verified</p>
                     </div>
                 </div>
             </div>
@@ -901,7 +524,7 @@
         <!-- Verified -->
         <section class="verified-section">
             <div class="container">
-                <div class="verified-label">Already Verified</div>
+                <div class="verified-label">Recently Verified</div>
                 <div class="verified-tags" id="verifiedTags">
                     <span class="vtag">Loading...</span>
                 </div>
@@ -917,7 +540,7 @@
     </div>
 
     <script>
-        // Particles
+        // ============ PARTICLES ============
         var canvas = document.getElementById('particles');
         var ctx = canvas.getContext('2d');
         var particles = [];
@@ -926,16 +549,16 @@
 
         function createParticles() {
             particles = [];
-            var count = Math.min(60, Math.floor(window.innerWidth / 18));
+            var count = Math.min(50, Math.floor(window.innerWidth / 20));
             for (var i = 0; i < count; i++) {
                 particles.push({
                     x: Math.random() * canvas.width,
                     y: Math.random() * canvas.height,
-                    vx: (Math.random() - 0.5) * 0.4,
-                    vy: (Math.random() - 0.5) * 0.4,
+                    vx: (Math.random() - 0.5) * 0.3,
+                    vy: (Math.random() - 0.5) * 0.3,
                     size: Math.random() * 2 + 0.5,
-                    opacity: Math.random() * 0.35 + 0.1,
-                    color: Math.random() > 0.6 ? '#ff6b35' : '#ffffff'
+                    opacity: Math.random() * 0.3 + 0.1,
+                    color: Math.random() > 0.5 ? '#ff6b35' : '#ffffff'
                 });
             }
         }
@@ -949,7 +572,7 @@
                     var dist = Math.sqrt(dx * dx + dy * dy);
                     if (dist < 100) {
                         ctx.beginPath();
-                        ctx.strokeStyle = 'rgba(255, 107, 53, ' + (0.1 * (1 - dist / 100)) + ')';
+                        ctx.strokeStyle = 'rgba(255, 107, 53, ' + (0.08 * (1 - dist / 100)) + ')';
                         ctx.lineWidth = 0.5;
                         ctx.moveTo(particles[i].x, particles[i].y);
                         ctx.lineTo(particles[j].x, particles[j].y);
@@ -982,21 +605,55 @@
         resizeCanvas(); createParticles();
         window.addEventListener('resize', function() { resizeCanvas(); createParticles(); });
 
-        // Payment
+        // ============ STATE ============
         var currentAmount = 10000;
+        var usernameValid = false;
+        var npubValid = false;
 
+        // ============ VALIDATION ============
+        function validateUsername(val) {
+            return /^[a-zA-Z0-9_]{1,20}$/.test(val);
+        }
+
+        function validateNpub(val) {
+            return val.startsWith('npub1') && val.length >= 50;
+        }
+
+        document.getElementById('usernameInput').addEventListener('input', function(e) {
+            var valid = validateUsername(e.target.value);
+            document.getElementById('usernameGroup').classList.toggle('error', e.target.value && !valid);
+            usernameValid = valid;
+            updatePayButton();
+        });
+
+        document.getElementById('npubInput').addEventListener('input', function(e) {
+            var val = e.target.value.trim();
+            var valid = validateNpub(val);
+            document.getElementById('npubGroup').classList.toggle('error', val && !valid);
+            npubValid = valid;
+            updatePayButton();
+        });
+
+        function updatePayButton() {
+            var btn = document.getElementById('payBtn');
+            btn.disabled = !(usernameValid && npubValid);
+        }
+
+        // ============ PAYMENT ============
         function selectPlan(amt) {
             currentAmount = amt;
             document.getElementById('planA').classList.toggle('active', amt === 10000);
             document.getElementById('planB').classList.toggle('active', amt === 50000);
             document.getElementById('amountDisplay').innerHTML = amt.toLocaleString() + ' <span>sats</span>';
             document.getElementById('modalAmt').textContent = amt.toLocaleString() + ' sats';
+            updateQR();
+        }
 
-            var qrData = 'lightning:paradigmtech21@coinos.io?amount=' + (amt / 1000);
-            var qrUrl = 'https://api.qrserver.com/v1/create-qr-code/?size=140x140&margin=8&data=' + encodeURIComponent(qrData);
-
+        function updateQR() {
+            var qrData = 'lightning:paradigmtech21@coinos.io?amount=' + (currentAmount / 1000);
+            var qrUrl = 'https://api.qrserver.com/v1/create-qr-code/?size=120x120&margin=6&data=' + encodeURIComponent(qrData);
             document.getElementById('mainQR').src = qrUrl;
-            document.getElementById('modalQR').src = qrUrl.replace('size=140', 'size=200');
+            document.getElementById('modalQR').src = qrUrl.replace('size=120', 'size=180');
         }
 
         function showModal() {
@@ -1009,6 +666,35 @@
             document.body.style.overflow = '';
         }
 
+        function startPayment() {
+            if (!usernameValid || !npubValid) return;
+
+            var username = document.getElementById('usernameInput').value;
+            var npub = document.getElementById('npubInput').value.trim();
+
+            // Store for reference (in real impl, this would be sent to backend)
+            console.log('Payment initiated:', { username: username, npub: npub, amount: currentAmount });
+
+            // Show success state
+            document.getElementById('paymentForm').classList.add('hidden');
+            document.getElementById('successCard').classList.add('show');
+
+            // Confetti!
+            var colors = ['#ff6b35', '#ffd700', '#00ff88', '#fff'];
+            for (var i = 0; i < 30; i++) {
+                var c = document.createElement('div');
+                c.className = 'confetti';
+                c.style.cssText = 'left:' + (30 + Math.random() * 50) + '%;top:30%;background:' + colors[Math.floor(Math.random() * colors.length)] + ';animation-delay:' + (Math.random() * 0.4) + 's';
+                document.body.appendChild(c);
+                setTimeout(function() { c.remove(); }, 1200);
+            }
+
+            // Simulate toast notification
+            setTimeout(function() {
+                showToast();
+            }, 2000);
+        }
+
         function copyAddress() {
             var addr = 'paradigmtech21@coinos.io?amount=' + (currentAmount / 1000);
             navigator.clipboard.writeText(addr).then(function() {
@@ -1017,31 +703,36 @@
                 txt.textContent = 'Copied!';
                 btn.classList.add('copied');
 
-                var colors = ['#ff6b35', '#ffd700', '#00ff88', '#fff'];
-                for (var i = 0; i < 20; i++) {
-                    var c = document.createElement('div');
-                    c.className = 'confetti';
-                    c.style.cssText = 'left:' + (40 + Math.random() * 30) + '%;top:40%;background:' + colors[Math.floor(Math.random() * colors.length)] + ';animation-delay:' + (Math.random() * 0.3) + 's';
-                    document.body.appendChild(c);
-                    setTimeout(function() { c.remove(); }, 1200);
-                }
-
-                setTimeout(function() { txt.textContent = 'Copy Payment Address'; btn.classList.remove('copied'); }, 2500);
+                setTimeout(function() {
+                    txt.textContent = 'Copy Address';
+                    btn.classList.remove('copied');
+                }, 2000);
             });
         }
 
-        // FAQ Toggle
+        // ============ TOAST ============
+        function showToast() {
+            var names = ['Alex', 'Sam', 'Jordan', 'Casey', 'Riley', 'Morgan', 'Taylor', 'Quinn'];
+            var name = names[Math.floor(Math.random() * names.length)];
+            document.querySelector('.toast-text strong').textContent = name;
+            document.getElementById('toast').classList.add('show');
+            setTimeout(function() {
+                document.getElementById('toast').classList.remove('show');
+            }, 4000);
+        }
+
+        // ============ FAQ ============
         function toggleFaq(el) { el.classList.toggle('open'); }
 
-        // Verified List
+        // ============ VERIFIED LIST ============
         function loadVerified() {
             fetch('https://hiftyco.github.io/.well-known/nostr.json')
                 .then(function(r) { return r.json(); })
                 .then(function(d) {
-                    var names = Object.keys(d.names || {}).filter(function(n) { return n !== '_'; });
+                    var names = Object.keys(d.names || {}).filter(function(n) { return n !== '_'; }).slice(0, 8);
                     var el = document.getElementById('verifiedTags');
                     if (names.length) {
-                        el.innerHTML = names.map(function(n) { return '<span class="vtag">' + n + '@hiftyco.github.io</span>'; }).join('');
+                        el.innerHTML = names.map(function(n) { return '<span class="vtag">' + n + '</span>'; }).join('');
                     } else {
                         el.innerHTML = '<span class="vtag">Be the first!</span>';
                     }
@@ -1049,8 +740,16 @@
                 .catch(function() { document.getElementById('verifiedTags').innerHTML = '<span class="vtag">Error loading</span>'; });
         }
 
+        // ============ INIT ============
         selectPlan(10000);
         loadVerified();
+
+        // Simulate counter updates
+        setInterval(function() {
+            var counter = document.getElementById('counterNum');
+            var val = parseInt(counter.textContent);
+            counter.textContent = val + Math.floor(Math.random() * 3);
+        }, 15000);
 
         document.getElementById('qrModal').addEventListener('click', function(e) { if (e.target.id === 'qrModal') closeModal(); });
         document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeModal(); });
