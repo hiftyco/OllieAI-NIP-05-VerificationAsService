@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NIP-05 Verification Service - Get Verified on Nostr</title>
-    <meta name="description" content="Get your business verified on Nostr with NIP-05. Build trust with the Bitcoin community.">
+    <title>⚡ NIP-05 Verification - Get Your GitHub-Style Checkmark on Nostr</title>
+    <meta name="description" content="Get verified on Nostr like GitHub verified developers. Stand out with a NIP-05 checkmark. No coding required!">
     <style>
         :root {
             --bg: #0d1117;
@@ -13,8 +13,10 @@
             --text: #e6edf3;
             --text-muted: #8b949e;
             --orange: #f7931a;
+            --green: #2ea043;
             --purple: #8b5cf6;
         }
+        * { box-sizing: border-box; }
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             max-width: 800px;
@@ -25,131 +27,340 @@
             line-height: 1.6;
         }
         .container { background: var(--card); border-radius: 16px; padding: 32px; border: 1px solid var(--border); }
-        h1 { color: var(--orange); margin-bottom: 8px; font-size: 2.5em; }
-        .subtitle { color: var(--text-muted); margin-bottom: 32px; font-size: 1.2em; }
-        .price { font-size: 3em; color: var(--orange); font-weight: bold; }
-        .price-label { color: var(--text-muted); font-size: 14px; }
-        .features { list-style: none; padding: 0; margin: 24px 0; }
-        .features li { padding: 12px 0; border-bottom: 1px solid var(--border); }
-        .features li:before { content: "✅ "; }
-        .cta {
+        
+        /* Hero */
+        .hero { text-align: center; margin-bottom: 32px; }
+        .hero h1 { color: var(--orange); font-size: 2.5em; margin: 0 0 8px 0; }
+        .hero .subtitle { color: var(--text-muted); font-size: 1.2em; }
+        
+        /* Dev Badge Preview */
+        .badge-preview { 
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border: 2px solid var(--orange);
+            border-radius: 12px;
+            padding: 24px;
+            margin: 24px 0;
+            text-align: center;
+        }
+        .badge-preview .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--orange);
+            color: #000;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+        .badge-preview .badge::before { content: "✓"; }
+        .badge-preview p { color: var(--text-muted); margin: 12px 0 0 0; }
+        
+        /* Verification Checker */
+        .checker { 
+            background: var(--bg); 
+            border-radius: 12px; 
+            padding: 24px; 
+            margin: 24px 0;
+        }
+        .checker h3 { margin: 0 0 16px 0; color: var(--purple); }
+        .checker-form { display: flex; gap: 8px; }
+        .checker-form input { 
+            flex: 1; 
+            padding: 14px 16px; 
+            border: 1px solid var(--border); 
+            border-radius: 8px;
+            background: var(--card);
+            color: var(--text);
+            font-size: 16px;
+        }
+        .checker-form button { 
+            padding: 14px 24px; 
+            background: var(--purple); 
+            color: #fff; 
+            border: none; 
+            border-radius: 8px; 
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .checker-form button:hover { background: #7c3aed; }
+        .checker-result { margin-top: 16px; padding: 16px; border-radius: 8px; display: none; }
+        .checker-result.verified { background: rgba(46, 160, 67, 0.15); border: 1px solid var(--green); }
+        .checker-result.not-verified { background: rgba(248, 81, 73, 0.15); border: 1px solid #f85149; }
+        .checker-result h4 { margin: 0 0 8px 0; }
+        .checker-result.verified h4 { color: var(--green); }
+        .checker-result.not-verified h4 { color: #f85149; }
+        
+        /* Pain Points */
+        .pain-points { margin: 32px 0; }
+        .pain-points h2 { color: var(--orange); text-align: center; }
+        .pain-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px; }
+        .pain-item { background: var(--bg); padding: 16px; border-radius: 8px; }
+        .pain-item .old { color: #f85149; text-decoration: line-through; margin-bottom: 4px; }
+        .pain-item .new { color: var(--green); }
+        .pain-item .emoji { font-size: 1.5em; }
+        
+        /* Pricing */
+        .pricing { margin: 32px 0; }
+        .pricing h2 { color: var(--orange); text-align: center; }
+        .pricing-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px; }
+        .pricing-card { background: var(--bg); padding: 24px; border-radius: 12px; text-align: center; border: 2px solid var(--border); }
+        .pricing-card.featured { border-color: var(--orange); }
+        .pricing-card h3 { margin: 0 0 8px 0; color: var(--purple); }
+        .pricing-card.featured h3 { color: var(--orange); }
+        .pricing-card .price { font-size: 2em; color: var(--orange); font-weight: bold; }
+        .pricing-card .price-label { color: var(--text-muted); font-size: 0.9em; }
+        .pricing-card ul { list-style: none; padding: 0; margin: 16px 0; text-align: left; }
+        .pricing-card li { padding: 6px 0; color: var(--text-muted); }
+        .pricing-card li::before { content: "✓ "; color: var(--green); }
+        
+        /* How It Works */
+        .steps { margin: 32px 0; }
+        .steps h2 { color: var(--orange); text-align: center; }
+        .steps-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 16px; }
+        .step { background: var(--bg); padding: 16px; border-radius: 8px; text-align: center; }
+        .step-num { 
+            width: 32px; height: 32px; 
+            background: var(--purple); 
+            color: #fff; 
+            border-radius: 50%; 
+            display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 8px auto;
+            font-weight: bold;
+        }
+        .step p { margin: 0; font-size: 0.9em; color: var(--text-muted); }
+        
+        /* CTA */
+        .cta-section { text-align: center; margin: 32px 0; }
+        .cta-button {
+            display: inline-block;
             background: var(--orange);
             color: #000;
             padding: 16px 32px;
             border-radius: 8px;
             text-decoration: none;
             font-weight: bold;
-            display: inline-block;
-            margin-top: 24px;
             font-size: 1.1em;
         }
-        .cta:hover { background: #e8850a; }
-        .how { background: var(--bg); padding: 24px; border-radius: 8px; margin: 24px 0; }
-        .how h3 { margin-top: 0; color: #58a6ff; }
-        .step { display: flex; align-items: flex-start; margin: 16px 0; }
-        .step-num { background: var(--border); width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 16px; flex-shrink: 0; font-weight: bold; }
-        .pricing-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 32px 0; }
-        .pricing-card { background: var(--bg); padding: 24px; border-radius: 12px; border: 1px solid var(--border); text-align: center; }
-        .pricing-card h3 { margin: 0 0 12px 0; color: #58a6ff; font-size: 1.3em; }
-        .pricing-card .price { font-size: 2.5em; margin: 16px 0; }
-        .pricing-card ul { list-style: none; padding: 0; margin: 16px 0 0 0; text-align: left; }
-        .pricing-card li { padding: 8px 0; font-size: 0.9em; color: var(--text-muted); }
+        .cta-button:hover { background: #e8850a; }
+        
+        /* Verified List */
         .verified-list { margin: 32px 0; }
-        .verified-item { display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; background: var(--bg); border-radius: 8px; margin: 8px 0; }
-        .verified-badge { background: #2ea043; padding: 4px 12px; border-radius: 20px; font-size: 12px; }
-        .payment { background: var(--bg); padding: 20px; border-radius: 8px; margin: 24px 0; border-left: 4px solid var(--orange); }
-        .payment h3 { margin-top: 0; color: var(--orange); }
-        .nostr-link { font-family: monospace; background: var(--border); padding: 12px 16px; border-radius: 4px; word-break: break-all; display: block; margin: 12px 0; }
-        footer { text-align: center; margin-top: 48px; padding-top: 24px; border-top: 1px solid var(--border); color: var(--text-muted); font-size: 0.9em; }
+        .verified-list h2 { color: var(--orange); text-align: center; font-size: 1.2em; }
+        .verified-users { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+        .verified-tag { 
+            background: var(--bg); 
+            padding: 8px 16px; 
+            border-radius: 20px; 
+            font-size: 0.9em;
+            border: 1px solid var(--border);
+        }
+        
+        /* Footer */
+        footer { text-align: center; margin-top: 32px; padding-top: 24px; border-top: 1px solid var(--border); color: var(--text-muted); font-size: 0.9em; }
+        
         @media (max-width: 600px) {
-            .pricing-grid { grid-template-columns: 1fr; }
-            h1 { font-size: 2em; }
+            .hero h1 { font-size: 1.8em; }
+            .pain-grid, .pricing-grid, .steps-grid { grid-template-columns: 1fr; }
+            .checker-form { flex-direction: column; }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>⚡ NIP-05 Verification</h1>
-        <p class="subtitle">Get your business verified on Nostr. Build trust. Grow your Bitcoin brand.</p>
+        <!-- Hero -->
+        <div class="hero">
+            <h1>⚡ Get Verified on Nostr</h1>
+            <p class="subtitle">Like GitHub verified developers. Stand out with a NIP-05 checkmark.</p>
+        </div>
         
-        <div class="pricing-grid">
-            <div class="pricing-card">
-                <h3>📤 DIY Setup</h3>
-                <div class="price">10k</div>
-                <p class="price-label">sats</p>
-                <ul>
-                    <li>✅ NIP-05 record generated</li>
-                    <li>✅ DNS setup guide</li>
-                    <li>✅ Verification check</li>
-                    <li>❌ No hosting</li>
-                </ul>
+        <!-- Badge Preview -->
+        <div class="badge-preview">
+            <div class="badge">satoshi@nip05.hifty.co</div>
+            <p>Your GitHub-style verification badge on Nostr</p>
+        </div>
+        
+        <!-- Verification Checker -->
+        <div class="checker">
+            <h3>🔍 Check Verification Status</h3>
+            <div class="checker-form">
+                <input type="text" id="checkUsername" placeholder="Enter username to check" />
+                <button onclick="checkUser()">Check</button>
             </div>
-            <div class="pricing-card">
-                <h3>🌐 Full Hosting</h3>
-                <div class="price">50k</div>
-                <p class="price-label">sats</p>
-                <ul>
-                    <li>✅ Everything in DIY</li>
-                    <li>✅ We host nostr.json</li>
-                    <li>✅ Ongoing support</li>
-                    <li>✅ Priority setup</li>
-                </ul>
+            <div id="checkerResult" class="checker-result"></div>
+        </div>
+        
+        <!-- Pain Points Solved -->
+        <div class="pain-points">
+            <h2>🎯 We Solved The Hard Parts</h2>
+            <div class="pain-grid">
+                <div class="pain-item">
+                    <div class="emoji">😰</div>
+                    <div class="old">"DNS setup is confusing"</div>
+                    <div class="new">✅ We host everything for you</div>
+                </div>
+                <div class="pain-item">
+                    <div class="emoji">🤯</div>
+                    <div class="old">"What's my hex pubkey?"</div>
+                    <div class="new">✅ Just paste your npub - we convert it</div>
+                </div>
+                <div class="pain-item">
+                    <div class="emoji">😕</div>
+                    <div class="old">"How do I know when it's ready?"</div>
+                    <div class="new">✅ We post public confirmation</div>
+                </div>
+                <div class="pain-item">
+                    <div class="emoji">💸</div>
+                    <div class="old">"Is this safe to pay?"</div>
+                    <div class="new">✅ Transparent process, public verification</div>
+                </div>
             </div>
         </div>
         
-        <div class="how">
-            <h3>How It Works</h3>
-            <div class="step">
-                <div class="step-num">1</div>
-                <div><strong>DM on Nostr</strong> - Send me your pubkey and desired username (e.g., "businessname")</div>
-            </div>
-            <div class="step">
-                <div class="step-num">2</div>
-                <div><strong>Pay</strong> - Send sats to <code>paradigmtech21@coinos.io</code></div>
-            </div>
-            <div class="step">
-                <div class="step-num">3</div>
-                <div><strong>Automatic</strong> - Once payment is confirmed, you're instantly added!</div>
-            </div>
-            <div class="step">
-                <div class="step-num">4</div>
-                <div><strong>Done!</strong> - Your NIP-05 is live with verified badge ✅</div>
+        <!-- How It Works -->
+        <div class="steps">
+            <h2>⚡ 4 Simple Steps</h2>
+            <div class="steps-grid">
+                <div class="step">
+                    <div class="step-num">1</div>
+                    <p>DM us your username + npub</p>
+                </div>
+                <div class="step">
+                    <div class="step-num">2</div>
+                    <p>Send payment (zap or LN)</p>
+                </div>
+                <div class="step">
+                    <div class="step-num">3</div>
+                    <p>We add you instantly</p>
+                </div>
+                <div class="step">
+                    <div class="step-num">4</div>
+                    <p>You're verified! ✅</p>
+                </div>
             </div>
         </div>
         
-        <div class="payment">
-            <h3>💰 Payment Address</h3>
-            <p>Send payment to:</p>
-            <span class="nostr-link">paradigmtech21@coinos.io</span>
-            <p style="color: var(--text-muted); font-size: 0.9em; margin-bottom: 0;">LNURL: paradigmtech21@coinos.io</p>
+        <!-- Pricing -->
+        <div class="pricing">
+            <h2>💰 Simple Pricing</h2>
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <h3>🌐 Full Hosting</h3>
+                    <div class="price">10k</div>
+                    <div class="price-label">sats</div>
+                    <ul>
+                        <li>We host your NIP-05</li>
+                        <li>No DNS needed</li>
+                        <li>Instant setup</li>
+                        <li>Example: you@nip05.hifty.co</li>
+                    </ul>
+                </div>
+                <div class="pricing-card featured">
+                    <h3>🚀 Priority Setup</h3>
+                    <div class="price">50k</div>
+                    <div class="price-label">sats</div>
+                    <ul>
+                        <li>Your own subdomain</li>
+                        <li>Example: you@yourbrand.co</li>
+                        <li>Priority support</li>
+                        <li>DNS configuration help</li>
+                    </ul>
+                </div>
+            </div>
         </div>
         
+        <!-- Verified List -->
         <div class="verified-list">
-            <h3>✅ Verified Businesses</h3>
-            <div class="verified-item">
-                <span><strong>hifty</strong>@nip05.hifty.co</span>
-                <span class="verified-badge">Verified</span>
-            </div>
-            <div class="verified-item" style="opacity: 0.5;">
-                <span><em>Your business here?</em></span>
-                <span style="color: var(--text-muted);">DM to get started</span>
+            <h2>✅ Already Verified</h2>
+            <div class="verified-users" id="verifiedUsers">
+                <span class="verified-tag">Loading...</span>
             </div>
         </div>
         
-        <h3>Why NIP-05 Matters</h3>
-        <ul class="features">
-            <li><strong>Proves identity</strong> - You control this pubkey</li>
-            <li><strong>Builds trust</strong> - Customers know you're real</li>
-            <li><strong>Professional</strong> - Shows verified badge on all clients</li>
-            <li><strong>Required</strong> - Some Lightning zaps need it</li>
-        </ul>
-        
-        <a href="nostr:npub1a3lz855htm20sfcd0y2hp38e4h2akrqjj92spvruw8ge9yslrgws4x8vth" class="cta">⚡ DM Me on Nostr</a>
+        <!-- CTA -->
+        <div class="cta-section">
+            <a href="nostr:npub1a3lz855htm20sfcd0y2hp38e4h2akrqjj92spvruw8ge9yslrgws4x8vth" class="cta-button">
+                ⚡ Get Verified Now - DM on Nostr
+            </a>
+            <p style="color: var(--text-muted); margin-top: 12px; font-size: 0.9em;">
+                Payment: paradigmtech21@coinos.io
+            </p>
+        </div>
         
         <footer>
-            <p>Powered by <a href="https://nostr.com" style="color: var(--purple);">Nostr</a> - The censorship-resistant social network</p>
-            <p>NIP-05 Verification Service by <a href="nostr:npub1a3lz855htm20sfcd0y2hp38e4h2akrqjj92spvruw8ge9yslrgws4x8vth" style="color: var(--orange);">Hifty</a></p>
+            <p>Powered by Nostr • NIP-05 Verification Service</p>
+            <p>npub: npub1a3lz855htm20sfcd0y2hp38e4h2akrqjj92spvruw8ge9yslrgws4x8vth</p>
         </footer>
     </div>
+    
+    <script>
+        const REPO = 'hiftyco/OllieAI-NIP-05-VerificationAsService';
+        
+        // Load verified users on page load
+        async function loadVerifiedUsers() {
+            try {
+                const response = await fetch(`https://raw.githubusercontent.com/${REPO}/main/nostr.json`);
+                const data = await response.json();
+                const names = Object.keys(data.names || {});
+                
+                const container = document.getElementById('verifiedUsers');
+                if (names.length > 0) {
+                    container.innerHTML = names.map(n => 
+                        `<span class="verified-tag">${n}@nip05.hifty.co</span>`
+                    ).join('');
+                } else {
+                    container.innerHTML = '<span class="verified-tag">No users verified yet - be first!</span>';
+                }
+            } catch (e) {
+                document.getElementById('verifiedUsers').innerHTML = '<span class="verified-tag">Could not load list</span>';
+            }
+        }
+        
+        // Check user verification
+        function checkUser() {
+            const username = document.getElementById('checkUsername').value.trim();
+            const result = document.getElementById('checkerResult');
+            
+            if (!username) {
+                alert('Please enter a username');
+                return;
+            }
+            
+            result.className = 'checker-result';
+            result.style.display = 'block';
+            result.innerHTML = '<p>Checking...</p>';
+            
+            fetch(`https://raw.githubusercontent.com/${REPO}/main/nostr.json`)
+                .then(r => r.json())
+                .then(data => {
+                    const names = data.names || {};
+                    const found = Object.entries(names).find(([k]) => k.toLowerCase() === username.toLowerCase());
+                    
+                    if (found) {
+                        const [name, pubkey] = found;
+                        result.className = 'checker-result verified';
+                        result.innerHTML = `
+                            <h4>✅ VERIFIED!</h4>
+                            <p><strong>${name}@nip05.hifty.co</strong></p>
+                            <p style="font-size: 0.85em; color: var(--text-muted);">This NIP-05 is live! Clients show verified badge.</p>
+                        `;
+                    } else {
+                        result.className = 'checker-result not-verified';
+                        result.innerHTML = `
+                            <h4>❌ Not Verified</h4>
+                            <p>"${username}" is not verified yet.</p>
+                            <p style="font-size: 0.85em; color: var(--text-muted);">DM us to get verified!</p>
+                        `;
+                    }
+                })
+                .catch(() => {
+                    result.className = 'checker-result not-verified';
+                    result.innerHTML = '<h4>❌ Error</h4><p>Could not check. Try again.</p>';
+                });
+        }
+        
+        // Load users on page load
+        loadVerifiedUsers();
+    </script>
 </body>
 </html>
