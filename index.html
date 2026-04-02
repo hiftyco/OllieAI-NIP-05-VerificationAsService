@@ -283,7 +283,7 @@
             <h3>Scan to Pay</h3>
             <div class="modal-amt" id="modalAmt">10,000 sats</div>
             <div class="modal-qr"><img id="modalQR" src="" alt="QR"></div>
-            <div class="modal-addr">paradigmtech21@coinos.io</div>
+            <div class="modal-addr">ollie21@coinos.io</div>
             <button class="modal-close" onclick="closeModal()">Close</button>
         </div>
     </div>
@@ -367,7 +367,7 @@
 
                         <div class="address-box">
                             <div class="alabel">Lightning Address</div>
-                            <div class="avalue">paradigmtech21@coinos.io</div>
+                            <div class="avalue">ollie21@coinos.io</div>
                         </div>
 
                         <button class="pay-btn" id="payBtn" onclick="startPayment()">
@@ -379,11 +379,11 @@
                         </button>
 
                         <div class="wallet-grid">
-                            <a href="https://coinos.io/paradigmtech21" class="wallet-btn" target="_blank">
+                            <a href="https://coinos.io/ollie21" class="wallet-btn" target="_blank">
                                 <div class="wallet-icon" style="background: linear-gradient(135deg, #00ff88, #00cc6a); color: #000;">C</div>
                                 <span class="wallet-name">Coinos</span>
                             </a>
-                            <a href="https://primal.net/dm/paradigmtech21" class="wallet-btn" target="_blank">
+                            <a href="https://primal.net/dm/ollie21" class="wallet-btn" target="_blank">
                                 <div class="wallet-icon" style="background: linear-gradient(135deg, #FFD700, #FFA500); color: #000;">P</div>
                                 <span class="wallet-name">Primal</span>
                             </a>
@@ -533,7 +533,7 @@
 
         <footer>
             <div class="container">
-                <p>&#9889; Payment: <strong>paradigmtech21@coinos.io</strong></p>
+                <p>&#9889; Payment: <strong>ollie21@coinos.io</strong></p>
                 <p>&#128172; Questions? <a href="nostr:npub1a3lz855htm20sfcd0y2hp38e4h2akrqjj92spvruw8ge9yslrgws4x8vth">DM on Nostr</a></p>
             </div>
         </footer>
@@ -650,7 +650,7 @@
         }
 
         function updateQR() {
-            var qrData = 'lightning:paradigmtech21@coinos.io?amount=' + (currentAmount / 1000);
+            var qrData = 'lightning:ollie21@coinos.io?amount=' + (currentAmount / 1000);
             var qrUrl = 'https://api.qrserver.com/v1/create-qr-code/?size=120x120&margin=6&data=' + encodeURIComponent(qrData);
             document.getElementById('mainQR').src = qrUrl;
             document.getElementById('modalQR').src = qrUrl.replace('size=120', 'size=180');
@@ -696,7 +696,7 @@
         }
 
         function copyAddress() {
-            var addr = 'paradigmtech21@coinos.io?amount=' + (currentAmount / 1000);
+            var addr = 'ollie21@coinos.io?amount=' + (currentAmount / 1000);
             navigator.clipboard.writeText(addr).then(function() {
                 var btn = document.getElementById('copyBtn');
                 var txt = document.getElementById('copyText');
