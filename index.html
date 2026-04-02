@@ -216,6 +216,30 @@
         .verified-section { padding: 50px 0; }
         /* Testimonials */
         .testimonials-section { padding: 80px 0; border-top: 1px solid var(--border); }
+        /* Process Animation */
+        .process-section { padding: 80px 0; border-top: 1px solid var(--border); }
+        .process-flow { display: flex; justify-content: center; align-items: flex-start; gap: 0; margin-top: 40px; flex-wrap: wrap; }
+        .process-step { text-align: center; flex: 1; min-width: 140px; max-width: 180px; position: relative; }
+        .process-step:not(:last-child)::after { content: ''; position: absolute; top: 50px; right: -20px; width: 40px; height: 2px; background: linear-gradient(90deg, var(--accent), transparent); }
+        .process-icon { width: 100px; height: 100px; border-radius: 50%; background: var(--card); border: 2px solid var(--border); display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; font-size: 40px; position: relative; overflow: hidden; }
+        .process-icon::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, var(--accent-soft) 0%, transparent 50%); opacity: 0; animation: iconPulse 2s ease-in-out infinite; }
+        @keyframes iconPulse { 0%, 100% { opacity: 0; } 50% { opacity: 1; } }
+        .process-step:hover .process-icon { border-color: var(--accent); transform: scale(1.05); }
+        .process-step:hover .process-icon::before { animation-duration: 1s; }
+        .process-num { position: absolute; top: -8px; right: -8px; width: 28px; height: 28px; background: var(--accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700; color: #000; z-index: 2; }
+        .process-title { font-size: 14px; font-weight: 700; margin-bottom: 6px; }
+        .process-desc { font-size: 12px; color: var(--text-dim); line-height: 1.4; }
+        
+        /* Arrow animation */
+        .process-arrow { display: inline-block; margin: 0 8px; color: var(--accent); font-size: 24px; animation: arrowBounce 1s ease-in-out infinite; }
+        @keyframes arrowBounce { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(5px); } }
+        
+        /* Mobile */
+        @media (max-width: 600px) {
+            .process-flow { flex-direction: column; align-items: center; gap: 30px; }
+            .process-step:not(:last-child)::after { display: none; }
+        }
+
         .testimonial-grid { display: grid; gap: 16px; }
         .testimonial-card { background: var(--card); border: 1px solid var(--border); border-radius: 18px; padding: 24px; position: relative; }
         .testimonial-card::before { content: '"'; position: absolute; top: 10px; left: 18px; font-size: 48px; color: var(--accent); opacity: 0.3; font-family: Georgia, serif; }
@@ -612,7 +636,45 @@
         </section>
 
         <!-- Testimonials -->
-        <section class="testimonials-section">
+        
+        <!-- Process Animation -->
+        <section class="process-section">
+            <div class="container">
+                <div class="section-label">How It Works</div>
+                <h2 class="section-title">3 Simple Steps</h2>
+                
+                <div class="process-flow">
+                    <div class="process-step">
+                        <div class="process-icon">
+                            <span class="process-num">1</span>
+                            <span style="font-size: 36px;">✍️</span>
+                        </div>
+                        <div class="process-title">Enter Details</div>
+                        <div class="process-desc">Type your username and paste your public key</div>
+                    </div>
+                    
+                    <div class="process-step">
+                        <div class="process-icon">
+                            <span class="process-num">2</span>
+                            <span style="font-size: 36px;">💳</span>
+                        </div>
+                        <div class="process-title">Pay</div>
+                        <div class="process-desc">Scan QR or copy address to your wallet</div>
+                    </div>
+                    
+                    <div class="process-step">
+                        <div class="process-icon">
+                            <span class="process-num">3</span>
+                            <span style="font-size: 36px;">✅</span>
+                        </div>
+                        <div class="process-title">Verified!</div>
+                        <div class="process-desc">Checkmark appears automatically</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+<section class="testimonials-section">
             <div class="container">
                 <div class="section-label">Testimonials</div>
                 <h2 class="section-title">What People Say</h2>
