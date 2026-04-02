@@ -672,8 +672,8 @@
             var username = document.getElementById('usernameInput').value;
             var npub = document.getElementById('npubInput').value.trim();
 
-            // Store for reference (in real impl, this would be sent to backend)
-            console.log('Payment initiated:', { username: username, npub: npub, amount: currentAmount });
+            // Call webhook to auto-verify
+            callWebhook(username, npub, currentAmount);
 
             // Show success state
             document.getElementById('paymentForm').classList.add('hidden');
@@ -753,6 +753,33 @@
 
         document.getElementById('qrModal').addEventListener('click', function(e) { if (e.target.id === 'qrModal') closeModal(); });
         document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeModal(); });
-    </script>
+    
+        function callWebhook(username, npub, amount) {
+            var data = {
+                username: username,
+                pubkey: npub,
+                amount: amount
+            };
+
+            // Try our local webhook server first
+            fetch('http://localhost:8080', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(data)
+            })
+            .then(function(r) {
+                if (r.ok) {
+                    console.log('✅ Verification request sent!');
+                } else {
+                    console.log('⚠️ Webhook not available, verification will be manual');
+                }
+            })
+            .catch(function(e) {
+                console.log('⚠️ Webhook error:', e.message);
+                console.log('📝 Please DM us with your username and npub to complete verification');
+            });
+        }
+
+</script>
 </body>
 </html>
