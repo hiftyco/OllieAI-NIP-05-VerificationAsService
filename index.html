@@ -3,19 +3,91 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NIP-05 Verification — Stand Out on Nostr</title>
+    <title>⚡ NIP-05 Verification — Get Verified. Be Different.</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
             background: #000;
-            color: #f5f5f7;
-            line-height: 1.5;
-            -webkit-font-smoothing: antialiased;
+            color: #fff;
+            overflow-x: hidden;
         }
         
-        /* Hero */
+        /* Animated Background */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+        
+        .bg-animation::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(120, 0, 255, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(0, 113, 227, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(255, 69, 0, 0.08) 0%, transparent 60%);
+            animation: bgMove 20s ease-in-out infinite;
+        }
+        
+        @keyframes bgMove {
+            0%, 100% { transform: translate(-10%, -10%) rotate(0deg); }
+            33% { transform: translate(-5%, -15%) rotate(2deg); }
+            66% { transform: translate(-15%, -5%) rotate(-2deg); }
+        }
+        
+        /* Floating Orbs */
+        .orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.5;
+            animation: float 10s ease-in-out infinite;
+            z-index: -1;
+        }
+        
+        .orb-1 {
+            width: 400px;
+            height: 400px;
+            background: rgba(0, 113, 227, 0.3);
+            top: -100px;
+            left: -100px;
+            animation-delay: 0s;
+        }
+        
+        .orb-2 {
+            width: 300px;
+            height: 300px;
+            background: rgba(255, 69, 0, 0.25);
+            bottom: -50px;
+            right: -50px;
+            animation-delay: -5s;
+        }
+        
+        .orb-3 {
+            width: 250px;
+            height: 250px;
+            background: rgba(48, 209, 88, 0.2);
+            top: 50%;
+            left: 50%;
+            animation-delay: -2.5s;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(30px, -30px) scale(1.05); }
+            50% { transform: translate(-20px, 20px) scale(0.95); }
+            75% { transform: translate(20px, 30px) scale(1.02); }
+        }
+        
+        /* Hero Section */
         .hero {
             min-height: 100vh;
             display: flex;
@@ -23,169 +95,298 @@
             justify-content: center;
             align-items: center;
             text-align: center;
-            padding: 80px 24px;
-            background: linear-gradient(180deg, #000 0%, #0a0a0a 100%);
+            padding: 60px 24px;
+            position: relative;
+        }
+        
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 8px 16px;
+            border-radius: 980px;
+            font-size: 14px;
+            color: #86868b;
+            margin-bottom: 32px;
+            backdrop-filter: blur(10px);
+            animation: fadeInDown 1s ease-out;
+        }
+        
+        .hero-badge span {
+            color: #30d158;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
         }
         
         .hero h1 {
-            font-size: clamp(40px, 8vw, 80px);
-            font-weight: 600;
-            letter-spacing: -0.02em;
-            margin-bottom: 16px;
-            background: linear-gradient(135deg, #fff 0%, #999 100%);
+            font-size: clamp(48px, 10vw, 96px);
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            line-height: 1.1;
+            margin-bottom: 24px;
+            animation: fadeInUp 1s ease-out 0.2s both;
+        }
+        
+        .hero h1 .gradient-text {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ffd93d 50%, #6bcb77 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            background-size: 200% 200%;
+            animation: gradientShift 3s ease infinite;
+        }
+        
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
         }
         
         .hero p {
-            font-size: clamp(18px, 3vw, 28px);
+            font-size: clamp(18px, 3vw, 24px);
             color: #86868b;
-            max-width: 600px;
+            max-width: 500px;
             margin-bottom: 48px;
-            font-weight: 400;
+            animation: fadeInUp 1s ease-out 0.4s both;
+        }
+        
+        .cta-group {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            justify-content: center;
+            animation: fadeInUp 1s ease-out 0.6s both;
         }
         
         .cta-button {
-            display: inline-block;
-            background: #0071e3;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(135deg, #ff6b6b 0%, #ff4757 100%);
             color: #fff;
-            padding: 16px 32px;
+            padding: 18px 36px;
             border-radius: 980px;
             text-decoration: none;
             font-size: 17px;
-            font-weight: 500;
+            font-weight: 600;
             transition: all 0.3s ease;
+            box-shadow: 0 8px 32px rgba(255, 71, 87, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+        
+        .cta-button:hover::before {
+            left: 100%;
         }
         
         .cta-button:hover {
-            background: #0077ed;
-            transform: scale(1.02);
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 12px 40px rgba(255, 71, 87, 0.4);
+        }
+        
+        .cta-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: none;
+        }
+        
+        .cta-secondary:hover {
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 8px 32px rgba(255, 255, 255, 0.1);
+        }
+        
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         
         /* Badge Preview */
         .badge-section {
-            padding: 120px 24px;
+            padding: 100px 24px;
             text-align: center;
-            background: #000;
         }
         
-        .badge-preview {
+        .badge-card {
             display: inline-block;
-            background: linear-gradient(135deg, #1d1d1f 0%, #2a2a2c 100%);
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
             border-radius: 24px;
             padding: 48px 64px;
-            margin-top: 40px;
-            border: 1px solid #424245;
+            margin: 40px 0;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+            animation: cardGlow 3s ease-in-out infinite;
         }
         
-        .badge-preview .label {
+        @keyframes cardGlow {
+            0%, 100% { box-shadow: 0 0 30px rgba(0, 113, 227, 0.2); }
+            50% { box-shadow: 0 0 60px rgba(255, 69, 0, 0.3); }
+        }
+        
+        .badge-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg, transparent, rgba(255,255,255,0.03), transparent, transparent);
+            animation: rotate 10s linear infinite;
+        }
+        
+        @keyframes rotate {
+            100% { transform: rotate(360deg); }
+        }
+        
+        .badge-card .content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .badge-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+            animation: bounce 2s ease-in-out infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .badge-label {
             font-size: 14px;
             color: #86868b;
-            margin-bottom: 12px;
             text-transform: uppercase;
             letter-spacing: 0.1em;
+            margin-bottom: 12px;
         }
         
-        .badge-preview .badge {
-            font-size: 32px;
+        .badge-username {
+            font-size: 28px;
             font-weight: 600;
-            color: #fff;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 12px;
         }
         
-        .badge-preview .badge::before {
-            content: "✓";
+        .badge-username .check {
             color: #30d158;
-            font-size: 28px;
+            font-size: 24px;
+        }
+        
+        .badge-username .domain {
+            color: #86868b;
+            font-weight: 400;
         }
         
         /* Checker */
         .checker-section {
-            padding: 120px 24px;
-            background: #000;
-        }
-        
-        .checker-container {
-            max-width: 500px;
-            margin: 0 auto;
+            padding: 100px 24px;
             text-align: center;
         }
         
-        .checker-container h2 {
-            font-size: 40px;
-            font-weight: 600;
+        .checker-card {
+            max-width: 500px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 24px;
+            padding: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+        }
+        
+        .checker-card h2 {
+            font-size: 32px;
             margin-bottom: 8px;
         }
         
-        .checker-container p {
+        .checker-card p {
             color: #86868b;
-            margin-bottom: 32px;
-            font-size: 18px;
+            margin-bottom: 24px;
         }
         
-        .checker-input-group {
+        .checker-input {
             display: flex;
             gap: 12px;
-            max-width: 400px;
-            margin: 0 auto;
         }
         
-        .checker-input-group input {
+        .checker-input input {
             flex: 1;
             padding: 18px 24px;
-            font-size: 17px;
-            border: 1px solid #424245;
-            border-radius: 12px;
-            background: #1d1d1f;
+            font-size: 16px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            background: rgba(0, 0, 0, 0.3);
             color: #fff;
             outline: none;
-            transition: border-color 0.3s;
+            transition: all 0.3s;
         }
         
-        .checker-input-group input:focus {
+        .checker-input input:focus {
             border-color: #0071e3;
+            box-shadow: 0 0 20px rgba(0, 113, 227, 0.2);
         }
         
-        .checker-input-group button {
+        .checker-input button {
             padding: 18px 32px;
-            font-size: 17px;
-            font-weight: 500;
-            background: #0071e3;
+            font-size: 16px;
+            font-weight: 600;
+            background: linear-gradient(135deg, #0071e3 0%, #0055d4 100%);
             color: #fff;
             border: none;
-            border-radius: 12px;
+            border-radius: 16px;
             cursor: pointer;
             transition: all 0.3s;
         }
         
-        .checker-input-group button:hover {
-            background: #0077ed;
+        .checker-input button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 24px rgba(0, 113, 227, 0.4);
         }
         
         .checker-result {
             margin-top: 24px;
-            padding: 24px;
+            padding: 20px;
             border-radius: 16px;
             display: none;
+            animation: fadeInUp 0.5s ease-out;
         }
         
+        .checker-result.show { display: block; }
         .checker-result.verified {
-            background: rgba(48, 209, 88, 0.1);
+            background: rgba(48, 209, 88, 0.15);
             border: 1px solid #30d158;
         }
         
         .checker-result.not-verified {
-            background: rgba(255, 69, 58, 0.1);
+            background: rgba(255, 69, 58, 0.15);
             border: 1px solid #ff453a;
         }
         
         .checker-result h4 {
-            font-size: 20px;
-            margin-bottom: 8px;
+            font-size: 18px;
+            margin-bottom: 4px;
         }
         
         .checker-result.verified h4 { color: #30d158; }
@@ -193,14 +394,12 @@
         
         /* Features */
         .features {
-            padding: 120px 24px;
-            background: #000;
+            padding: 100px 24px;
         }
         
         .features h2 {
             text-align: center;
             font-size: clamp(32px, 5vw, 48px);
-            font-weight: 600;
             margin-bottom: 64px;
         }
         
@@ -213,16 +412,35 @@
         }
         
         .feature-card {
-            background: #1d1d1f;
+            background: rgba(255, 255, 255, 0.03);
             border-radius: 24px;
             padding: 40px;
-            border: 1px solid #424245;
-            transition: transform 0.3s, border-color 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
         }
         
         .feature-card:hover {
-            transform: translateY(-4px);
-            border-color: #636366;
+            transform: translateY(-8px);
+            border-color: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+        
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #0071e3, transparent);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .feature-card:hover::before {
+            opacity: 1;
         }
         
         .feature-icon {
@@ -231,26 +449,24 @@
         }
         
         .feature-card h3 {
-            font-size: 22px;
-            font-weight: 600;
+            font-size: 20px;
             margin-bottom: 12px;
         }
         
         .feature-card p {
             color: #86868b;
-            font-size: 16px;
+            font-size: 15px;
+            line-height: 1.6;
         }
         
         /* Pricing */
         .pricing {
-            padding: 120px 24px;
-            background: #000;
+            padding: 100px 24px;
         }
         
         .pricing h2 {
             text-align: center;
             font-size: clamp(32px, 5vw, 48px);
-            font-weight: 600;
             margin-bottom: 64px;
         }
         
@@ -263,28 +479,47 @@
         }
         
         .pricing-card {
-            background: #1d1d1f;
+            background: rgba(255, 255, 255, 0.03);
             border-radius: 24px;
             padding: 40px;
-            border: 1px solid #424245;
+            border: 1px solid rgba(255, 255, 255, 0.08);
             text-align: center;
+            position: relative;
+            transition: all 0.3s;
+        }
+        
+        .pricing-card:hover {
+            transform: scale(1.02);
         }
         
         .pricing-card.featured {
-            border-color: #0071e3;
-            background: linear-gradient(180deg, #1d1d1f 0%, #0a1540 100%);
+            border-color: #ff6b6b;
+            background: linear-gradient(135deg, rgba(255,107,107,0.1) 0%, rgba(255,71,87,0.05) 100%);
+        }
+        
+        .pricing-card.featured::before {
+            content: '🔥 Popular';
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, #ff6b6b 0%, #ff4757 100%);
+            padding: 6px 16px;
+            border-radius: 980px;
+            font-size: 12px;
+            font-weight: 600;
         }
         
         .pricing-card h3 {
-            font-size: 20px;
-            font-weight: 600;
-            margin-bottom: 8px;
+            font-size: 18px;
+            margin-bottom: 16px;
+            color: #86868b;
         }
         
         .pricing-card .price {
             font-size: 48px;
-            font-weight: 600;
-            color: #0071e3;
+            font-weight: 700;
+            color: #fff;
             margin-bottom: 4px;
         }
         
@@ -303,24 +538,25 @@
         .pricing-card li {
             padding: 8px 0;
             color: #f5f5f7;
-            font-size: 15px;
+            font-size: 14px;
         }
         
         .pricing-card li::before {
-            content: "✓ ";
+            content: '✓ ';
             color: #30d158;
         }
         
-        /* Verified List */
+        /* Verified Section */
         .verified-section {
             padding: 80px 24px;
-            background: #000;
             text-align: center;
         }
         
         .verified-section h3 {
-            font-size: 20px;
             color: #86868b;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
             margin-bottom: 24px;
         }
         
@@ -332,20 +568,20 @@
         }
         
         .verified-tag {
-            background: #1d1d1f;
+            background: rgba(48, 209, 88, 0.15);
+            border: 1px solid #30d158;
             padding: 10px 20px;
             border-radius: 980px;
             font-size: 14px;
-            border: 1px solid #424245;
-            color: #f5f5f7;
+            color: #30d158;
+            animation: fadeInUp 0.5s ease-out;
         }
         
         /* Footer */
         footer {
             padding: 40px 24px;
-            background: #000;
             text-align: center;
-            border-top: 1px solid #424245;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
         }
         
         footer p {
@@ -358,51 +594,93 @@
             text-decoration: none;
         }
         
+        /* Scroll animations */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s ease-out;
+        }
+        
+        .animate-on-scroll.animated {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
         /* Responsive */
         @media (max-width: 600px) {
-            .checker-input-group {
+            .checker-input {
                 flex-direction: column;
             }
             
-            .badge-preview {
+            .cta-group {
+                flex-direction: column;
+            }
+            
+            .badge-card {
                 padding: 32px;
             }
             
-            .badge-preview .badge {
-                font-size: 24px;
+            .badge-username {
+                font-size: 22px;
+                flex-direction: column;
+                gap: 4px;
             }
         }
     </style>
 </head>
 <body>
+    <!-- Animated Background -->
+    <div class="bg-animation">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+    
     <!-- Hero -->
     <section class="hero">
-        <h1>Get Verified on Nostr</h1>
-        <p>Stand out with a verified badge like GitHub developers. No coding required.</p>
-        <a href="nostr:npub1a3lz855htm20sfcd0y2hp38e4h2akrqjj92spvruw8ge9yslrgws4x8vth" class="cta-button">
-            Get Verified
-        </a>
+        <div class="hero-badge">
+            <span>⚡</span> Lightning Fast Verification
+        </div>
+        
+        <h1>
+            Get Verified.<br>
+            <span class="gradient-text">Be Different.</span>
+        </h1>
+        
+        <p>Stand out on Nostr like never before. No DNS headaches. No coding required. Just you, verified.</p>
+        
+        <div class="cta-group">
+            <a href="nostr:npub1a3lz855htm20sfcd0y2hp38e4h2akrqjj92spvruw8ge9yslrgws4x8vth" class="cta-button">
+                ⚡ Get Verified Now
+            </a>
+            <a href="#checker" class="cta-button cta-secondary">
+                🔍 Check Verification
+            </a>
+        </div>
     </section>
     
     <!-- Badge Preview -->
     <section class="badge-section">
-        <h2>Your Badge. Your Identity.</h2>
-        <p style="color: #86868b; max-width: 500px; margin: 0 auto 40px;">Be recognized. Be trusted. Show the world you're real.</p>
-        
-        <div class="badge-preview">
-            <div class="label">Your NIP-05 Identifier</div>
-            <div class="badge">satoshi@hiftyco.github.io</div>
+        <div class="badge-card">
+            <div class="content">
+                <div class="badge-icon">🎉</div>
+                <div class="badge-label">Your NIP-05 Badge</div>
+                <div class="badge-username">
+                    <span class="check">✓</span>
+                    yourname<span class="domain">@hiftyco.github.io</span>
+                </div>
+            </div>
         </div>
     </section>
     
     <!-- Checker -->
-    <section class="checker-section">
-        <div class="checker-container">
-            <h2>Check Verification</h2>
-            <p>Enter a username to verify their NIP-05 status.</p>
+    <section class="checker-section" id="checker">
+        <div class="checker-card">
+            <h2>🔍 Check Verification</h2>
+            <p>See if a username is verified instantly.</p>
             
-            <div class="checker-input-group">
-                <input type="text" id="usernameInput" placeholder="Enter username" />
+            <div class="checker-input">
+                <input type="text" id="usernameInput" placeholder="Enter username..." />
                 <button onclick="checkUser()">Check</button>
             </div>
             
@@ -412,32 +690,32 @@
     
     <!-- Features -->
     <section class="features">
-        <h2>Why Get Verified?</h2>
+        <h2>Why Get Verified? ✨</h2>
         
         <div class="feature-grid">
-            <div class="feature-card">
-                <div class="feature-icon">✓</div>
+            <div class="feature-card animate-on-scroll">
+                <div class="feature-icon">🛡️</div>
                 <h3>Proves You're Real</h3>
-                <p>NIP-05 verification shows you control your Nostr identity. No more "is this really you?"</p>
+                <p>No more "is this really you?" Show the verified badge and clients know instantly.</p>
             </div>
             
-            <div class="feature-card">
+            <div class="feature-card animate-on-scroll">
+                <div class="feature-icon">⚡</div>
+                <h3>Instant Setup</h3>
+                <p>We handle everything. No DNS. No coding. Just send your npub and get verified.</p>
+            </div>
+            
+            <div class="feature-card animate-on-scroll">
                 <div class="feature-icon">🎯</div>
                 <h3>Builds Trust</h3>
-                <p>Clients and followers know they're dealing with the real you. Trust = better relationships.</p>
-            </div>
-            
-            <div class="feature-card">
-                <div class="feature-icon">⚡</div>
-                <h3>Lightning Fast</h3>
-                <p>No DNS setup. No coding. We handle everything. Get verified in minutes.</p>
+                <p>Trust = better connections. Verified users get more zaps, more followers.</p>
             </div>
         </div>
     </section>
     
     <!-- Pricing -->
     <section class="pricing">
-        <h2>Simple Pricing</h2>
+        <h2>Simple Pricing 💰</h2>
         
         <div class="pricing-grid">
             <div class="pricing-card featured">
@@ -447,7 +725,7 @@
                 <ul>
                     <li>We host your NIP-05</li>
                     <li>Just send your npub</li>
-                    <li>Instant verification</li>
+                    <li>Verified in minutes</li>
                     <li>Example: you@hiftyco.github.io</li>
                 </ul>
             </div>
@@ -459,16 +737,16 @@
                 <ul>
                     <li>Your own subdomain</li>
                     <li>Example: you@yourbrand.com</li>
-                    <li>DNS configuration help</li>
+                    <li>DNS help included</li>
                     <li>Priority support</li>
                 </ul>
             </div>
         </div>
     </section>
     
-    <!-- Verified List -->
+    <!-- Verified -->
     <section class="verified-section">
-        <h3>Already Verified</h3>
+        <h3>✅ Already Verified</h3>
         <div class="verified-tags" id="verifiedList">
             <span class="verified-tag">hifty@hiftyco.github.io</span>
         </div>
@@ -476,10 +754,8 @@
     
     <!-- Footer -->
     <footer>
-        <p>Payment: <strong>paradigmtech21@coinos.io</strong></p>
-        <p style="margin-top: 12px;">
-            <a href="nostr:npub1a3lz855htm20sfcd0y2hp38e4h2akrqjj92spvruw8ge9yslrgws4x8vth">DM on Nostr</a> to get started
-        </p>
+        <p>💬 DM on Nostr to get started</p>
+        <p style="margin-top: 8px;">⚡ Payment: <strong>paradigmtech21@coinos.io</strong></p>
     </footer>
     
     <script>
@@ -510,7 +786,7 @@
             
             if (!username) return;
             
-            result.style.display = 'block';
+            result.className = 'checker-result show';
             result.innerHTML = '<p style="color:#86868b">Checking...</p>';
             
             fetch(`https://raw.githubusercontent.com/${REPO}/main/nostr.json`)
@@ -521,25 +797,77 @@
                     );
                     
                     if (found) {
-                        result.className = 'checker-result verified';
-                        result.innerHTML = `<h4>✅ Verified!</h4><p>${found[0]}@hiftyco.github.io is verified.</p>`;
+                        result.className = 'checker-result show verified';
+                        result.innerHTML = `<h4>✅ ${found[0]} is Verified!</h4><p>${found[0]}@hiftyco.github.io</p>`;
                     } else {
-                        result.className = 'checker-result not-verified';
-                        result.innerHTML = `<h4>❌ Not Verified</h4><p>"${username}" is not verified yet. DM to get started!</p>`;
+                        result.className = 'checker-result show not-verified';
+                        result.innerHTML = `<h4>❌ Not Verified Yet</h4><p>"${username}" hasn't verified with us.</p>`;
                     }
                 })
                 .catch(() => {
-                    result.className = 'checker-result not-verified';
+                    result.className = 'checker-result show not-verified';
                     result.innerHTML = '<h4>❌ Error</h4><p>Could not check. Try again.</p>';
                 });
         }
         
+        // Enter key
+        document.getElementById('usernameInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') checkUser();
+        });
+        
         // Load on page load
         loadVerified();
         
-        // Enter key for checker
-        document.getElementById('usernameInput').addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') checkUser();
+        // Scroll animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animated');
+                }
+            });
+        }, { threshold: 0.1 });
+        
+        document.querySelectorAll('.animate-on-scroll').forEach(el => {
+            observer.observe(el);
+        });
+        
+        // Fun: confetti on CTA click
+        document.querySelector('.cta-button').addEventListener('click', (e) => {
+            for (let i = 0; i < 20; i++) {
+                const confetti = document.createElement('div');
+                confetti.style.cssText = `
+                    position: fixed;
+                    width: 10px;
+                    height: 10px;
+                    background: hsl(${Math.random() * 360}, 80%, 60%);
+                    border-radius: 50%;
+                    pointer-events: none;
+                    z-index: 9999;
+                    left: ${e.clientX}px;
+                    top: ${e.clientY}px;
+                `;
+                document.body.appendChild(confetti);
+                
+                const angle = Math.random() * Math.PI * 2;
+                const velocity = 5 + Math.random() * 5;
+                const vx = Math.cos(angle) * velocity;
+                const vy = Math.sin(angle) * velocity;
+                
+                let x = e.clientX, y = e.clientY;
+                let opacity = 1;
+                
+                const animate = () => {
+                    x += vx;
+                    y += vy + 2;
+                    opacity -= 0.02;
+                    confetti.style.transform = `translate(${x - e.clientX}px, ${y - e.clientY}px)`;
+                    confetti.style.opacity = opacity;
+                    if (opacity > 0) requestAnimationFrame(animate);
+                    else confetti.remove();
+                };
+                
+                requestAnimationFrame(animate);
+            }
         });
     </script>
 </body>
