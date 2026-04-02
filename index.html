@@ -686,7 +686,7 @@
         }
 
         function updateQR() {
-            var qrData = 'lightning:ollie21@coinos.io?amount=' + (currentAmount);
+            var qrData = 'ollie21@coinos.io';
             var qrUrl = 'https://api.qrserver.com/v1/create-qr-code/?size=120x120&margin=6&data=' + encodeURIComponent(qrData);
             document.getElementById('mainQR').src = qrUrl;
             document.getElementById('modalQR').src = qrUrl.replace('size=120', 'size=180');
