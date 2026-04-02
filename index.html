@@ -407,6 +407,12 @@
                             <div class="form-error">Invalid npub format</div>
                         </div>
 
+                        <div class="form-group">
+                            <label class="form-label">Payment Proof (Optional)</label>
+                            <input type="text" class="form-input" id="paymentHashInput" placeholder="Preimage or invoice ID after payment">
+                            <div class="form-hint">Paste your payment preimage after paying (helps us verify faster)</div>
+                        </div>
+
                         <div class="plan-toggle">
                             <button class="plan-btn active" id="planA" onclick="selectPlan(8000)">
                                 <span class="pname">Full Hosting</span>
@@ -1018,7 +1024,8 @@
             var data = {
                 username: username,
                 pubkey: npub,
-                amount: amount
+                amount: amount,
+                payment_hash: document.getElementById('paymentHashInput').value.trim() || null
             };
 
             // Try our local webhook server first
