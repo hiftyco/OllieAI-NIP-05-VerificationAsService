@@ -487,49 +487,55 @@
                 </div>
                 
                 <div class="wallet-section">
-                    <h3>📱 Open Payment App</h3>
+                    <h3>📱 Pay Now</h3>
+                    
+                    <!-- Big QR Code -->
+                    <div style="background: #fff; padding: 16px; border-radius: 16px; display: inline-block; margin-bottom: 20px; cursor: pointer;" onclick="showQRModal()">
+                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&margin=10&data=lightning%3Aparadigmtech21%40coinos.io%3Famount%3D10000" width="180" height="180" alt="Pay QR" />
+                    </div>
+                    <p style="color: #666; font-size: 13px; margin-top: 8px;">Tap QR to enlarge</p>
                     
                     <div class="wallet-grid">
-                        <!-- Wallet of Satoshi - Popular -->
-                        <a href="walletofsatoshi://pay?address=paradigmtech21@coinos.io&amount=10000" class="wallet-btn" onclick="trackClick('walletofsatoshi')">
-                            <span class="icon">⚡</span>
-                            <span class="name">Wallet of Satoshi</span>
-                        </a>
-                        
-                        <!-- Primal -->
-                        <a href="primal://pay?lnurl=paradigmtech21@coinos.io&amount=10000" class="wallet-btn" onclick="trackClick('primal')">
-                            <span class="icon">🔶</span>
-                            <span class="name">Primal</span>
-                        </a>
-                        
-                        <!-- Alby -->
-                        <a href="alby://pay?destination=paradigmtech21@coinos.io&amount=10000" class="wallet-btn" onclick="trackClick('alby')">
-                            <span class="icon">⚡</span>
-                            <span class="name">Alby</span>
+                        <!-- QR Code - Always Works -->
+                        <a href="#" onclick="showQRModal(); return false;" class="wallet-btn">
+                            <span class="icon">📱</span>
+                            <span class="name">QR Code</span>
                         </a>
                         
                         <!-- Cash App -->
-                        <a href="cashapp://pay?$$amount=100&$$currency=SAT" class="wallet-btn" onclick="trackClick('cashapp')">
+                        <a href="cashapp:$paradigmtech21" class="wallet-btn" onclick="trackClick('cashapp')">
                             <span class="icon">💚</span>
                             <span class="name">Cash App</span>
                         </a>
                         
-                        <!-- Strike -->
-                        <a href="strike://pay?amount=10000&currency=sat&lnInvoice=true&to=paradigmtech21@coinos.io" class="wallet-btn" onclick="trackClick('strike')">
-                            <span class="icon">⚡</span>
-                            <span class="name">Strike</span>
+                        <!-- Primal -->
+                        <a href="https://primal.net/dm/paradigmtech21" class="wallet-btn" onclick="trackClick('primal')">
+                            <span class="icon">🔶</span>
+                            <span class="name">Primal DM</span>
                         </a>
                         
-                        <!-- Phoenix -->
-                        <a href="phoenix://pay?provider=coinos&lnurl=true&amount=10000" class="wallet-btn" onclick="trackClick('phoenix')">
-                            <span class="icon">🔴</span>
-                            <span class="name">Phoenix</span>
+                        <!-- Alby -->
+                        <a href="https://getalby.com/pay/paradigmtech21" class="wallet-btn" onclick="trackClick('alby')">
+                            <span class="icon">⚡</span>
+                            <span class="name">Alby</span>
+                        </a>
+                        
+                        <!-- Wallet of Satoshi -->
+                        <a href="https://walletofsatoshi.com/pay/paradigmtech21" class="wallet-btn" onclick="trackClick('walletofsatoshi')">
+                            <span class="icon">⚡</span>
+                            <span class="name">WoS Web</span>
+                        </a>
+                        
+                        <!-- Coinos -->
+                        <a href="https://coinos.io/paradigmtech21" class="wallet-btn" onclick="trackClick('coinos')">
+                            <span class="icon">💰</span>
+                            <span class="name">Coinos</span>
                         </a>
                     </div>
                     
                     <!-- Primary Pay Button -->
-                    <a href="bitpay://pay?id=paradigmtech21@coinos.io&amount=10000" class="pay-btn" id="payBtn" onclick="trackClick('primary-pay')">
-                        ⚡ Pay with Lightning
+                    <a href="#" onclick="showQRModal(); return false;" class="pay-btn" id="payBtn" onclick="trackClick('qr-pay')">
+                        📱 Show QR to Pay
                     </a>
                     
                     <!-- LN Address Copy -->
@@ -770,6 +776,51 @@
         }
         
         loadVerified();
+        
+        // ============ QR MODAL ============
+        function showQRModal() {
+            const amount = currentAmount;
+            const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&margin=10&data=lightning%3Aparadigmtech21%40coinos.io%3Famount%3D${amount}`;
+            
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0,0,0,0.9);
+                z-index: 10000;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                padding: 20px;
+            `;
+            
+            modal.innerHTML = `
+                <div style="background: #1a1a1a; border-radius: 24px; padding: 40px; text-align: center; max-width: 400px;">
+                    <h2 style="color: #fff; margin-bottom: 8px;">⚡ Scan to Pay</h2>
+                    <p style="color: #666; margin-bottom: 24px;">${amount.toLocaleString()} sats</p>
+                    <div style="background: #fff; padding: 16px; border-radius: 16px; display: inline-block;">
+                        <img src="${qrUrl}" width="260" height="260" alt="QR Code" />
+                    </div>
+                    <p style="color: #30d158; margin-top: 16px; font-size: 14px;">${amount.toLocaleString()} sats to:</p>
+                    <p style="color: #888; font-size: 12px; word-break: break-all; margin-top: 8px;">paradigmtech21@coinos.io</p>
+                    <button onclick="this.closest('div').parentElement.remove(); document.body.style.overflow='auto';" style="margin-top: 24px; padding: 14px 32px; background: #333; border: none; border-radius: 12px; color: #fff; font-size: 16px; cursor: pointer;">Close</button>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+            document.body.style.overflow = 'hidden';
+            
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.remove();
+                    document.body.style.overflow = 'auto';
+                }
+            });
+        }
         
         // ============ CONFETTI ON CLICK ============
         document.querySelector('.pay-btn').addEventListener('click', function(e) {
