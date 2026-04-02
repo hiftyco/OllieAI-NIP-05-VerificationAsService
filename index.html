@@ -298,7 +298,7 @@
     <div class="modal" id="qrModal">
         <div class="modal-box">
             <h3>Scan to Pay</h3>
-            <div class="modal-amt" id="modalAmt">10,000 sats</div>
+            <div class="modal-amt" id="modalAmt">8,000 sats</div>
             <div class="modal-qr"><img id="modalQR" src="" alt="QR"></div>
             <div class="modal-addr">ollie21@coinos.io</div>
             <button class="modal-close" onclick="closeModal()">Close</button>
@@ -363,9 +363,9 @@
                         </div>
 
                         <div class="plan-toggle">
-                            <button class="plan-btn active" id="planA" onclick="selectPlan(10000)">
+                            <button class="plan-btn active" id="planA" onclick="selectPlan(8000)">
                                 <span class="pname">Full Hosting</span>
-                                <span class="pprice">10k</span>
+                                <span class="pprice">8k</span>
                             </button>
                             <button class="plan-btn" id="planB" onclick="selectPlan(50000)">
                                 <span class="pname">Custom Domain</span>
@@ -380,7 +380,7 @@
                             <div class="qr-hint">Tap to enlarge</div>
                         </div>
 
-                        <div class="amount-display" id="amountDisplay">10,000 <span>sats</span></div>
+                        <div class="amount-display" id="amountDisplay">8,000 <span>sats</span></div>
 
                         <div class="address-box">
                             <div class="alabel">Lightning Address</div>
@@ -442,7 +442,7 @@
                     <div class="why-card">
                         <div class="why-card-icon">&#128176;</div>
                         <h3>One-Time Payment</h3>
-                        <p>Just 10,000 sats for lifetime verification.</p>
+                        <p>Just 8,000 sats for lifetime verification.</p>
                     </div>
                 </div>
             </div>
@@ -642,7 +642,7 @@
         window.addEventListener('resize', function() { resizeCanvas(); createParticles(); });
 
         // ============ STATE ============
-        var currentAmount = 10000;
+        var currentAmount = 8000;
         var usernameValid = false;
         var npubValid = false;
 
@@ -678,7 +678,7 @@
         // ============ PAYMENT ============
         function selectPlan(amt) {
             currentAmount = amt;
-            document.getElementById('planA').classList.toggle('active', amt === 10000);
+            document.getElementById('planA').classList.toggle('active', amt === 8000);
             document.getElementById('planB').classList.toggle('active', amt === 50000);
             document.getElementById('amountDisplay').innerHTML = amt.toLocaleString() + ' <span>sats</span>';
             document.getElementById('modalAmt').textContent = amt.toLocaleString() + ' sats';
@@ -822,7 +822,7 @@
         
 
 // ============ INIT ============
-        selectPlan(10000);
+        selectPlan(8000);
         loadVerified();
 
         // Simulate counter updates
