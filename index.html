@@ -947,18 +947,38 @@
         }
 
         function copyAddress() {
-            var addr = 'ollie21@coinos.io?amount=' + (currentAmount);
-            navigator.clipboard.writeText(addr).then(function() {
-                var btn = document.getElementById('copyBtn');
-                var txt = document.getElementById('copyText');
-                txt.textContent = 'Copied!';
-                btn.classList.add('copied');
-
-                setTimeout(function() {
-                    txt.textContent = 'Copy Address';
-                    btn.classList.remove('copied');
-                }, 2000);
-            });
+            var addr = 'ollie21@coinos.io';
+            var btn = document.querySelector('button[onclick="copyAddress()"]');
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(addr).then(function() {
+                    if (btn) {
+                        var original = btn.textContent;
+                        btn.textContent = '✅ Copied!';
+                        btn.style.background = 'var(--green)';
+                        setTimeout(function() {
+                            btn.textContent = original;
+                            btn.style.background = '';
+                        }, 2000);
+                    }
+                }).catch(function(err) {
+                    // Fallback for older browsers
+                    var textArea = document.createElement('textarea');
+                    textArea.value = addr;
+                    textArea.style.position = 'fixed';
+                    textArea.style.left = '-9999px';
+                    document.body.appendChild(textArea);
+                    textArea.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(textArea);
+                    if (btn) {
+                        btn.textContent = '✅ Copied!';
+                        setTimeout(function() { btn.textContent = 'Copy Address'; }, 2000);
+                    }
+                });
+            } else {
+                // Fallback
+                alert('Copy this address: ' + addr);
+            }
         }
 
         // ============ TOAST ============
@@ -1108,14 +1128,21 @@
                 username: username,
                 pubkey: npub,
                 amount: amount,
-                payment_hash: document.getElementById('paymentHashInput').value.trim() || null
+                payment_hash: document.getElementById('paymentHashInput').value.trim() || 'manual_' + Date.now()
             };
 
-            // Try our local webhook server first
-            fetch('https://arrant-harshly-martine.ngrok-free.dev', {
+            // Try local webhook first, then public URL
+            fetch('http://localhost:8080', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify(data)
+            }).catch(function() {
+                // Fallback to public URL
+                return fetch('https://arrant-harshly-martine.ngrok-free.dev', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(data)
+                });
             })
             .then(function(r) {
                 if (r.ok) {
