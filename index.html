@@ -885,12 +885,19 @@
         // ============ PAYMENT ============
         function selectPlan(amt) {
             currentAmount = amt;
-            document.getElementById('planA').classList.toggle('active', amt === 8000);
-            var planB = document.getElementById('planB');
-            if (planB) planB.classList.toggle('active', amt === 50000);
-            document.getElementById('amountDisplay').innerHTML = amt.toLocaleString() + ' <span>sats</span>';
-            document.getElementById('modalAmt').textContent = amt.toLocaleString() + ' sats';
-            updateQR();
+            var el = document.getElementById('planA');
+            if (el) el.classList.toggle('active', amt === 8000);
+            el = document.getElementById('amountDisplay');
+            if (el) el.innerHTML = '<span style="font-size:20px;color:var(--text-muted);">Pay </span>' + amt.toLocaleString() + ' <span style="font-size:14px;color:var(--text-muted);">sats</span>';
+            el = document.getElementById('modalAmt');
+            if (el) el.textContent = amt.toLocaleString() + ' sats';
+            // Update QR - force reload
+            var qrImg = document.getElementById('mainQR');
+            if (qrImg) {
+                var qrData = 'ollie21@coinos.io';
+                var ts = new Date().getTime();
+                qrImg.src = 'https://api.qrserver.com/v1/create-qr-code/?size=150x150&margin=6&data=' + encodeURIComponent(qrData) + '&t=' + ts;
+            }
         }
 
         function updateQR() {
@@ -1062,12 +1069,20 @@
         loadStats();
 
 // ============ INIT ============
-        window.onload = function() {
-            selectPlan(8000);
-            loadVerified();
-            // Force QR update on load
-            setTimeout(updateQR, 100);
-        };
+        (function init() {
+            // Small delay to ensure DOM is ready
+            setTimeout(function() {
+                var qrImg = document.getElementById('mainQR');
+                if (qrImg && !qrImg.src) {
+                    var qrData = 'ollie21@coinos.io';
+                    var qrUrl = 'https://api.qrserver.com/v1/create-qr-code/?size=150x150&margin=6&data=' + encodeURIComponent(qrData);
+                    qrImg.src = qrUrl;
+                    console.log('QR initialized:', qrUrl);
+                }
+                loadStats();
+                loadVerified();
+            }, 100);
+        })();
 
         // Fetch real stats from webhook
         function loadRealStats() {
