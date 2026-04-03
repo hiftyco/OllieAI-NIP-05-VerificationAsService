@@ -30,6 +30,8 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         html { scroll-behavior: smooth; }
+        * { -webkit-tap-highlight-color: transparent; }
+        button, a { touch-action: manipulation; }
 
         body {
             font-family: 'Space Grotesk', -apple-system, sans-serif;
@@ -85,6 +87,12 @@
         /* Trust Bar */
         .trust-bar { display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; margin-bottom: 28px; }
         .trust-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text-muted); }
+        .trust-logo { background: var(--card); padding: 8px 14px; border-radius: 8px; border: 1px solid var(--border); }
+        .trust-logo span { font-size: 11px; color: var(--text-muted); }
+        .recent-activity { background: linear-gradient(135deg, rgba(0, 255, 136, 0.1) 0%, rgba(255, 107, 53, 0.05) 100%); border: 1px solid rgba(0, 255, 136, 0.2); border-radius: 14px; padding: 12px 18px; margin-bottom: 28px; display: flex; align-items: center; gap: 10px; }
+        .activity-dot { width: 8px; height: 8px; background: var(--green); border-radius: 50%; animation: pulse 2s infinite; }
+        .activity-text { font-size: 13px; color: var(--text-muted); }
+        .activity-text strong { color: var(--green); }
 
         /* Badge */
         .badge-wrapper { position: relative; margin-bottom: 28px; }
@@ -107,7 +115,11 @@
         /* Form */
         .form-group { margin-bottom: 18px; text-align: left; }
         .form-label { display: block; font-size: 11px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 8px; }
-        .form-input { width: 100%; padding: 14px 16px; background: var(--bg); border: 1px solid var(--border); border-radius: 12px; color: var(--text); font-size: 14px; font-family: 'SF Mono', ui-monospace, monospace; transition: border-color 0.2s ease; }
+        .form-input { width: 100%; padding: 16px; background: var(--bg); border: 1px solid var(--border); border-radius: 12px; color: var(--text); font-size: 16px; font-family: 'SF Mono', ui-monospace, monospace; transition: border-color 0.2s ease; -webkit-appearance: none; }
+        @media (max-width: 640px) {
+            .form-input { font-size: 16px; padding: 18px 16px; }
+            .pay-btn { padding: 18px; font-size: 16px; }
+        }
         .form-input:focus { outline: none; border-color: var(--accent); }
         .form-input::placeholder { color: var(--text-dim); font-family: 'Space Grotesk', sans-serif; }
         .form-hint { font-size: 11px; color: var(--text-dim); margin-top: 6px; }
@@ -195,7 +207,12 @@
 
         /* FAQ */
         .faq-section { padding: 60px 0; }
-        .faq-item { background: var(--card); border: 1px solid var(--border); border-radius: 14px; margin-bottom: 10px; overflow: hidden; }
+        .faq-item { background: var(--card); border: 1px solid var(--border); border-radius: 14px; margin-bottom: 10px; overflow: hidden; transition: all 0.3s ease; }
+        .faq-item:hover { border-color: var(--accent); transform: translateY(-2px); }
+        .faq-q { padding: 18px 20px; font-weight: 600; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
+        .faq-q::after { content: '+'; font-size: 20px; color: var(--accent); transition: transform 0.3s ease; }
+        .faq-item.open .faq-q::after { transform: rotate(45deg); }
+        .faq-a { padding: 0 20px 18px; color: var(--text-muted); line-height: 1.6; }
         .faq-q { padding: 16px 18px; font-size: 13px; font-weight: 600; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
         .faq-q:hover { background: var(--card-hover); }
         .faq-q .arrow { transition: transform 0.3s ease; font-size: 11px; color: var(--text-dim); }
@@ -357,7 +374,9 @@
                 <div class="live-counter">
                     <div class="counter-left">
                         <div class="counter-dot"></div>
-                        <span class="counter-text"><strong id="counterNum">12</strong> people verified today</span>
+                        <span class="counter-text"><strong id="counterNum">3</strong> verified today</span>
+                        <span class="counter-right">|</span>
+                        <span class="counter-text"><strong id="totalVerified">3</strong> total</span>
                     </div>
                     <div class="counter-right">Avg. verification: <strong style="color: var(--green);">5 min</strong></div>
                 </div>
@@ -727,6 +746,7 @@
 <section class="verified-section">
             <div class="container">
                 <div class="verified-label">Recently Verified</div>
+                <div id="recentBadge" style="font-size: 11px; color: var(--green); margin-bottom: 8px;">● Live</div>
                 <div class="verified-tags" id="verifiedTags">
                     <span class="vtag">Loading...</span>
                 </div>
@@ -990,16 +1010,33 @@
 
 
         // Load live stats
+        // Load real stats and recent verifications
         function loadStats() {
+            // Load from nostr.json
             fetch('https://hiftyco.github.io/.well-known/nostr.json')
                 .then(function(r) { return r.json(); })
                 .then(function(data) {
-                    var count = Object.keys(data.names || {}).filter(function(n) { return n !== '_'; }).length;
+                    var names = Object.keys(data.names || {});
+                    var count = names.filter(function(n) { return n !== '_'; }).length;
                     document.getElementById('statVerified').textContent = count;
+                    // Show recent verifier
+                    if (names.length > 0) {
+                        var recent = names[names.length - 1];
+                        document.getElementById('recentName').textContent = '@' + recent;
+                    }
                 })
                 .catch(function() {
-                    document.getElementById('statVerified').textContent = '12';
+                    document.getElementById('statVerified').textContent = '3';
                 });
+            // Also load from our webhook
+            fetch('https://arrant-harshly-martine.ngrok-free.dev/stats')
+                .then(function(r) { return r.json(); })
+                .then(function(stats) {
+                    document.getElementById('counterNum').textContent = stats.today || 0;
+                    var totalEl = document.getElementById('totalVerified');
+                    if (totalEl) totalEl.textContent = stats.total || 0;
+                })
+                .catch(function() {});
         }
         loadStats();
 
@@ -1011,12 +1048,21 @@
             setTimeout(updateQR, 100);
         };
 
-        // Simulate counter updates
-        setInterval(function() {
-            var counter = document.getElementById('counterNum');
-            var val = parseInt(counter.textContent);
-            counter.textContent = val + Math.floor(Math.random() * 3);
-        }, 15000);
+        // Fetch real stats from webhook
+        function loadRealStats() {
+            fetch('https://arrant-harshly-martine.ngrok-free.dev/stats')
+                .then(function(r) { return r.json(); })
+                .then(function(stats) {
+                    document.getElementById('counterNum').textContent = stats.today || 0;
+                    var totalEl = document.getElementById('totalVerified');
+                    if (totalEl) totalEl.textContent = stats.total || 0;
+                })
+                .catch(function() {
+                    // Fallback to static
+                });
+        }
+        loadRealStats();
+        setInterval(loadRealStats, 30000); // Update every 30 seconds
 
         document.getElementById('qrModal').addEventListener('click', function(e) { if (e.target.id === 'qrModal') closeModal(); });
         document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeModal(); });
