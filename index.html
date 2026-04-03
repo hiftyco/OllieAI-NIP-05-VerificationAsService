@@ -441,27 +441,46 @@
                             </button>
                         </div>
 
-                        <div class="qr-section">
-                            <div class="qr-frame" onclick="showModal()">
-                                <img id="mainQR" src="" alt="QR">
+                        <div style="text-align: center; margin-bottom: 20px;">
+                            <div style="display: inline-block; background: linear-gradient(135deg, rgba(255, 107, 53, 0.1) 0%, rgba(0, 255, 136, 0.05) 100%); border: 2px dashed var(--accent); border-radius: 16px; padding: 20px;">
+                                <div style="font-size: 11px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 6px;">Pay Exactly</div>
+                                <div style="font-size: 48px; font-weight: 800; color: var(--accent); letter-spacing: -0.02em;">8,000<span style="font-size: 18px; color: var(--text-muted);"> sats</span></div>
                             </div>
-                            <div class="qr-hint">Tap to enlarge</div>
                         </div>
 
-                        <div class="amount-display" id="amountDisplay">8,000 <span>sats</span></div>
-
-                        <div class="address-box">
-                            <div class="alabel">Lightning Address</div>
-                            <div class="avalue">ollie21@coinos.io</div>
+                        <div class="qr-section" onclick="showModal()" style="cursor: pointer; position: relative;">
+                            <div style="display: inline-block; padding: 12px; background: #fff; border-radius: 16px; box-shadow: 0 0 40px rgba(255, 107, 53, 0.3);">
+                                <img id="mainQR" src="" alt="QR" style="width: 150px; height: 150px; display: block;">
+                            </div>
+                            <div style="position: absolute; bottom: -8px; left: 50%; transform: translateX(-50%); background: var(--accent); color: #000; padding: 4px 16px; border-radius: 20px; font-size: 11px; font-weight: 700;">SCAN TO PAY</div>
                         </div>
 
-                        <button class="pay-btn" id="payBtn" onclick="startPayment()">
-                            <span>&#9889;</span> Pay &amp; Verify
+                        <div style="margin: 24px 0; text-align: center;">
+                            <div style="display: inline-flex; align-items: center; gap: 8px; padding: 12px 20px; background: var(--card); border: 1px solid var(--border); border-radius: 10px;">
+                                <span style="font-size: 16px;">📋</span>
+                                <span style="font-size: 14px; font-weight: 600; color: var(--gold);">ollie21@coinos.io</span>
+                            </div>
+                            <button onclick="copyAddress()" style="display: block; margin: 12px auto 0; padding: 10px 20px; background: var(--accent); color: #000; border: none; border-radius: 8px; font-size: 13px; font-weight: 700; cursor: pointer;">Copy Address</button>
+                        </div>
+
+                        <details style="margin: 20px 0; padding: 14px; background: var(--card); border: 1px solid var(--border); border-radius: 10px;">
+                            <summary style="font-size: 13px; font-weight: 600; cursor: pointer; color: var(--text-muted);">❓ How do I pay?</summary>
+                            <div style="margin-top: 12px; font-size: 12px; color: var(--text-dim); line-height: 1.7; text-align: left;">
+                                <p><strong>1.</strong> Open your Lightning wallet (Alby, BlueWallet, Phoenix)</p>
+                                <p><strong>2.</strong> Send exactly <strong style="color: var(--accent);">8,000 sats</strong> to <strong style="color: var(--gold);">ollie21@coinos.io</strong></p>
+                                <p><strong>3.</strong> Copy the payment hash/proof from your wallet</p>
+                                <p><strong>4.</strong> Paste it in the form above &amp; click "I've Paid"</p>
+                                <p style="margin-top: 10px; color: var(--green);">✅ Takes less than 1 minute!</p>
+                            </div>
+                        </details>
+
+                        <button class="pay-btn" id="payBtn" onclick="startPayment()" style="font-size: 16px; padding: 18px;">
+                            <span>🚀</span> I've Paid - Verify Me!
                         </button>
 
-                        <button class="copy-btn" id="copyBtn" onclick="copyAddress()">
-                            <span id="copyText">Copy Address</span>
-                        </button>
+                        <div style="margin-top: 16px; padding: 14px; background: rgba(0, 255, 136, 0.1); border: 1px solid rgba(0, 255, 136, 0.2); border-radius: 10px; text-align: center;">
+                            <span style="font-size: 12px; color: var(--text-muted);">💡 <strong>No wallet?</strong> <a href="https://getalby.com" target="_blank" style="color: var(--accent);">Get Alby</a> - free browser extension</span>
+                        </div>
 
                         <div class="wallet-grid">
                             <a href="https://coinos.io/ollie21" class="wallet-btn" target="_blank">
