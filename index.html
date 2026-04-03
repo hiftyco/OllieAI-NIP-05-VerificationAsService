@@ -845,7 +845,8 @@
         function selectPlan(amt) {
             currentAmount = amt;
             document.getElementById('planA').classList.toggle('active', amt === 8000);
-            document.getElementById('planB').classList.toggle('active', amt === 50000);
+            var planB = document.getElementById('planB');
+            if (planB) planB.classList.toggle('active', amt === 50000);
             document.getElementById('amountDisplay').innerHTML = amt.toLocaleString() + ' <span>sats</span>';
             document.getElementById('modalAmt').textContent = amt.toLocaleString() + ' sats';
             updateQR();
@@ -1003,8 +1004,12 @@
         loadStats();
 
 // ============ INIT ============
-        selectPlan(8000);
-        loadVerified();
+        window.onload = function() {
+            selectPlan(8000);
+            loadVerified();
+            // Force QR update on load
+            setTimeout(updateQR, 100);
+        };
 
         // Simulate counter updates
         setInterval(function() {
