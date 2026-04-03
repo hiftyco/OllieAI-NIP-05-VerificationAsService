@@ -29,7 +29,10 @@
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
-        html { scroll-behavior: smooth; }
+        html { scroll-behavior: smooth; scroll-padding-top: 20px; }
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: var(--bg); }
+        ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 5px; }
         * { -webkit-tap-highlight-color: transparent; }
         button, a { touch-action: manipulation; }
 
@@ -82,6 +85,22 @@
             justify-content: center;
             text-align: center;
             padding: 60px 0 50px;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255,107,53,0.05) 0%, transparent 50%, rgba(0,255,136,0.05) 100%);
+            animation: heroGlow 8s ease-in-out infinite alternate;
+        }
+        @keyframes heroGlow {
+            0% { opacity: 0.5; }
+            100% { opacity: 1; }
         }
 
         /* Trust Bar */
@@ -100,7 +119,10 @@
         .badge-ring-2 { inset: -55px; opacity: 0.15; }
         .badge-glow { position: absolute; inset: -20px; background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%); opacity: 0.5; animation: badgeGlow 3s ease-in-out infinite; }
         @keyframes badgeGlow { 0%, 100% { opacity: 0.3; transform: scale(0.95); } 50% { opacity: 0.6; transform: scale(1.05); } }
-        .badge { position: relative; width: 80px; height: 80px; border-radius: 50%; background: linear-gradient(135deg, var(--card) 0%, var(--bg-light) 100%); border: 2px solid var(--accent); display: flex; align-items: center; justify-content: center; box-shadow: 0 0 40px var(--accent-glow); }
+        .badge { position: relative; width: 90px; height: 90px; border-radius: 50%; background: linear-gradient(135deg, var(--card) 0%, var(--bg-light) 100%); border: 3px solid var(--accent); display: flex; align-items: center; justify-content: center; box-shadow: 0 0 50px var(--accent-glow), 0 0 80px rgba(255,107,53,0.2); animation: badgeFloat 3s ease-in-out infinite; }
+        @keyframes badgeFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+        .badge-glow { position: absolute; inset: -20px; background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%); opacity: 0.5; animation: badgeGlow 2s ease-in-out infinite; }
+        @keyframes badgeGlow { 0%, 100% { opacity: 0.3; transform: scale(1); } 50% { opacity: 0.6; transform: scale(1.1); } }
         .badge span { font-size: 36px; color: var(--accent); }
 
         /* Typography */
@@ -115,7 +137,8 @@
         /* Form */
         .form-group { margin-bottom: 18px; text-align: left; }
         .form-label { display: block; font-size: 11px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 8px; }
-        .form-input { width: 100%; padding: 16px; background: var(--bg); border: 1px solid var(--border); border-radius: 12px; color: var(--text); font-size: 16px; font-family: 'SF Mono', ui-monospace, monospace; transition: border-color 0.2s ease; -webkit-appearance: none; }
+        .form-input { width: 100%; padding: 16px 18px; background: var(--bg); border: 2px solid var(--border); border-radius: 14px; color: var(--text); font-size: 16px; font-family: 'SF Mono', ui-monospace, monospace; transition: all 0.3s ease; -webkit-appearance: none; }
+        .form-input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 20px var(--accent-glow); transform: scale(1.01); }
         @media (max-width: 640px) {
             .form-input { font-size: 16px; padding: 18px 16px; }
             .pay-btn { padding: 18px; font-size: 16px; }
